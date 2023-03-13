@@ -70,9 +70,9 @@ export default function AdminSignup() {
         message: "Signup was Successful",
         severity: "success",
       });
-      navigate("/dashboard");
+      navigate("admin/dashboard");
       console.log(data);
-      // localStorage.setItem("user", JSON.stringify(data.data));
+      localStorage.setItem("admin-token", JSON.stringify(data.data.token));
     },
     onError: (err: any) => {
       setOpenSnack({

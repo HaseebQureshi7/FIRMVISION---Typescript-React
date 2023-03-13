@@ -45,9 +45,9 @@ export default function AdminLogin() {
         message: "Logged in successfully!",
         severity: "success",
       });
-      navigate("/dashboard");
-      console.log(data);
-      // localStorage.setItem("user", JSON.stringify(data.data));
+      navigate("/admin/dashboard");
+      // console.log(data.data.token);
+      localStorage.setItem("admin-token", JSON.stringify(data.data.token));
     },
     onError: (err: any) => {
       setOpenSnack({
