@@ -15,12 +15,11 @@ import {
   Box,
   ButtonBase,
   Divider,
-  SwipeableDrawer,
   Typography,
 } from "@mui/material";
 import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
 
-export default function Sidebar({ openSidebar, setOpenSidebar }: any) {
+export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
   return (
     <Box
       sx={{
@@ -45,8 +44,17 @@ export default function Sidebar({ openSidebar, setOpenSidebar }: any) {
         onMouseOut={() => setOpenSidebar("5vw")}
       >
         {/* HEAD */}
-        <Box sx={{ ...FlexBox, flex: 4, mt: 5, gap: 1.5 }}>
+        <Box
+          sx={{
+            ...FlexBox,
+            flex: 4,
+            mt: openSidebar == "5vw" ? 0 : 5,
+            gap: 1.5,
+            transition:'all .5s'
+          }}
+        >
           <Avatar
+            src={user?.picture}
             sx={{
               width: {
                 xs: openSidebar == "5vw" ? "0" : "35px",
@@ -63,7 +71,7 @@ export default function Sidebar({ openSidebar, setOpenSidebar }: any) {
             sx={{
               opacity: openSidebar == "5vw" ? "0" : "1",
               display: { xs: "none", lg: "inherit" },
-              color: "primary.main",
+              color: "text.primary",
               fontWeight: 700,
               whiteSpace: "nowrap",
               transition: "0.1s opacity",
@@ -71,7 +79,7 @@ export default function Sidebar({ openSidebar, setOpenSidebar }: any) {
             }}
             variant="h6"
           >
-            Haseeb Qureshi
+            {user?.name}
           </Typography>
           <Typography
             sx={{

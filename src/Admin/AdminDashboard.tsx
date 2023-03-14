@@ -5,8 +5,17 @@ import {
   ReportProblem,
   Task,
 } from "@mui/icons-material";
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  Typography,
+  useMediaQuery,
+  useTheme,
+  Tooltip,
+} from "@mui/material";
+import axios from "axios";
 import React from "react";
+import { useQuery } from "react-query";
+import LiveClock from "../components/LiveClock";
 import { SideFade } from "../components/PageTransition";
 import StatisticsChart from "../components/StatisticsChart";
 import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
@@ -15,6 +24,86 @@ import AdminPagesContainer from "./AdminPagesContainer";
 export default function AdminDashboard() {
   const themeInstance = useTheme();
   const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
+
+  const user: any | null = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")!)
+    : null;
+
+  const authToken = localStorage.getItem("admin-token");
+  const Authheaders = {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  };
+
+  const getEmpsQF = () => {
+    return axios.post(
+      import.meta.env.VITE_BASE_URL + "admin/getemployees",
+      {},
+      Authheaders
+    );
+  };
+
+  const getTasksQF = () => {
+    return axios.post(
+      import.meta.env.VITE_BASE_URL + "admin/getallassignedtasks",
+      {},
+      Authheaders
+    );
+  };
+
+  const getRemsQF = () => {
+    return axios.post(
+      import.meta.env.VITE_BASE_URL + "admin/getreminders",
+      {},
+      Authheaders
+    );
+  };
+
+  // ALL EMPLOYEES QUERY FUNCTION
+  const { data: empData } = useQuery<any>("all_employees", getEmpsQF, {
+    onSuccess: (data) => {
+      // console.log(data);
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+    select: (data) => {
+      return data.data;
+    },
+  });
+
+  // ALL ASSIGNED TASKS QUERY FUNCTION
+  const { data: taskData } = useQuery<any>("all_assigned_tasks", getTasksQF, {
+    onSuccess: (data) => {
+      // console.log(data);
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+    select: (data) => {
+      return data.data;
+    },
+  });
+
+  // ALL REMINDERS QUERY FUNCTION
+  const { data: remsData } = useQuery<any>("all_reminders", getRemsQF, {
+    onSuccess: (data) => {
+      // console.log(data);
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+    select: (data) => {
+      return data.data;
+    },
+  });
+
+  // REPORTED TASKS.
+  // LOOKS FOR STATUS COMPLETION WITH NO SUBMITTION REPORT. 
+  const reportedTasks = taskData?.filter((data: any) => {
+    return data.status == "complete" && data.submittionReport == "NA";
+  });
 
   const data = [
     {
@@ -111,8 +200,12 @@ export default function AdminDashboard() {
                 >
                   Welcome,
                 </Typography>
-                <Typography variant={isXS ? "h5" : "h3"} fontWeight={700}>
-                  Haseeb Qureshi
+                <Typography
+                  sx={{ color: "text.primary" }}
+                  variant={isXS ? "h5" : "h3"}
+                  fontWeight={700}
+                >
+                  {user?.name}
                 </Typography>
               </Box>
               {/* LR2 */}
@@ -145,11 +238,11 @@ export default function AdminDashboard() {
               }}
             >
               <Typography
-                sx={{ textAlign: "center" }}
+                sx={{ textAlign: "center", color: "text.primary" }}
                 variant={isXS ? "h4" : "h1"}
                 fontWeight={700}
               >
-                10:25 AM
+                <LiveClock />
               </Typography>
             </Box>
           </Box>
@@ -168,72 +261,96 @@ export default function AdminDashboard() {
               py: 2.5,
             }}
           >
-            <Box
-              sx={{
-                ...FlexBox,
-                flexDirection: {xs:"column", lg: "row"},
-                gap: 2.5,
-                backgroundColor: "info.main",
-                borderRadius: 2,
-                p: 1,
-              }}
-            >
-              <AssignmentInd
-                sx={{ width: "40px", height: "40px", color: "white" }}
-              />
-              <Typography fontWeight={700} variant={isXS ? "h5" :"h4"} color="white">
-                174
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                ...FlexBox,
-                flexDirection: {xs:"column", lg: "row"},
-                gap: 2.5,
-                backgroundColor: "success.main",
-                borderRadius: 2,
-                p: 1,
-              }}
-            >
-              <Task sx={{ width: "40px", height: "40px", color: "white" }} />
-              <Typography fontWeight={700} variant={isXS ? "h5" :"h4"} color="white">
-                92
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                ...FlexBox,
-                flexDirection: {xs:"column", lg: "row"},
-                gap: 2.5,
-                backgroundColor: "error.main",
-                borderRadius: 2,
-                p: 1,
-              }}
-            >
-              <ReportProblem
-                sx={{ width: "40px", height: "40px", color: "white" }}
-              />
-              <Typography fontWeight={700} variant={isXS ? "h5" :"h4"} color="white">
-                13
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                ...FlexBox,
-                flexDirection: {xs:"column", lg: "row"},
-                gap: 2.5,
-                backgroundColor: "warning.main",
-                borderRadius: 2,
-                p: 1,
-              }}
-            >
-              <NotificationImportant
-                sx={{ width: "40px", height: "40px", color: "white" }}
-              />
-              <Typography fontWeight={700} variant={isXS ? "h5" :"h4"} color="white">
-                4
-              </Typography>
-            </Box>
+            <Tooltip title="Total Employees">
+              <Box
+                sx={{
+                  ...FlexBox,
+                  flexDirection: { xs: "column", lg: "row" },
+                  gap: 2.5,
+                  backgroundColor: "info.main",
+                  borderRadius: 2,
+                  p: 1,
+                }}
+              >
+                <AssignmentInd
+                  sx={{ width: "40px", height: "40px", color: "white" }}
+                />
+                <Typography
+                  fontWeight={700}
+                  variant={isXS ? "h5" : "h4"}
+                  color="white"
+                >
+                  {empData?.length}
+                </Typography>
+              </Box>
+            </Tooltip>
+            <Tooltip title="All Assigned Tasks">
+              <Box
+                sx={{
+                  ...FlexBox,
+                  flexDirection: { xs: "column", lg: "row" },
+                  gap: 2.5,
+                  backgroundColor: "success.main",
+                  borderRadius: 2,
+                  p: 1,
+                }}
+              >
+                <Task sx={{ width: "40px", height: "40px", color: "white" }} />
+                <Typography
+                  fontWeight={700}
+                  variant={isXS ? "h5" : "h4"}
+                  color="white"
+                >
+                  {taskData?.length}
+                </Typography>
+              </Box>
+            </Tooltip>
+            <Tooltip title="All Reported Tasks">
+              <Box
+                sx={{
+                  ...FlexBox,
+                  flexDirection: { xs: "column", lg: "row" },
+                  gap: 2.5,
+                  backgroundColor: "error.main",
+                  borderRadius: 2,
+                  p: 1,
+                }}
+              >
+                <ReportProblem
+                  sx={{ width: "40px", height: "40px", color: "white" }}
+                />
+                <Typography
+                  fontWeight={700}
+                  variant={isXS ? "h5" : "h4"}
+                  color="white"
+                >
+                  {reportedTasks?.length}
+                </Typography>
+              </Box>
+            </Tooltip>
+            <Tooltip title="Upcoming Reminders">
+              <Box
+                sx={{
+                  ...FlexBox,
+                  flexDirection: { xs: "column", lg: "row" },
+                  gap: 2.5,
+                  backgroundColor: "warning.main",
+                  borderRadius: 2,
+                  p: 1,
+                }}
+              >
+                <NotificationImportant
+                  sx={{ width: "40px", height: "40px", color: "white" }}
+                />
+                <Typography
+                  fontWeight={700}
+                  variant={isXS ? "h5" : "h4"}
+                  color="white"
+                >
+                  {remsData?.length}
+                </Typography>
+              </Box>
+            </Tooltip>
           </Box>
         </Box>
       </SideFade>

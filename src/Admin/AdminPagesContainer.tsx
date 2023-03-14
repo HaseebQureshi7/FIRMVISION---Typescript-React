@@ -7,7 +7,11 @@ export default function AdminPagesContainer({ children }: any) {
   const themeInstance = useTheme();
   const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
 
-  const [openSidebar, setOpenSidebar] = useState(isXS ? "0vw" :"5vw");
+  const user: string | null = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")!)
+    : null;
+
+  const [openSidebar, setOpenSidebar] = useState(isXS ? "0vw" : "5vw");
   return (
     <>
       <Box
@@ -15,10 +19,15 @@ export default function AdminPagesContainer({ children }: any) {
           width: "100vw",
           display: "flex",
           alignItems: "flex-start",
+          backgroundColor:'background.default',
           justifyContent: "flex-start",
         }}
       >
-        <Sidebar openSidebar={openSidebar} setOpenSidebar={setOpenSidebar} />
+        <Sidebar
+          user={user}
+          openSidebar={openSidebar}
+          setOpenSidebar={setOpenSidebar}
+        />
         <Box
           sx={{
             width: "100%",
@@ -29,7 +38,11 @@ export default function AdminPagesContainer({ children }: any) {
           }}
         >
           {/* APPBAR */}
-          <Appbar openSidebar={openSidebar} setOpenSidebar={setOpenSidebar} />
+          <Appbar
+            user={user}
+            openSidebar={openSidebar}
+            setOpenSidebar={setOpenSidebar}
+          />
           {children}
         </Box>
       </Box>

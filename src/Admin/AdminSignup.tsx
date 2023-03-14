@@ -73,6 +73,7 @@ export default function AdminSignup() {
       navigate("admin/dashboard");
       console.log(data);
       localStorage.setItem("admin-token", JSON.stringify(data.data.token));
+      localStorage.setItem("user", JSON.stringify(data.data.user));
     },
     onError: (err: any) => {
       setOpenSnack({

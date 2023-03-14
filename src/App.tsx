@@ -18,6 +18,7 @@ import AdminLogin from "./Admin/AdminLogin";
 import AdminSignup from "./Admin/AdminSignup";
 import axios from "axios";
 import AdminDashboard from "./Admin/AdminDashboard";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 function App() {
   const location = useLocation();
@@ -36,11 +37,12 @@ function App() {
       const token = localStorage.getItem("admin-token")?.replace(/"/g, "");
       axios
         .post(import.meta.env.VITE_BASE_URL + "admin/login", { token })
-        .then(() =>
+        .then((res) => {
           location.pathname.includes("/admin/dashboard")
             ? null
-            : navigate("/admin/dashboard")
-        )
+            : navigate("/admin/dashboard");
+          localStorage.setItem("user", JSON.stringify(res.data));
+        })
         .catch((err) => console.log(err));
     }
     if (localStorage.getItem("employee-token")) {
@@ -74,6 +76,7 @@ function App() {
           </ThemeProvider>
         </GlobalSnackbarContext.Provider>
       </DarkModeContext.Provider>
+      <ReactQueryDevtools position="bottom-left" />
     </Box>
   );
 }

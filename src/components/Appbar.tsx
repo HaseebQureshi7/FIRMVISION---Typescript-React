@@ -1,15 +1,25 @@
-import { DarkMode, Menu, Notifications, Settings } from "@mui/icons-material";
+import {
+  DarkMode,
+  LightMode,
+  Menu,
+  Notifications,
+  Settings,
+} from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
+import { DarkModeContext } from "../context/DarkModeContext";
 import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
 
-export default function Appbar({ openSidebar, setOpenSidebar }: any) {
+export default function Appbar({ user, openSidebar, setOpenSidebar }: any) {
+  const { themeMode, setThemeMode } = useContext(DarkModeContext);
+
   return (
     <>
       <Box
         sx={{
           ...FlexBox,
           flexDirection: "row",
+          backgroundColor:'background.default',
           justifyContent: "space-evenly",
           width: "100%",
           height: "60px",
@@ -32,7 +42,7 @@ export default function Appbar({ openSidebar, setOpenSidebar }: any) {
             variant="h6"
             color="text.primary"
           >
-            Valley Mist Automations
+            {user?.companyName} &copy;
           </Typography>
           <Menu
             sx={{ display: { xs: "inherit", lg: "none" } }}
@@ -49,9 +59,23 @@ export default function Appbar({ openSidebar, setOpenSidebar }: any) {
             justifyContent: "space-evenly",
           }}
         >
-          <DarkMode sx={{ width: "25px", height: "25px" }} />
-          <Notifications sx={{ width: "25px", height: "25px" }} />
-          <Settings sx={{ width: "25px", height: "25px" }} />
+          {themeMode == "dark" ? (
+            <LightMode
+              onClick={() =>
+                setThemeMode(themeMode == "light" ? "dark" : "light")
+              }
+              sx={{ width: "25px", height: "25px", color:'text.primary' }}
+            />
+          ) : (
+            <DarkMode
+              onClick={() =>
+                setThemeMode(themeMode == "light" ? "dark" : "light")
+              }
+              sx={{ width: "25px", height: "25px", color:'text.primary' }}
+            />
+          )}
+          <Notifications sx={{ width: "25px", height: "25px", color:'text.primary' }} />
+          <Settings sx={{ width: "25px", height: "25px", color:'text.primary' }} />
         </Box>
       </Box>
     </>
