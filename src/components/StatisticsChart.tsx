@@ -1,3 +1,4 @@
+import { useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
 import {
   ResponsiveContainer,
@@ -11,9 +12,12 @@ import {
 } from "recharts";
 
 export default function StatisticsChart({ data }: any) {
+  const themeInstance = useTheme();
+  const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
+
   return (
     <>
-      <ResponsiveContainer width="100%" aspect={4}>
+      <ResponsiveContainer width="100%" aspect={isXS ? 1 : 4}>
         <LineChart
           width={500}
           height={300}

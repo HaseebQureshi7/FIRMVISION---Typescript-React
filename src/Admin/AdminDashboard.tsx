@@ -87,12 +87,13 @@ export default function AdminDashboard() {
                 gap: 1,
               }}
             >
+              {/* LR1 */}
               <Box
                 sx={{
                   ...FlexBox,
-                  flexDirection: "row",
+                  flexDirection: {xs:"column",lg:"row"},
                   justifyContent: "flex-start",
-                  alignItems: "flex-end",
+                  alignItems:  {xs:"flex-start",lg:"flex-end"},
                   gap: 1,
                 }}
               >
@@ -107,6 +108,7 @@ export default function AdminDashboard() {
                   Haseeb Qureshi
                 </Typography>
               </Box>
+              {/* LR2 */}
               <Box
                 sx={{
                   ...FlexBox,
@@ -132,10 +134,10 @@ export default function AdminDashboard() {
                 flexDirection: "row",
                 justifyContent: "flex-end",
                 gap: 1,
-                display: { xs: "none", lg: "flex" },
+                width: { xs: "50%", lg: "100%" },
               }}
             >
-              <Typography variant="h1" fontWeight={700}>
+              <Typography sx={{textAlign:'center'}} variant={isXS ? "h4" : "h1"} fontWeight={700}>
                 10:25 AM
               </Typography>
             </Box>
