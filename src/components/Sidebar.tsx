@@ -13,6 +13,7 @@ import {
 import {
   Avatar,
   Box,
+  ButtonBase,
   Divider,
   SwipeableDrawer,
   Typography,
@@ -21,7 +22,12 @@ import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
 
 export default function Sidebar({ openSidebar, setOpenSidebar }: any) {
   return (
-    <>
+    <Box
+      sx={{
+        width: openSidebar,
+        transition: "width 0.1s ease-in-out",
+      }}
+    >
       <Box
         sx={{
           ...FlexBox,
@@ -33,6 +39,7 @@ export default function Sidebar({ openSidebar, setOpenSidebar }: any) {
           backgroundColor: "background.default",
           boxShadow: "2px 2px 10px rgba(0, 0, 0, 0.2)",
           transition: "width 0.1s ease-in-out",
+          position: "fixed",
         }}
         onMouseOver={() => setOpenSidebar("20vw")}
         onMouseOut={() => setOpenSidebar("5vw")}
@@ -84,14 +91,15 @@ export default function Sidebar({ openSidebar, setOpenSidebar }: any) {
         <Divider sx={{ width: "100%", my: 2 }} />
 
         {/* ACTIONS */}
-        <Box sx={{ ...FlexBox, flex: 6, gap: 2.5 }}>
-          <Box
+        <Box sx={{ ...FlexBox, flex: 6, gap: 0 }}>
+          <ButtonBase
             sx={{
               ...FlexBox,
               width: "100%",
               flexDirection: "row",
               justifyContent: "flex-start",
               pl: 2.5,
+              py: 1.75,
             }}
           >
             <PersonAdd
@@ -105,22 +113,24 @@ export default function Sidebar({ openSidebar, setOpenSidebar }: any) {
                 whiteSpace: "nowrap",
                 transition: "0.1s opacity",
                 transitionDelay: "0.15s",
+                display: { xs: "none", lg: "inherit" },
               }}
               variant="body1"
               color="text.primary"
             >
               Add Employees
             </Typography>
-          </Box>
+          </ButtonBase>
           {/* <Divider sx={{width:'100%'}}/> */}
 
-          <Box
+          <ButtonBase
             sx={{
               ...FlexBox,
               width: "100%",
               flexDirection: "row",
               justifyContent: "flex-start",
               pl: 2.5,
+              py: 1.75,
             }}
           >
             <PersonSearch
@@ -134,22 +144,24 @@ export default function Sidebar({ openSidebar, setOpenSidebar }: any) {
                 whiteSpace: "nowrap",
                 transition: "0.1s opacity",
                 transitionDelay: "0.25s",
+                display: { xs: "none", lg: "inherit" },
               }}
               variant="body1"
               color="text.primary"
             >
               Search Employees
             </Typography>
-          </Box>
+          </ButtonBase>
           {/* <Divider sx={{width:'100%'}}/> */}
 
-          <Box
+          <ButtonBase
             sx={{
               ...FlexBox,
               width: "100%",
               flexDirection: "row",
               justifyContent: "flex-start",
               pl: 2.5,
+              py: 1.75,
             }}
           >
             <Assignment
@@ -163,21 +175,23 @@ export default function Sidebar({ openSidebar, setOpenSidebar }: any) {
                 whiteSpace: "nowrap",
                 transition: "0.1s opacity",
                 transitionDelay: "0.35s",
+                display: { xs: "none", lg: "inherit" },
               }}
               variant="body1"
               color="text.primary"
             >
               Assigned Tasks
             </Typography>
-          </Box>
+          </ButtonBase>
 
-          <Box
+          <ButtonBase
             sx={{
               ...FlexBox,
               width: "100%",
               flexDirection: "row",
               justifyContent: "flex-start",
               pl: 2.5,
+              py: 1.75,
             }}
           >
             <QuestionAnswer
@@ -191,22 +205,24 @@ export default function Sidebar({ openSidebar, setOpenSidebar }: any) {
                 whiteSpace: "nowrap",
                 transition: "0.1s opacity",
                 transitionDelay: "0.45s",
+                display: { xs: "none", lg: "inherit" },
               }}
               variant="body1"
               color="text.primary"
             >
               Conversations
             </Typography>
-          </Box>
+          </ButtonBase>
           {/* <Divider sx={{width:'100%'}}/> */}
 
-          <Box
+          <ButtonBase
             sx={{
               ...FlexBox,
               width: "100%",
               flexDirection: "row",
               justifyContent: "flex-start",
               pl: 2.5,
+              py: 1.75,
             }}
           >
             <NotificationAdd
@@ -220,27 +236,29 @@ export default function Sidebar({ openSidebar, setOpenSidebar }: any) {
                 whiteSpace: "nowrap",
                 transition: "0.1s opacity",
                 transitionDelay: "0.55s",
+                display: { xs: "none", lg: "inherit" },
               }}
               variant="body1"
               color="text.primary"
             >
               Add Reminders
             </Typography>
-          </Box>
+          </ButtonBase>
           {/* <Divider sx={{width:'100%'}}/> */}
         </Box>
 
-        <Divider sx={{ width: "100%", my: 2 }} />
+        <Divider sx={{ width: "100%", my: 0 }} />
 
         {/* QUICK LINKS */}
-        <Box sx={{ ...FlexBox, flex: 2, gap: 2.5 }}>
-          <Box
+        <Box sx={{ ...FlexBox, flex: 2, gap: 0 }}>
+          <ButtonBase
             sx={{
               ...FlexBox,
               width: "100%",
               flexDirection: "row",
               justifyContent: "flex-start",
               pl: 2.5,
+              py: 1.75,
             }}
           >
             <Home
@@ -254,21 +272,23 @@ export default function Sidebar({ openSidebar, setOpenSidebar }: any) {
                 whiteSpace: "nowrap",
                 transition: "0.1s opacity",
                 transitionDelay: "0.15s",
+                display: { xs: "none", lg: "inherit" },
               }}
               variant="body1"
               color="text.primary"
             >
               Home
             </Typography>
-          </Box>
+          </ButtonBase>
 
-          <Box
+          <ButtonBase
             sx={{
               ...FlexBox,
               width: "100%",
               flexDirection: "row",
               justifyContent: "flex-start",
               pl: 2.5,
+              py: 1.75,
             }}
           >
             <Settings
@@ -282,27 +302,29 @@ export default function Sidebar({ openSidebar, setOpenSidebar }: any) {
                 whiteSpace: "nowrap",
                 transition: "0.1s opacity",
                 transitionDelay: "0.25s",
+                display: { xs: "none", lg: "inherit" },
               }}
               variant="body1"
               color="text.primary"
             >
               Settings
             </Typography>
-          </Box>
+          </ButtonBase>
           {/* <Divider sx={{width:'100%'}}/> */}
         </Box>
 
-        <Divider sx={{ width: "100%", mt: 2.5 }} />
+        <Divider sx={{ width: "100%", mt: 0.5 }} />
 
-        {/* QUICK LINKS */}
+        {/* LOGOUT */}
         <Box sx={{ ...FlexBox, flex: 2, gap: 2.5 }}>
-          <Box
+          <ButtonBase
             sx={{
               ...FlexBox,
               width: "100%",
               flexDirection: "row",
               justifyContent: "flex-start",
               pl: 2.5,
+              py: 1.75,
             }}
           >
             <PowerSettingsNew
@@ -316,15 +338,16 @@ export default function Sidebar({ openSidebar, setOpenSidebar }: any) {
                 whiteSpace: "nowrap",
                 transition: "0.1s opacity",
                 transitionDelay: "0.15s",
+                display: { xs: "none", lg: "inherit" },
               }}
               variant="body1"
               color="text.primary"
             >
               Logout
             </Typography>
-          </Box>
+          </ButtonBase>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 }

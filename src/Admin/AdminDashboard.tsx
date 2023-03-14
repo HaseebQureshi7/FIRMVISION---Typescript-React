@@ -1,3 +1,10 @@
+import {
+  AssignmentInd,
+  Groups,
+  NotificationImportant,
+  ReportProblem,
+  Task,
+} from "@mui/icons-material";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
 import { SideFade } from "../components/PageTransition";
@@ -91,9 +98,9 @@ export default function AdminDashboard() {
               <Box
                 sx={{
                   ...FlexBox,
-                  flexDirection: {xs:"column",lg:"row"},
+                  flexDirection: { xs: "column", lg: "row" },
                   justifyContent: "flex-start",
-                  alignItems:  {xs:"flex-start",lg:"flex-end"},
+                  alignItems: { xs: "flex-start", lg: "flex-end" },
                   gap: 1,
                 }}
               >
@@ -137,7 +144,11 @@ export default function AdminDashboard() {
                 width: { xs: "50%", lg: "100%" },
               }}
             >
-              <Typography sx={{textAlign:'center'}} variant={isXS ? "h4" : "h1"} fontWeight={700}>
+              <Typography
+                sx={{ textAlign: "center" }}
+                variant={isXS ? "h4" : "h1"}
+                fontWeight={700}
+              >
                 10:25 AM
               </Typography>
             </Box>
@@ -145,6 +156,84 @@ export default function AdminDashboard() {
           {/* ROW 2 */}
           <Box sx={{ width: "100%" }}>
             <StatisticsChart data={data} />
+          </Box>
+          {/* ROW 3 */}
+          <Box
+            sx={{
+              ...FlexBox,
+              gap: { xs: 1, lg: 7.5 },
+              flexDirection: "row",
+              justifyContent: "space-between",
+              px: { xs: 2.5, lg: 5 },
+              py: 2.5,
+            }}
+          >
+            <Box
+              sx={{
+                ...FlexBox,
+                flexDirection: {xs:"column", lg: "row"},
+                gap: 2.5,
+                backgroundColor: "info.main",
+                borderRadius: 2,
+                p: 1,
+              }}
+            >
+              <AssignmentInd
+                sx={{ width: "40px", height: "40px", color: "white" }}
+              />
+              <Typography fontWeight={700} variant={isXS ? "h5" :"h4"} color="white">
+                174
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                ...FlexBox,
+                flexDirection: {xs:"column", lg: "row"},
+                gap: 2.5,
+                backgroundColor: "success.main",
+                borderRadius: 2,
+                p: 1,
+              }}
+            >
+              <Task sx={{ width: "40px", height: "40px", color: "white" }} />
+              <Typography fontWeight={700} variant={isXS ? "h5" :"h4"} color="white">
+                92
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                ...FlexBox,
+                flexDirection: {xs:"column", lg: "row"},
+                gap: 2.5,
+                backgroundColor: "error.main",
+                borderRadius: 2,
+                p: 1,
+              }}
+            >
+              <ReportProblem
+                sx={{ width: "40px", height: "40px", color: "white" }}
+              />
+              <Typography fontWeight={700} variant={isXS ? "h5" :"h4"} color="white">
+                13
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                ...FlexBox,
+                flexDirection: {xs:"column", lg: "row"},
+                gap: 2.5,
+                backgroundColor: "warning.main",
+                borderRadius: 2,
+                p: 1,
+              }}
+            >
+              <NotificationImportant
+                sx={{ width: "40px", height: "40px", color: "white" }}
+              />
+              <Typography fontWeight={700} variant={isXS ? "h5" :"h4"} color="white">
+                4
+              </Typography>
+            </Box>
           </Box>
         </Box>
       </SideFade>
