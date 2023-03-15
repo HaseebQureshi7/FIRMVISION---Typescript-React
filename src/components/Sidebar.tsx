@@ -17,9 +17,13 @@ import {
   Divider,
   Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
 
 export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
+
+  const navigate = useNavigate()
+
   return (
     <Box
       sx={{
@@ -109,6 +113,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
               pl: 2.5,
               py: 1.75,
             }}
+            onClick={()=> navigate("/admin/addemployee")}
           >
             <PersonAdd
               sx={{ width: "35px", height: "35px", color: "primary.main" }}
@@ -140,6 +145,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
               pl: 2.5,
               py: 1.75,
             }}
+            onClick={()=> navigate("/admin/searchemployees")}
           >
             <PersonSearch
               sx={{ width: "35px", height: "35px", color: "primary.main" }}
@@ -171,6 +177,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
               pl: 2.5,
               py: 1.75,
             }}
+            onClick={()=> navigate("/admin/assignedtasks")}
           >
             <Assignment
               sx={{ width: "35px", height: "35px", color: "primary.main" }}
@@ -268,6 +275,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
               pl: 2.5,
               py: 1.75,
             }}
+            onClick={()=> navigate("/admin/dashboard")}
           >
             <Home
               sx={{ width: "35px", height: "35px", color: "primary.main" }}

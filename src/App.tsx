@@ -19,6 +19,9 @@ import AdminSignup from "./Admin/AdminSignup";
 import axios from "axios";
 import AdminDashboard from "./Admin/AdminDashboard";
 import { ReactQueryDevtools } from "react-query/devtools";
+import AdminAssignedTasks from "./Admin/AdminAssignedTasks";
+import AdminAddEmployee from "./Admin/AdminAddEmployee";
+import AdminSearchEmployee from "./Admin/AdminSearchEmployee";
 
 function App() {
   const location = useLocation();
@@ -71,12 +74,15 @@ function App() {
                 <Route path="admin/login" element={<AdminLogin />} />
                 <Route path="admin/signup" element={<AdminSignup />} />
                 <Route path="admin/dashboard" element={<AdminDashboard />} />
+                <Route path="admin/assignedtasks" element={<AdminAssignedTasks />} />
+                <Route path="admin/addemployee" element={<AdminAddEmployee />} />
+                <Route path="admin/searchemployees" element={<AdminSearchEmployee />} />
               </Routes>
             </AnimatePresence>
           </ThemeProvider>
         </GlobalSnackbarContext.Provider>
       </DarkModeContext.Provider>
-      <ReactQueryDevtools position="bottom-left" />
+      <ReactQueryDevtools position="bottom-right" />
     </Box>
   );
 }

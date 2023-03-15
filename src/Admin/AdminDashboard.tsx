@@ -15,6 +15,11 @@ import {
 import axios from "axios";
 import React from "react";
 import { useQuery } from "react-query";
+import {
+  getEmpsQD,
+  getRemsQD,
+  getTasksQD,
+} from "../components/AdminGlobalDataHandler";
 import LiveClock from "../components/LiveClock";
 import { SideFade } from "../components/PageTransition";
 import StatisticsChart from "../components/StatisticsChart";
@@ -29,78 +34,12 @@ export default function AdminDashboard() {
     ? JSON.parse(localStorage.getItem("user")!)
     : null;
 
-  const authToken = localStorage.getItem("admin-token");
-  const Authheaders = {
-    headers: {
-      Authorization: `Bearer ${authToken}`,
-    },
-  };
-
-  const getEmpsQF = () => {
-    return axios.post(
-      import.meta.env.VITE_BASE_URL + "admin/getemployees",
-      {},
-      Authheaders
-    );
-  };
-
-  const getTasksQF = () => {
-    return axios.post(
-      import.meta.env.VITE_BASE_URL + "admin/getallassignedtasks",
-      {},
-      Authheaders
-    );
-  };
-
-  const getRemsQF = () => {
-    return axios.post(
-      import.meta.env.VITE_BASE_URL + "admin/getreminders",
-      {},
-      Authheaders
-    );
-  };
-
-  // ALL EMPLOYEES QUERY FUNCTION
-  const { data: empData } = useQuery<any>("all_employees", getEmpsQF, {
-    onSuccess: (data) => {
-      // console.log(data);
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-    select: (data) => {
-      return data.data;
-    },
-  });
-
-  // ALL ASSIGNED TASKS QUERY FUNCTION
-  const { data: taskData } = useQuery<any>("all_assigned_tasks", getTasksQF, {
-    onSuccess: (data) => {
-      // console.log(data);
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-    select: (data) => {
-      return data.data;
-    },
-  });
-
-  // ALL REMINDERS QUERY FUNCTION
-  const { data: remsData } = useQuery<any>("all_reminders", getRemsQF, {
-    onSuccess: (data) => {
-      // console.log(data);
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-    select: (data) => {
-      return data.data;
-    },
-  });
+  const { data: taskData } = getTasksQD();
+  const { data: empData } = getEmpsQD();
+  const { data: remsData } = getRemsQD();
 
   // REPORTED TASKS.
-  // LOOKS FOR STATUS COMPLETION WITH NO SUBMITTION REPORT. 
+  // LOOKS FOR STATUS COMPLETION WITH NO SUBMITTION REPORT.
   const reportedTasks = taskData?.filter((data: any) => {
     return data.status == "complete" && data.submittionReport == "NA";
   });
@@ -137,7 +76,7 @@ export default function AdminDashboard() {
       amt: 2000,
     },
     {
-      name: "Firday",
+      name: "Friday",
       assignedTasks: 1890,
       completedTasks: 4800,
       reportedTasks: 2000,
