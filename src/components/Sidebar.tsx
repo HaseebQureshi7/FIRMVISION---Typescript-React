@@ -10,19 +10,16 @@ import {
   QuestionAnswer,
   Settings,
 } from "@mui/icons-material";
-import {
-  Avatar,
-  Box,
-  ButtonBase,
-  Divider,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, ButtonBase, Divider, Typography } from "@mui/material";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
 import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
 
 export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
+  const { openSnack, setOpenSnack } = useContext(GlobalSnackbarContext);
 
   return (
     <Box
@@ -54,7 +51,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
             flex: 4,
             mt: openSidebar == "5vw" ? 0 : 5,
             gap: 1.5,
-            transition:'all .5s'
+            transition: "all .5s",
           }}
         >
           <Avatar
@@ -113,7 +110,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
               pl: 2.5,
               py: 1.75,
             }}
-            onClick={()=> navigate("/admin/addemployee")}
+            onClick={() => navigate("/admin/addemployee")}
           >
             <PersonAdd
               sx={{ width: "35px", height: "35px", color: "primary.main" }}
@@ -145,7 +142,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
               pl: 2.5,
               py: 1.75,
             }}
-            onClick={()=> navigate("/admin/searchemployees")}
+            onClick={() => navigate("/admin/searchemployees")}
           >
             <PersonSearch
               sx={{ width: "35px", height: "35px", color: "primary.main" }}
@@ -177,7 +174,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
               pl: 2.5,
               py: 1.75,
             }}
-            onClick={()=> navigate("/admin/assignedtasks")}
+            onClick={() => navigate("/admin/assignedtasks")}
           >
             <Assignment
               sx={{ width: "35px", height: "35px", color: "primary.main" }}
@@ -275,7 +272,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
               pl: 2.5,
               py: 1.75,
             }}
-            onClick={()=> navigate("/admin/dashboard")}
+            onClick={() => navigate("/admin/dashboard")}
           >
             <Home
               sx={{ width: "35px", height: "35px", color: "primary.main" }}
@@ -334,6 +331,15 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
         {/* LOGOUT */}
         <Box sx={{ ...FlexBox, flex: 2, gap: 2.5 }}>
           <ButtonBase
+            onClick={() => {
+              localStorage.clear();
+              navigate("/");
+              setOpenSnack({
+                open: true,
+                message: "Logout was Successful",
+                serverity: "info",
+              });
+            }}
             sx={{
               ...FlexBox,
               width: "100%",

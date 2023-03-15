@@ -14,7 +14,14 @@ export default function AdminLanding() {
 
   return (
     <FadeIn>
-      <Box sx={{ ...FlexBox, p: { xs: 2, lg: 5 } }}>
+      <Box
+        sx={{
+          ...FlexBox,
+          p: { xs: 2, lg: 5 },
+          backgroundColor: "background.default",
+          minHeight: "100vh",
+        }}
+      >
         {/* SECTION 1 */}
         <Box
           sx={{
@@ -74,7 +81,7 @@ export default function AdminLanding() {
               </Button>
               <Button
                 onClick={() => navigate("signup")}
-                sx={{ p: "8px 50px", fontWeight: 700 }}
+                sx={{ p: "8px 50px", fontWeight: 700, color: "white" }}
                 variant="contained"
                 color="info"
               >

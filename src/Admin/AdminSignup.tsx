@@ -130,6 +130,7 @@ export default function AdminSignup() {
         sx={{
           ...FlexBox,
           backgroundColor: "background.default",
+          minHeight:'100vh',
           p: { xs: 2, lg: 5 },
         }}
       >

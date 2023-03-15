@@ -30,6 +30,7 @@ import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
 import AdminPagesContainer from "./AdminPagesContainer";
 import invite from "../assets/images/invite.png";
 import { useNavigate } from "react-router-dom";
+import { getEmpsQD } from "../components/AdminGlobalDataHandler";
 
 export default function AdminSearchEmployee() {
   const navigate = useNavigate();
@@ -38,6 +39,8 @@ export default function AdminSearchEmployee() {
   const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
 
   const nameRef = useRef<HTMLInputElement>();
+
+  const { data: empData } = getEmpsQD();
 
   function HandleSubmit(e: Event) {
     e.preventDefault();
@@ -57,7 +60,7 @@ export default function AdminSearchEmployee() {
           <Box sx={{ ...FlexBox, alignItems: "flex-start" }}>
             <Typography
               sx={{ fontWeight: 500 }}
-              variant={isXS ? "h4" :"h3"}
+              variant={isXS ? "h4" : "h3"}
               color="text.primary"
             >
               Search Employees
@@ -99,7 +102,7 @@ export default function AdminSearchEmployee() {
                 }}
               />
               <IconButton
-                sx={{ mr: {xs:'0%',lg:"25%"} }}
+                sx={{ mr: { xs: "0%", lg: "25%" } }}
                 type="submit"
                 aria-label="search-employees"
                 size="large"
@@ -108,7 +111,7 @@ export default function AdminSearchEmployee() {
                 <Search />
               </IconButton>
               <IconButton
-                sx={{ mx: {xs:'0%',lg:"2.5%"} }}
+                sx={{ mx: { xs: "0%", lg: "2.5%" } }}
                 aria-label="filter-employees"
                 size="large"
                 color="info"
@@ -116,7 +119,8 @@ export default function AdminSearchEmployee() {
                 <FilterAlt />
               </IconButton>
               <IconButton
-                sx={{ mx: {xs:'0%',lg:"2.5%"} }}
+              onClick={()=> navigate("/admin/addemployee")}
+                sx={{ mx: { xs: "0%", lg: "2.5%" } }}
                 aria-label="add-employees"
                 size="large"
                 color="success"
@@ -138,7 +142,7 @@ export default function AdminSearchEmployee() {
                 variant={isXS ? "h5" : "h4"}
                 color="primary.main"
               >
-                Total Employees (2)
+                Total Employees ({empData?.length})
               </Typography>
               {/* CARD CONTAINER*/}
               <Box
@@ -150,274 +154,152 @@ export default function AdminSearchEmployee() {
                 }}
               >
                 {/* CARD */}
-                <Box
-                  sx={{
-                    ...FlexBox,
-                    border: "2px solid lightgray",
-                    borderRadius: "10px",
-                    width: { xs: "100%", lg: "45%" },
-                    p: 2.5,
-                  }}
-                >
-                  {/* TOP BOXES */}
-                  <Box
-                    sx={{
-                      ...FlexBox,
-                      flexDirection: {xs:"column", lg:"row"},
-                    }}
-                  >
-                    {/* R1 */}
-                    <Box
-                      component="img"
-                      src={invite}
-                      sx={{ width: { xs: "75%", lg: "40%" }, height: "auto" }}
-                    />
-                    {/* R2 */}
-                    <Box sx={{ ...FlexBox }}>
+                {empData?.map((data:any) => {
+                  return (
+                    <Box key={data._id}
+                      sx={{
+                        ...FlexBox,
+                        border: "2px solid lightgray",
+                        borderRadius: "10px",
+                        width: { xs: "100%", lg: "45%" },
+                        p: 2.5,
+                      }}
+                    >
+                      {/* TOP BOXES */}
                       <Box
                         sx={{
                           ...FlexBox,
-                          width: { xs: "100%", lg: "60%" },
-                          alignItems: { xs: "center", lg: "flex-start" },
-                          textAlign: { xs: "center", lg: "start" },
+                          flexDirection: { xs: "column", lg: "row" },
+                        }}
+                      >
+                        {/* R1 */}
+                        <Box
+                          component="img"
+                          src={data?.picture}
+                          sx={{
+                            width: { xs: "75%", lg: "40%" },
+                            height: "auto",
+                          }}
+                        />
+                        {/* R2 */}
+                        <Box sx={{ ...FlexBox }}>
+                          <Box
+                            sx={{
+                              ...FlexBox,
+                              width: { xs: "100%", lg: "60%" },
+                              alignItems: { xs: "center", lg: "flex-start" },
+                              textAlign: { xs: "center", lg: "start" },
+                            }}
+                          >
+                            <Typography
+                              sx={{ fontWeight: 700 }}
+                              variant="h4"
+                              color="text.primary"
+                            >
+                              {data?.name}
+                            </Typography>
+                            <Typography
+                              sx={{
+                                fontWeight: 700,
+                                textOverflow: "ellipsis",
+                                width: "100%",
+                              }}
+                              variant="h6"
+                              color="primary.main"
+                            >
+                              {data?.position}
+                            </Typography>
+                            <Typography
+                              sx={{ fontWeight: 700 }}
+                              variant="subtitle2"
+                              color="secondary.main"
+                            >
+                              Since : {data?.createdAt}
+                            </Typography>
+                          </Box>
+                        </Box>
+                      </Box>
+                      {/* BOTTOM BOXES */}
+                      <Box
+                        sx={{
+                          ...FlexBox,
+                          flexDirection: { xs: "column", lg: "row" },
+                          justifyContent: "space-between",
                         }}
                       >
                         <Typography
                           sx={{ fontWeight: 700 }}
-                          variant="h4"
-                          color="text.primary"
-                        >
-                          Alexander Bill Dunne (26)
-                        </Typography>
-                        <Typography
-                          sx={{
-                            fontWeight: 700,
-                            textOverflow: "ellipsis",
-                            width: "100%",
-                          }}
                           variant="h6"
                           color="primary.main"
                         >
-                          Full Stack Developer
+                          <Box
+                            sx={{ color: "text.secondary" }}
+                            component="span"
+                          >
+                            Active Tasks
+                          </Box>{" "}
+                          : 4
                         </Typography>
                         <Typography
                           sx={{ fontWeight: 700 }}
-                          variant="subtitle2"
-                          color="secondary.main"
+                          variant="h6"
+                          color="primary.main"
                         >
-                          Since : 24th May 2022
+                          <Box
+                            sx={{ color: "text.secondary" }}
+                            component="span"
+                          >
+                            Success Rate :
+                          </Box>{" "}
+                          98%
                         </Typography>
                       </Box>
-                    </Box>
-                  </Box>
-                  {/* BOTTOM BOXES */}
-                  <Box
-                    sx={{
-                      ...FlexBox,
-                      flexDirection: { xs: "column", lg: "row" },
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Typography
-                      sx={{ fontWeight: 700 }}
-                      variant="h6"
-                      color="primary.main"
-                    >
-                      <Box sx={{ color: "text.secondary" }} component="span">
-                        Active Tasks
-                      </Box>{" "}
-                      : 4
-                    </Typography>
-                    <Typography
-                      sx={{ fontWeight: 700 }}
-                      variant="h6"
-                      color="primary.main"
-                    >
-                      <Box sx={{ color: "text.secondary" }} component="span">
-                        Success Rate :
-                      </Box>{" "}
-                      98%
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      ...FlexBox,
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <AddCircle
-                      sx={{
-                        width: "40px",
-                        height: "40px",
-                        color: "success.main",
-                      }}
-                    />
-                    <Phone
-                      sx={{
-                        width: "40px",
-                        height: "40px",
-                        color: "primary.main",
-                      }}
-                    />
-                    <Message
-                      sx={{
-                        width: "40px",
-                        height: "40px",
-                        color: "warning.main",
-                      }}
-                    />
-                    <Visibility
-                      sx={{
-                        width: "40px",
-                        height: "40px",
-                        color: "primary.main",
-                      }}
-                    />
-                    <PersonRemove
-                      sx={{
-                        width: "40px",
-                        height: "40px",
-                        color: "error.main",
-                      }}
-                    />
-                  </Box>
-                </Box>
-                {/* CARD */}
-                <Box
-                  sx={{
-                    ...FlexBox,
-                    border: "2px solid lightgray",
-                    borderRadius: "10px",
-                    width: { xs: "100%", lg: "45%" },
-                    p: 2.5,
-                  }}
-                >
-                  {/* TOP BOXES */}
-                  <Box
-                    sx={{
-                      ...FlexBox,
-                      flexDirection: {xs:"column", lg:"row"},
-                    }}
-                  >
-                    {/* R1 */}
-                    <Box
-                      component="img"
-                      src={invite}
-                      sx={{ width: { xs: "75%", lg: "40%" }, height: "auto" }}
-                    />
-                    {/* R2 */}
-                    <Box sx={{ ...FlexBox }}>
                       <Box
                         sx={{
                           ...FlexBox,
-                          width: { xs: "100%", lg: "60%" },
-                          alignItems: { xs: "center", lg: "flex-start" },
-                          textAlign: { xs: "center", lg: "start" },
+                          flexDirection: "row",
+                          justifyContent: "space-between",
                         }}
                       >
-                        <Typography
-                          sx={{ fontWeight: 700 }}
-                          variant="h4"
-                          color="text.primary"
-                        >
-                          Alexander Bill Dunne (26)
-                        </Typography>
-                        <Typography
+                        <AddCircle
                           sx={{
-                            fontWeight: 700,
-                            textOverflow: "ellipsis",
-                            width: "100%",
+                            width: "40px",
+                            height: "40px",
+                            color: "success.main",
                           }}
-                          variant="h6"
-                          color="primary.main"
-                        >
-                          Full Stack Developer
-                        </Typography>
-                        <Typography
-                          sx={{ fontWeight: 700 }}
-                          variant="subtitle2"
-                          color="secondary.main"
-                        >
-                          Since : 24th May 2022
-                        </Typography>
+                        />
+                        <Phone
+                          sx={{
+                            width: "40px",
+                            height: "40px",
+                            color: "primary.main",
+                          }}
+                        />
+                        <Message
+                          sx={{
+                            width: "40px",
+                            height: "40px",
+                            color: "warning.main",
+                          }}
+                        />
+                        <Visibility
+                          sx={{
+                            width: "40px",
+                            height: "40px",
+                            color: "primary.main",
+                          }}
+                        />
+                        <PersonRemove
+                          sx={{
+                            width: "40px",
+                            height: "40px",
+                            color: "error.main",
+                          }}
+                        />
                       </Box>
                     </Box>
-                  </Box>
-                  {/* BOTTOM BOXES */}
-                  <Box
-                    sx={{
-                      ...FlexBox,
-                      flexDirection: { xs: "column", lg: "row" },
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Typography
-                      sx={{ fontWeight: 700 }}
-                      variant="h6"
-                      color="primary.main"
-                    >
-                      <Box sx={{ color: "text.secondary" }} component="span">
-                        Active Tasks
-                      </Box>{" "}
-                      : 4
-                    </Typography>
-                    <Typography
-                      sx={{ fontWeight: 700 }}
-                      variant="h6"
-                      color="primary.main"
-                    >
-                      <Box sx={{ color: "text.secondary" }} component="span">
-                        Success Rate :
-                      </Box>{" "}
-                      98%
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      ...FlexBox,
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <AddCircle
-                      sx={{
-                        width: "40px",
-                        height: "40px",
-                        color: "success.main",
-                      }}
-                    />
-                    <Phone
-                      sx={{
-                        width: "40px",
-                        height: "40px",
-                        color: "primary.main",
-                      }}
-                    />
-                    <Message
-                      sx={{
-                        width: "40px",
-                        height: "40px",
-                        color: "warning.main",
-                      }}
-                    />
-                    <Visibility
-                      sx={{
-                        width: "40px",
-                        height: "40px",
-                        color: "primary.main",
-                      }}
-                    />
-                    <PersonRemove
-                      sx={{
-                        width: "40px",
-                        height: "40px",
-                        color: "error.main",
-                      }}
-                    />
-                  </Box>
-                </Box>
-
+                  );
+                })}
               </Box>
             </Box>
           </Box>

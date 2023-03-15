@@ -1,7 +1,8 @@
-import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import React, { useState } from "react";
 import Appbar from "../components/Appbar";
 import Sidebar from "../components/Sidebar";
+import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
 
 export default function AdminPagesContainer({ children }: any) {
   const themeInstance = useTheme();
@@ -17,9 +18,10 @@ export default function AdminPagesContainer({ children }: any) {
       <Box
         sx={{
           width: "100vw",
+          minHeight: "100vh",
           display: "flex",
           alignItems: "flex-start",
-          backgroundColor:'background.default',
+          backgroundColor: "background.default",
           justifyContent: "flex-start",
         }}
       >
@@ -44,6 +46,30 @@ export default function AdminPagesContainer({ children }: any) {
             setOpenSidebar={setOpenSidebar}
           />
           {children}
+          {/* FOOTER */}
+          <Box
+            sx={{
+              ...FlexBox,
+              height: "5vh",
+              backgroundColor: "background.default",
+              color: "text.primary",
+              borderTop: "2px solid lightgrey",
+            }}
+          >
+            <Typography variant="subtitle1">
+              Developed by{" "}
+              <Typography
+                sx={{
+                  color: "inherit",
+                  fontWeight: 500,
+                }}
+                component="a"
+                href={"https://hiam.vercel.app/anonymous/users/2"}
+              >
+                Haseeb Qureshi
+              </Typography>
+            </Typography>
+          </Box>
         </Box>
       </Box>
     </>

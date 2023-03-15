@@ -19,7 +19,7 @@ export default function Appbar({ user, openSidebar, setOpenSidebar }: any) {
         sx={{
           ...FlexBox,
           flexDirection: "row",
-          backgroundColor:'background.default',
+          backgroundColor: "background.default",
           justifyContent: "space-evenly",
           width: "100%",
           height: "60px",
@@ -45,7 +45,10 @@ export default function Appbar({ user, openSidebar, setOpenSidebar }: any) {
             {user?.companyName} &copy;
           </Typography>
           <Menu
-            sx={{ display: { xs: "inherit", lg: "none" } }}
+            sx={{
+              display: { xs: "inherit", lg: "none" },
+              color: "text.primary",
+            }}
             onClick={() =>
               setOpenSidebar(openSidebar == "0vw" ? "20vw" : "0vw")
             }
@@ -64,18 +67,22 @@ export default function Appbar({ user, openSidebar, setOpenSidebar }: any) {
               onClick={() =>
                 setThemeMode(themeMode == "light" ? "dark" : "light")
               }
-              sx={{ width: "25px", height: "25px", color:'text.primary' }}
+              sx={{ width: "25px", height: "25px", color: "text.primary" }}
             />
           ) : (
             <DarkMode
               onClick={() =>
                 setThemeMode(themeMode == "light" ? "dark" : "light")
               }
-              sx={{ width: "25px", height: "25px", color:'text.primary' }}
+              sx={{ width: "25px", height: "25px", color: "text.primary" }}
             />
           )}
-          <Notifications sx={{ width: "25px", height: "25px", color:'text.primary' }} />
-          <Settings sx={{ width: "25px", height: "25px", color:'text.primary' }} />
+          <Notifications
+            sx={{ width: "25px", height: "25px", color: "text.primary" }}
+          />
+          <Settings
+            sx={{ width: "25px", height: "25px", color: "text.primary" }}
+          />
         </Box>
       </Box>
     </>
