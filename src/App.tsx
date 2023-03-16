@@ -22,6 +22,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import AdminAssignedTasks from "./Admin/AdminAssignedTasks";
 import AdminAddEmployee from "./Admin/AdminAddEmployee";
 import AdminSearchEmployee from "./Admin/AdminSearchEmployee";
+import AdminAddReminder from "./Admin/AdminAddReminder";
 
 function App() {
   const location = useLocation();
@@ -77,6 +78,7 @@ function App() {
                 <Route path="admin/assignedtasks" element={<AdminAssignedTasks />} />
                 <Route path="admin/addemployee" element={<AdminAddEmployee />} />
                 <Route path="admin/searchemployees" element={<AdminSearchEmployee />} />
+                <Route path="admin/addreminders" element={<AdminAddReminder />} />
               </Routes>
             </AnimatePresence>
           </ThemeProvider>

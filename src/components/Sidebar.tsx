@@ -236,6 +236,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
               pl: 2.5,
               py: 1.75,
             }}
+            onClick={() => navigate("/admin/addreminders")}
           >
             <NotificationAdd
               sx={{ width: "35px", height: "35px", color: "primary.main" }}
