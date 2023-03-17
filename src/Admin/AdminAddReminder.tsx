@@ -19,28 +19,85 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React, { useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { SideFade } from "../components/PageTransition";
 import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
 import AdminPagesContainer from "./AdminPagesContainer";
 import assign from "../assets/images/assign.png";
 import { useNavigate } from "react-router-dom";
 import { MobileDatePicker } from "@mui/x-date-pickers";
+import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
+import { useMutation } from "react-query";
+import axios from "axios";
 
 export default function AdminAddReminder() {
   const navigate = useNavigate();
+
+  const user: any | null = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")!)
+    : null;
+
+  const { openSnack, setOpenSnack } = useContext(GlobalSnackbarContext);
 
   const themeInstance = useTheme();
   const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
 
   const nameRef = useRef<HTMLInputElement>();
-  const emailRef = useRef<HTMLInputElement>();
+  const detailsRef = useRef<HTMLInputElement>();
+  const [date, setDate] = useState<any>();
 
-  //   EMPLOYEE JOINING FIELDS
-  //   url, employeeName, employeeEmail, adminName, companyName
+  const authToken = localStorage.getItem("admin-token");
+  const Authheaders = {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  };
+
+  const setRemQF = (addRemData: any) => {
+    return axios.post(
+      import.meta.env.VITE_BASE_URL + "reminder/createreminder",
+      addRemData,
+      Authheaders
+    );
+  };
+
+  // SET REMINDER MUTATION FUNCTION
+  const { mutate } = useMutation<any>(setRemQF, {
+    onSuccess: () => {
+      setOpenSnack({
+        open: true,
+        message: "New Reminder Added!",
+        severity: "success",
+      });
+      navigate("/admin/dashboard");
+    },
+    onError: (err: any) => {
+      setOpenSnack({
+        open: true,
+        message: err.response.data,
+        severity: "error",
+      });
+    },
+  });
 
   function HandleSubmit(e: Event) {
     e.preventDefault();
+    if (date == undefined) {
+      setOpenSnack({
+        open: true,
+        message: "Add a Date to Proceed!",
+        severity: "warning",
+      });
+    } else {
+      const addRemData: any = {
+        setBy: user._id,
+        setDate: date,
+        name: nameRef?.current?.value,
+        details: detailsRef?.current?.value,
+      };
+      console.log(addRemData);
+      mutate(addRemData);
+    }
   }
 
   return (
@@ -113,13 +170,15 @@ export default function AdminAddReminder() {
                   {/* NO REQUIRED SUPPORT !!! HANDLE IT BY YOURSELF */}
                   <MobileDatePicker
                     sx={{ width: { xs: "100%", lg: "100%" } }}
-                    onChange={(newValue) => console.log(newValue)}
+                    onChange={(newValue: any) =>
+                      setDate(newValue.$d.toISOString())
+                    }
                   />
                 </Grid>
                 <Grid item xs={12} lg={12}>
                   <TextField
                     required
-                    // inputRef={nameRef}
+                    inputRef={detailsRef}
                     sx={{ width: { xs: "100%", lg: "100%" } }}
                     placeholder="Details"
                     InputProps={{
