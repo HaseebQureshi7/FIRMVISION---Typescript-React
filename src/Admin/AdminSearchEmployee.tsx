@@ -119,7 +119,7 @@ export default function AdminSearchEmployee() {
                 <FilterAlt />
               </IconButton>
               <IconButton
-              onClick={()=> navigate("/admin/addemployee")}
+                onClick={() => navigate("/admin/addemployee")}
                 sx={{ mx: { xs: "0%", lg: "2.5%" } }}
                 aria-label="add-employees"
                 size="large"
@@ -154,9 +154,10 @@ export default function AdminSearchEmployee() {
                 }}
               >
                 {/* CARD */}
-                {empData?.map((data:any) => {
+                {empData?.map((data: any) => {
                   return (
-                    <Box key={data._id}
+                    <Box
+                      key={data._id}
                       sx={{
                         ...FlexBox,
                         border: "2px solid lightgray",
@@ -268,13 +269,15 @@ export default function AdminSearchEmployee() {
                             color: "success.main",
                           }}
                         />
-                        <Phone
-                          sx={{
-                            width: "40px",
-                            height: "40px",
-                            color: "primary.main",
-                          }}
-                        />
+                        <a href={"tel:" + data?.phone}>
+                          <Phone
+                            sx={{
+                              width: "40px",
+                              height: "40px",
+                              color: "primary.main",
+                            }}
+                          />
+                        </a>
                         <Message
                           sx={{
                             width: "40px",
