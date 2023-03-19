@@ -175,7 +175,11 @@ export default function AdminAssignedTasks() {
 
               {taskData?.map((data: any) => {
                 return (
-                  <Accordion key={data?._id} elevation={3} sx={{ flex: 1, width: "100%" }}>
+                  <Accordion
+                    key={data?._id}
+                    elevation={3}
+                    sx={{ flex: 1, width: "100%" }}
+                  >
                     <AccordionSummary
                       expandIcon={<ExpandMore />}
                       aria-label="Expand"

@@ -45,7 +45,7 @@ function App() {
           location.pathname.includes("/admin/dashboard")
             ? null
             : navigate("/admin/dashboard");
-          localStorage.setItem("user", JSON.stringify(res.data));
+          localStorage.setItem("user", JSON.stringify(res?.data?.user));
         })
         .catch((err) => console.log(err));
     }
@@ -75,10 +75,22 @@ function App() {
                 <Route path="admin/login" element={<AdminLogin />} />
                 <Route path="admin/signup" element={<AdminSignup />} />
                 <Route path="admin/dashboard" element={<AdminDashboard />} />
-                <Route path="admin/assignedtasks" element={<AdminAssignedTasks />} />
-                <Route path="admin/addemployee" element={<AdminAddEmployee />} />
-                <Route path="admin/searchemployees" element={<AdminSearchEmployee />} />
-                <Route path="admin/addreminders" element={<AdminAddReminder />} />
+                <Route
+                  path="admin/assignedtasks"
+                  element={<AdminAssignedTasks />}
+                />
+                <Route
+                  path="admin/addemployee"
+                  element={<AdminAddEmployee />}
+                />
+                <Route
+                  path="admin/searchemployees"
+                  element={<AdminSearchEmployee />}
+                />
+                <Route
+                  path="admin/addreminders"
+                  element={<AdminAddReminder />}
+                />
               </Routes>
             </AnimatePresence>
           </ThemeProvider>

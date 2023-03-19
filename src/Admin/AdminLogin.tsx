@@ -17,7 +17,9 @@ import { useMutation } from "react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import jwt_decode from "jwt-decode";
+import google from "../types/GoogleType";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -31,6 +33,7 @@ export default function AdminLogin() {
     password: string | undefined;
   }
 
+  // CONVENTIONAL LOGIN
   const loginQF = (loginQueryData: loginQDTypes) => {
     return axios.post(
       import.meta.env.VITE_BASE_URL + "admin/login",
@@ -38,6 +41,7 @@ export default function AdminLogin() {
     );
   };
 
+  // CONVENTIONAL LOGIN QF
   const { mutate, isLoading } = useMutation(loginQF, {
     onSuccess: (data) => {
       setOpenSnack({
@@ -47,6 +51,36 @@ export default function AdminLogin() {
       });
       navigate("/admin/dashboard");
       // console.log(data.data.token);
+      localStorage.setItem("admin-token", JSON.stringify(data.data.token));
+      localStorage.setItem("user", JSON.stringify(data.data.user));
+    },
+    onError: (err: any) => {
+      setOpenSnack({
+        open: true,
+        message: err.response.data,
+        severity: "error",
+      });
+    },
+  });
+
+  // LOGIN WITH GOOGLE
+  const loginWithGoogleQF = (loginWGQueryData: any) => {
+    return axios.post(
+      import.meta.env.VITE_BASE_URL + "admin/loginwithgoogle",
+      loginWGQueryData
+    );
+  };
+
+  // LOGIN WITH GOOGLE QF
+  const { mutate: mutateLoginWG } = useMutation(loginWithGoogleQF, {
+    onSuccess: (data) => {
+      setOpenSnack({
+        open: true,
+        message: "Logged in successfully!",
+        severity: "success",
+      });
+      navigate("/admin/dashboard");
+      console.log(data.data);
       localStorage.setItem("admin-token", JSON.stringify(data.data.token));
       localStorage.setItem("user", JSON.stringify(data.data.user));
     },
@@ -69,13 +103,37 @@ export default function AdminLogin() {
     mutate(loginQueryData);
   }
 
+  function HandleCallbackResponse(res: any) {
+    const decoded: any = jwt_decode(res.credential);
+    console.log(decoded?.email);
+    mutateLoginWG({ email: decoded?.email });
+  }
+
+  useEffect(() => {
+    /* global google */
+    google.accounts.id.initialize({
+      client_id: import.meta.env.VITE_GOOGLE_CID,
+      callback: HandleCallbackResponse,
+    });
+
+    google.accounts.id.renderButton(
+      document.getElementById("googleSignupButton"),
+      {
+        theme: "filled_blue",
+        text: "continue_with",
+        size: "large",
+        shape: "rectangular",
+      }
+    );
+  }, []);
+
   return (
     <FadeIn>
       <Box
         sx={{
           ...FlexBox,
           backgroundColor: "background.default",
-          minHeight:'100vh',
+          minHeight: "100vh",
           p: { xs: 2, lg: 5 },
         }}
       >
@@ -105,7 +163,7 @@ export default function AdminLogin() {
           sx={{
             ...FlexBox,
             flexDirection: "column",
-            gap: 7.5,
+            gap: 5,
           }}
         >
           <Typography variant="h5" fontWeight={700} color="text.secondary">
@@ -144,15 +202,18 @@ export default function AdminLogin() {
               ),
             }}
           />
-          <Button
-            type="submit"
-            startIcon={<CheckCircle />}
-            sx={{ p: "8px 50px", fontWeight: 700 }}
-            variant="contained"
-            color="primary"
-          >
-            Log into your Account
-          </Button>
+          <Box sx={{ ...FlexBox, gap: 2.5, justifyContent: "center" }}>
+            <Button
+              type="submit"
+              startIcon={<CheckCircle />}
+              sx={{ p: "8px 50px", fontWeight: 700 }}
+              variant="contained"
+              color="primary"
+            >
+              Log into your Account
+            </Button>
+            <div id="googleSignupButton"></div>
+          </Box>
         </Box>
         {/* SECTION 3 */}
         <Box
