@@ -232,13 +232,7 @@ export default function AdminAddReminder() {
             variant="subtitle2"
             color="text.secondary"
           >
-            Sending a joining mail typically involves sending an email to a new
-            employee containing instructions on how to access and login to an
-            organization's system or application. The email may include login
-            credentials, links to the app or website, and any necessary training
-            materials. This process is designed to onboard employees effectively
-            and ensure they have access to the necessary resources to begin
-            their job duties.
+            Adding a reminder will notify you with a notification on the date the remider was set and will be visible in your remiders tab for changes or deletion. Passing that date will remove the reminder from your reminders list.
           </Typography>
         </Box>
       </SideFade>
