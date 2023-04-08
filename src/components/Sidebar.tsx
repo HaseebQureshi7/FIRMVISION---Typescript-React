@@ -12,12 +12,13 @@ import {
 } from "@mui/icons-material";
 import { Avatar, Box, ButtonBase, Divider, Typography } from "@mui/material";
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
 import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
 
 export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { openSnack, setOpenSnack } = useContext(GlobalSnackbarContext);
 
@@ -113,12 +114,20 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
             onClick={() => navigate("/admin/addemployee")}
           >
             <PersonAdd
-              sx={{ width: "35px", height: "35px", color: "primary.main" }}
+              sx={{
+                width: "35px",
+                height: "35px",
+                color: location.pathname.includes("addemployee")
+                  ? "primary.main"
+                  : "text.secondary",
+              }}
             />
             <Typography
               sx={{
                 opacity: openSidebar == "5vw" ? "0" : "1",
-                color: "primary.main",
+                color: location.pathname.includes("addemployee")
+                  ? "primary.main"
+                  : "text.secondary",
                 fontWeight: 700,
                 whiteSpace: "nowrap",
                 transition: "0.1s opacity",
@@ -145,12 +154,20 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
             onClick={() => navigate("/admin/searchemployees")}
           >
             <PersonSearch
-              sx={{ width: "35px", height: "35px", color: "primary.main" }}
+              sx={{
+                width: "35px",
+                height: "35px",
+                color: location.pathname.includes("searchemployee")
+                  ? "primary.main"
+                  : "text.secondary",
+              }}
             />
             <Typography
               sx={{
                 opacity: openSidebar == "5vw" ? "0" : "1",
-                color: "primary.main",
+                color: location.pathname.includes("searchemployee")
+                  ? "primary.main"
+                  : "text.secondary",
                 fontWeight: 700,
                 whiteSpace: "nowrap",
                 transition: "0.1s opacity",
@@ -177,12 +194,20 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
             onClick={() => navigate("/admin/assignedtasks")}
           >
             <Assignment
-              sx={{ width: "35px", height: "35px", color: "primary.main" }}
+              sx={{
+                width: "35px",
+                height: "35px",
+                color: location.pathname.includes("assignedtasks")
+                  ? "primary.main"
+                  : "text.secondary",
+              }}
             />
             <Typography
               sx={{
                 opacity: openSidebar == "5vw" ? "0" : "1",
-                color: "primary.main",
+                color: location.pathname.includes("assignedatasks")
+                  ? "primary.main"
+                  : "text.secondary",
                 fontWeight: 700,
                 whiteSpace: "nowrap",
                 transition: "0.1s opacity",
@@ -207,12 +232,20 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
             }}
           >
             <QuestionAnswer
-              sx={{ width: "35px", height: "35px", color: "primary.main" }}
+              sx={{
+                width: "35px",
+                height: "35px",
+                color: location.pathname.includes("conversation")
+                  ? "primary.main"
+                  : "text.secondary",
+              }}
             />
             <Typography
               sx={{
                 opacity: openSidebar == "5vw" ? "0" : "1",
-                color: "primary.main",
+                color: location.pathname.includes("conversation")
+                  ? "primary.main"
+                  : "text.secondary",
                 fontWeight: 700,
                 whiteSpace: "nowrap",
                 transition: "0.1s opacity",
@@ -239,12 +272,20 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
             onClick={() => navigate("/admin/addreminders")}
           >
             <NotificationAdd
-              sx={{ width: "35px", height: "35px", color: "primary.main" }}
+              sx={{
+                width: "35px",
+                height: "35px",
+                color: location.pathname.includes("reminder")
+                  ? "primary.main"
+                  : "text.secondary",
+              }}
             />
             <Typography
               sx={{
                 opacity: openSidebar == "5vw" ? "0" : "1",
-                color: "primary.main",
+                color: location.pathname.includes("reminder")
+                  ? "primary.main"
+                  : "text.secondary",
                 fontWeight: 700,
                 whiteSpace: "nowrap",
                 transition: "0.1s opacity",
@@ -276,12 +317,20 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
             onClick={() => navigate("/admin/dashboard")}
           >
             <Home
-              sx={{ width: "35px", height: "35px", color: "primary.main" }}
+              sx={{
+                width: "35px",
+                height: "35px",
+                color: location.pathname.includes("dashboard")
+                  ? "primary.main"
+                  : "text.secondary",
+              }}
             />
             <Typography
               sx={{
                 opacity: openSidebar == "5vw" ? "0" : "1",
-                color: "primary.main",
+                color: location.pathname.includes("dashboard")
+                  ? "primary.main"
+                  : "text.secondary",
                 fontWeight: 700,
                 whiteSpace: "nowrap",
                 transition: "0.1s opacity",
@@ -306,12 +355,20 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
             }}
           >
             <Settings
-              sx={{ width: "35px", height: "35px", color: "primary.main" }}
+              sx={{
+                width: "35px",
+                height: "35px",
+                color: location.pathname.includes("setting")
+                  ? "primary.main"
+                  : "text.secondary",
+              }}
             />
             <Typography
               sx={{
                 opacity: openSidebar == "5vw" ? "0" : "1",
-                color: "primary.main",
+                color: location.pathname.includes("setting")
+                  ? "primary.main"
+                  : "text.secondary",
                 fontWeight: 700,
                 whiteSpace: "nowrap",
                 transition: "0.1s opacity",

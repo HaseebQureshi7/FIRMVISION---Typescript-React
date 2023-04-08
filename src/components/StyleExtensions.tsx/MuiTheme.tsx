@@ -12,7 +12,7 @@ const MuiTheme = (themeMode: PaletteMode) =>
       },
     },
     typography: {
-      fontFamily: "Montserrat"
+      fontFamily: "Questrial"
     }
   });
 

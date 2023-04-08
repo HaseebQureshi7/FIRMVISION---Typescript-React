@@ -20,16 +20,17 @@ export default function Appbar({ user, openSidebar, setOpenSidebar }: any) {
           ...FlexBox,
           flexDirection: "row",
           backgroundColor: "background.default",
-          justifyContent: "space-evenly",
+          justifyContent: "flex-end",
           width: "100%",
           height: "60px",
-          borderBottom: "2px solid lightgrey",
+          // borderBottom: "2px solid lightgrey",
         }}
       >
         <Box
           sx={{
             flex: 3,
             ...FlexBox,
+            display: { xs: "flex", lg: "none" },
             flexDirection: "row",
             alignItems: "flex-start",
             justifyContent: "flex-start",
@@ -56,8 +57,9 @@ export default function Appbar({ user, openSidebar, setOpenSidebar }: any) {
         </Box>
         <Box
           sx={{
-            flex: { xs: 4, lg: 1 },
+            // flex: { xs: 4, lg: 1 },
             ...FlexBox,
+            width: { xs: "70%", lg: "40%" },
             flexDirection: "row",
             justifyContent: "space-evenly",
           }}
@@ -78,13 +80,29 @@ export default function Appbar({ user, openSidebar, setOpenSidebar }: any) {
             />
           )}
           <Notifications
-            sx={{ width: "25px", height: "25px", color: "text.primary" }}
+            sx={{ width: "25px", height: "25px", color: "warning.main" }}
           />
           <Settings
-            sx={{ width: "25px", height: "25px", color: "text.primary" }}
+            sx={{ width: "25px", height: "25px", color: "text.secondary" }}
           />
+          <Typography
+            sx={{ display: { xs: "none", lg: "inherit" } }}
+            fontWeight={700}
+            variant="h6"
+            color="text.primary"
+          >
+            {user?.companyName} &copy;
+          </Typography>
         </Box>
       </Box>
+      <Box
+        sx={{
+          width: { xs: "100%", lg: "50%" },
+          ml: "auto",
+          height: "1.5px",
+          background: "linear-gradient(to right, #ffffff, lightgrey)",
+        }}
+      />
     </>
   );
 }
