@@ -112,7 +112,8 @@ export default function AdminDashboard() {
               ...FlexBox,
               flexDirection: "row",
               justifyContent: "space-between",
-              p: 2.5,
+              px: 2.5,
+              py: 1,
             }}
           >
             {/* LEFT SIDE */}
@@ -186,7 +187,7 @@ export default function AdminDashboard() {
             </Box>
           </Box>
           {/* ROW 2 */}
-          <Box sx={{ width: "100%" }}>
+          <Box sx={{ width: "95%" }}>
             <StatisticsChart data={data} />
           </Box>
           {/* ROW 3 */}

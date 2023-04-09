@@ -97,10 +97,11 @@ export default function Appbar({ user, openSidebar, setOpenSidebar }: any) {
       </Box>
       <Box
         sx={{
-          width: { xs: "100%", lg: "50%" },
+          width: { xs: "100%", lg: "100%" },
           ml: "auto",
           height: "1.5px",
-          background: "linear-gradient(to right, #ffffff, lightgrey)",
+          // background: "linear-gradient(to right, #ffffff, lightgrey)",
+          backgroundColor: "lightgrey",
         }}
       />
     </>

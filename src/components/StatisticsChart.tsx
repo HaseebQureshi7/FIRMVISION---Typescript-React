@@ -1,5 +1,4 @@
 import { useMediaQuery, useTheme } from "@mui/material";
-import React from "react";
 import {
   ResponsiveContainer,
   CartesianGrid,
@@ -29,11 +28,11 @@ export default function StatisticsChart({ data }: any) {
             bottom: 5,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
+          {/* <CartesianGrid strokeDasharray="3 3" /> */}
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
-          <Legend />
+          {/* <Legend /> */}
           <Line
             type="monotone"
             name="Completed Tasks"
