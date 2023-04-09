@@ -23,6 +23,7 @@ import AdminAssignedTasks from "./Admin/AdminAssignedTasks";
 import AdminAddEmployee from "./Admin/AdminAddEmployee";
 import AdminSearchEmployee from "./Admin/AdminSearchEmployee";
 import AdminAddReminder from "./Admin/AdminAddReminder";
+import AdminSettings from "./Admin/AdminSettings";
 
 function App() {
   const location = useLocation();
@@ -90,6 +91,10 @@ function App() {
                 <Route
                   path="admin/addreminders"
                   element={<AdminAddReminder />}
+                />
+                <Route
+                  path="admin/settings"
+                  element={<AdminSettings />}
                 />
               </Routes>
             </AnimatePresence>

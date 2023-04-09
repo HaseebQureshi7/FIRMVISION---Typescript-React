@@ -353,6 +353,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
               pl: 2.5,
               py: 1.75,
             }}
+            onClick={() => navigate("/admin/settings")}
           >
             <Settings
               sx={{
