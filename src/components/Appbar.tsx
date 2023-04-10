@@ -9,9 +9,12 @@ import { Box, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import { DarkModeContext } from "../context/DarkModeContext";
 import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
+import { useNavigate } from "react-router-dom";
 
 export default function Appbar({ user, openSidebar, setOpenSidebar }: any) {
   const { themeMode, setThemeMode } = useContext(DarkModeContext);
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -69,21 +72,72 @@ export default function Appbar({ user, openSidebar, setOpenSidebar }: any) {
               onClick={() =>
                 setThemeMode(themeMode == "light" ? "dark" : "light")
               }
-              sx={{ width: "25px", height: "25px", color: "text.primary" }}
+              sx={{
+                width: "25px",
+                height: "25px",
+                color: "text.primary",
+                "&:hover": {
+                  rotate: "45deg",
+                  filter: "invert(0.5)",
+                  position: "relative",
+                  transform: "scale(1.25)",
+                  transition: "all 1s ease ",
+                },
+                "&:not(:hover)": {
+                  rotate: "0deg",
+                  position: "inline",
+                  transform: "scale(1)",
+                  transition: "all 1s ease ",
+                },
+              }}
             />
           ) : (
             <DarkMode
               onClick={() =>
                 setThemeMode(themeMode == "light" ? "dark" : "light")
               }
-              sx={{ width: "25px", height: "25px", color: "text.primary" }}
+              sx={{
+                width: "25px",
+                height: "25px",
+                color: "text.primary",
+                "&:hover": {
+                  rotate: "25deg",
+                  filter: "invert(0.5)",
+                  position: "relative",
+                  transform: "scale(1.25)",
+                  transition: "all 1s ease ",
+                },
+                "&:not(:hover)": {
+                  rotate: "0deg",
+                  position: "inline",
+                  transform: "scale(1)",
+                  transition: "all 1s ease ",
+                },
+              }}
             />
           )}
           <Notifications
             sx={{ width: "25px", height: "25px", color: "warning.main" }}
           />
           <Settings
-            sx={{ width: "25px", height: "25px", color: "text.secondary" }}
+            onClick={() => navigate("/admin/settings")}
+            sx={{
+              width: "25px",
+              height: "25px",
+              color: "text.secondary",
+              "&:hover": {
+                rotate: "180deg",
+                position: "relative",
+                transform: "scale(1.5)",
+                transition: "all 1s ease ",
+              },
+              "&:not(:hover)": {
+                rotate: "0deg",
+                position: "inline",
+                transform: "scale(1)",
+                transition: "all 1s ease ",
+              },
+            }}
           />
           <Typography
             sx={{ display: { xs: "none", lg: "inherit" } }}

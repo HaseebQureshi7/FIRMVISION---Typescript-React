@@ -1,6 +1,5 @@
 import axios from "axios";
-import React, { useContext } from "react";
-import { useMutation, useQuery } from "react-query";;
+import { useMutation, useQuery } from "react-query";
 
 const authToken = localStorage.getItem("admin-token");
 const Authheaders = {
