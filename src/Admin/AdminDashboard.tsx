@@ -46,58 +46,22 @@ export default function AdminDashboard() {
 
   const data = [
     {
-      name: "Monday",
-      assignedTasks: 4000,
-      completedTasks: 2400,
-      reportedTasks: 900,
-      amt: 2400,
+      name: "Completed Tasks",
+      // assignedTasks : 17,
+      completedTasks : 12,
+      // reportedTasks : 0,
     },
     {
-      name: "Tuesday",
-      assignedTasks: 3000,
-      completedTasks: 1398,
-      reportedTasks: 1000,
-      amt: 2210,
+      name: "Assigned Tasks",
+      assignedTasks : 17,
+      // completedTasks : 0,
+      // reportedTasks : 0,
     },
     {
-      name: "Wednesday",
-      assignedTasks: 2000,
-      completedTasks: 9800,
-      reportedTasks: 1500,
-
-      amt: 2290,
-    },
-    {
-      name: "Thursday",
-      assignedTasks: 2780,
-      completedTasks: 3908,
-      reportedTasks: 1000,
-
-      amt: 2000,
-    },
-    {
-      name: "Friday",
-      assignedTasks: 1890,
-      completedTasks: 4800,
-      reportedTasks: 2000,
-
-      amt: 2181,
-    },
-    {
-      name: "Monday",
-      assignedTasks: 2390,
-      completedTasks: 3800,
-      reportedTasks: 1200,
-
-      amt: 2500,
-    },
-    {
-      name: "Tuesday",
-      assignedTasks: 3490,
-      completedTasks: 4300,
-      reportedTasks: 800,
-
-      amt: 2100,
+      name: "Reported Tasks",
+      // assignedTasks : 17,
+      // completedTasks : 0,
+      reportedTasks : 5,
     },
   ];
 
@@ -187,7 +151,7 @@ export default function AdminDashboard() {
             </Box>
           </Box>
           {/* ROW 2 */}
-          <Box sx={{ width: "95%" }}>
+          <Box sx={{ width: "100%" }}>
             <StatisticsChart data={data} />
           </Box>
           {/* ROW 3 */}

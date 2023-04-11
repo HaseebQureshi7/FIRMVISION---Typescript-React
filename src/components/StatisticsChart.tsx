@@ -2,10 +2,10 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import {
   ResponsiveContainer,
   CartesianGrid,
-  Line,
+  Bar,
   XAxis,
   YAxis,
-  LineChart,
+  BarChart,
   Legend,
   Tooltip,
 } from "recharts";
@@ -16,44 +16,29 @@ export default function StatisticsChart({ data }: any) {
 
   return (
     <>
-      <ResponsiveContainer width="100%" aspect={isXS ? 1 : 4}>
-        <LineChart
-          width={500}
-          height={300}
-          data={data}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          {/* <CartesianGrid strokeDasharray="3 3" /> */}
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          {/* <Legend /> */}
-          <Line
-            type="monotone"
-            name="Completed Tasks"
-            dataKey="completedTasks"
-            stroke="navy"
-            activeDot={{ r: 8 }}
-          />
-          <Line
-            type="monotone"
-            name="Assigned Tasks"
-            dataKey="assignedTasks"
-            stroke="green"
-          />
-          <Line
-            type="monotone"
-            name="Reported Tasks"
-            dataKey="reportedTasks"
-            stroke="red"
-          />
-        </LineChart>
-      </ResponsiveContainer>
+     <ResponsiveContainer width="100%" aspect={isXS ? 1 : 8}>
+  <BarChart
+    width={500}
+    height={300}
+    data={data}
+    margin={{
+      top: 5,
+      right: 30,
+      left: 20,
+      bottom: 5,
+    }}
+    barGap={0}
+    barCategoryGap={2}
+  >
+    <XAxis dataKey="name" />
+    <YAxis />
+    <Tooltip />
+    <Legend />
+    <Bar dataKey="assignedTasks" name="Assigned Tasks" stackId="tasks" fill="#0288D1" />
+    <Bar dataKey="completedTasks" name="Completed Tasks" stackId="tasks" fill="#2E7D32" />
+    <Bar dataKey="reportedTasks" name="Repo Tasks" stackId="tasks" fill="#FF0000" />
+  </BarChart>
+</ResponsiveContainer>
     </>
   );
 }
