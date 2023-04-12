@@ -60,6 +60,15 @@ function App() {
     // else {
     //   console.log("no token found!");
     // }
+
+    // LAST LOGIN TIME
+    const date = new Date();
+    // console.log(date.toUTCString())
+    // localStorage.setItem("last-login", date.toLocaleString());   //Full Date
+    localStorage.setItem(
+      "last-login",
+      date.toLocaleTimeString([], { hour12: true, hour: '2-digit', minute:'2-digit', second: undefined })
+    ); //Only Time
   }, []);
 
   return (
@@ -92,10 +101,7 @@ function App() {
                   path="admin/addreminders"
                   element={<AdminAddReminder />}
                 />
-                <Route
-                  path="admin/settings"
-                  element={<AdminSettings />}
-                />
+                <Route path="admin/settings" element={<AdminSettings />} />
               </Routes>
             </AnimatePresence>
           </ThemeProvider>

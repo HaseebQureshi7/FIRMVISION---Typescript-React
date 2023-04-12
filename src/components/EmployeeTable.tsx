@@ -27,7 +27,7 @@ export default function EmployeeTable() {
   return (
     <TableContainer sx={{ p: 3 }} component={Paper}>
       <Typography sx={{ fontWeight: 700 }} variant="h5" color="text.primary">
-        Employees (46)
+        Employees ({empData?.length})
       </Typography>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>

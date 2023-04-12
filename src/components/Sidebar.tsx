@@ -38,7 +38,8 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
           width: openSidebar,
           height: "100vh",
           backgroundColor: "background.default",
-          boxShadow: "2px 2px 10px rgba(0, 0, 0, 0.2)",
+          // boxShadow: "2px 2px 10px rgba(0, 0, 0, 0.2)",
+          borderRight:'2px solid lightgrey',
           transition: "width 0.1s ease-in-out",
           position: "fixed",
         }}

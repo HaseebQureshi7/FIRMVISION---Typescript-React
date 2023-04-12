@@ -11,6 +11,7 @@ import {
   useMediaQuery,
   useTheme,
   Tooltip,
+  Paper,
 } from "@mui/material";
 import axios from "axios";
 import React from "react";
@@ -164,9 +165,30 @@ export default function AdminDashboard() {
             <Box sx={{ width: { xs: "90%", lg: "50%" } }}>
               <StatisticsChart data={data} />
             </Box>
-            <Box sx={{ width: { xs: "90%", lg: "50%" } }}>
-              <StatisticsChart data={data} />
-            </Box>
+            <Paper
+              elevation={0}
+              sx={{
+                ...FlexBox,
+                width: { xs: "90%", lg: "50%" },
+                alignItems: "flex-start",
+                p: 2.5,
+                borderRadius: "5px",
+              }}
+            >
+              <Typography variant={isXS ? "h5" : "h4"} color="text.primary">
+                Last Login :{" "}
+                <span style={{ fontWeight: 700, color: "navy" }}>
+                  {localStorage.getItem("last-login")}
+                </span>
+              </Typography>
+              {/* <Typography variant="h5" color="text.primary">Notifications Received : <span style={{fontWeight:700, color:'navy'}}>{5}</span></Typography> */}
+              <Typography variant={isXS ? "h5" : "h4"} color="text.primary">
+                Active Time (Today) :{" "}
+                <span style={{ fontWeight: 700, color: "navy" }}>
+                  {"4.7 hours"}
+                </span>
+              </Typography>
+            </Paper>
           </Box>
           {/* ROW 3 */}
           <Box

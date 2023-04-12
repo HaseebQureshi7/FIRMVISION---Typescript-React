@@ -117,7 +117,36 @@ export default function Appbar({ user, openSidebar, setOpenSidebar }: any) {
             />
           )}
           <Notifications
-            sx={{ width: "25px", height: "25px", color: "warning.main" }}
+            sx={{
+              width: "25px",
+              height: "25px",
+              color: "warning.main",
+              "&:hover": {
+                transformOrigin:'top',
+                transform: "scale(1.25)",
+                animation: "bell 1s ease forwards infinite",
+                transition: "all 1s ease ",
+              },
+              "&:not(:hover)": {
+                rotate: "0deg",
+                transform: "scale(1)",
+                transition: "all 1s ease ",
+              },
+              "@keyframes bell": {
+                "0%": {
+                  rotate: "0deg",
+                },
+                "30%": {
+                  rotate: "45deg",
+                },
+                "600%": {
+                  rotate: "0deg",
+                },
+                "90%": {
+                  rotate: "-45deg",
+                }
+              }
+            }}
           />
           <Settings
             onClick={() => navigate("/admin/settings")}
