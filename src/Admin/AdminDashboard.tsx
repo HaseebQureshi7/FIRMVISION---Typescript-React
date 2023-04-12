@@ -25,6 +25,7 @@ import { SideFade } from "../components/PageTransition";
 import StatisticsChart from "../components/StatisticsChart";
 import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
 import AdminPagesContainer from "./AdminPagesContainer";
+import EmployeeTable from "../components/EmployeeTable";
 
 export default function AdminDashboard() {
   const themeInstance = useTheme();
@@ -48,12 +49,12 @@ export default function AdminDashboard() {
     {
       name: "Completed Tasks",
       // assignedTasks : 17,
-      completedTasks : 12,
+      completedTasks: 12,
       // reportedTasks : 0,
     },
     {
       name: "Assigned Tasks",
-      assignedTasks : 17,
+      assignedTasks: 17,
       // completedTasks : 0,
       // reportedTasks : 0,
     },
@@ -61,7 +62,7 @@ export default function AdminDashboard() {
       name: "Reported Tasks",
       // assignedTasks : 17,
       // completedTasks : 0,
-      reportedTasks : 5,
+      reportedTasks: 5,
     },
   ];
 
@@ -151,8 +152,21 @@ export default function AdminDashboard() {
             </Box>
           </Box>
           {/* ROW 2 */}
-          <Box sx={{ width: "100%" }}>
-            <StatisticsChart data={data} />
+          <Box
+            sx={{
+              ...FlexBox,
+              width: "100%",
+              flexDirection: { xs: "column", lg: "row" },
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
+            }}
+          >
+            <Box sx={{ width: { xs: "90%", lg: "50%" } }}>
+              <StatisticsChart data={data} />
+            </Box>
+            <Box sx={{ width: { xs: "90%", lg: "50%" } }}>
+              <StatisticsChart data={data} />
+            </Box>
           </Box>
           {/* ROW 3 */}
           <Box
@@ -255,6 +269,19 @@ export default function AdminDashboard() {
                 </Typography>
               </Box>
             </Tooltip>
+          </Box>
+          {/* ROW 4 */}
+          <Box
+            sx={{
+              ...FlexBox,
+              gap: { xs: 1, lg: 7.5 },
+              flexDirection: "row",
+              justifyContent: "space-between",
+              px: { xs: 2.5, lg: 5 },
+              py: 2.5,
+            }}
+          >
+            <EmployeeTable />
           </Box>
         </Box>
       </SideFade>
