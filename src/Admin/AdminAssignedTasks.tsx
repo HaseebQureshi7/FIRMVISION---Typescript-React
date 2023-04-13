@@ -47,6 +47,16 @@ export default function AdminAssignedTasks() {
 
   const { data: taskData } = getTasksQD();
 
+  // ACTIVE TASKS
+  const activeTasks = taskData?.filter((data: any) => {
+    return data.status == "incomplete";
+  });
+
+  // COMPLETED TASKS
+  const completedTasks = taskData?.filter((data: any) => {
+    return data.status == "complete";
+  });
+
   function HandleSubmit(e: Event) {
     e.preventDefault();
   }
@@ -141,14 +151,15 @@ export default function AdminAssignedTasks() {
                 flexDirection: "column",
                 alignItems: { xs: "center", lg: "flex-start" },
                 justifyContent: "flex-start",
+                gap: 0,
               }}
             >
               <Typography
-                sx={{ fontWeight: 700 }}
+                sx={{ fontWeight: 500, my: 5 }}
                 variant={isXS ? "h5" : "h4"}
                 color="primary.main"
               >
-                Active Tasks ({taskData?.length})
+                Active Tasks ({activeTasks?.length})
               </Typography>
 
               <Box
@@ -173,12 +184,125 @@ export default function AdminAssignedTasks() {
                 </Typography>
               </Box>
 
-              {taskData?.map((data: any) => {
+              {activeTasks?.map((data: any) => {
                 return (
                   <Accordion
                     key={data?._id}
                     elevation={3}
-                    sx={{ flex: 1, width: "100%" }}
+                    sx={{ flex: 1, width: "100%", p: 1, m: 1 }}
+                  >
+                    <AccordionSummary
+                      expandIcon={<ExpandMore />}
+                      aria-label="Expand"
+                      aria-controls="-content"
+                      id="-header"
+                    >
+                      <Box
+                        sx={{
+                          ...FlexBox,
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Typography
+                          fontWeight={700}
+                          color={
+                            data?.priority === "High"
+                              ? "error.main"
+                              : data?.priority === "Low"
+                              ? "success.main"
+                              : data?.priority === "Neutral"
+                              ? "info.main"
+                              : "success.main"
+                          }
+                          variant="body1"
+                        >
+                          {data?.priority}
+                        </Typography>
+                        <Typography
+                          fontWeight={700}
+                          color="text.primary"
+                          variant="body1"
+                        >
+                          {data?.name}
+                        </Typography>
+                        <Typography
+                          fontWeight={700}
+                          color="text.primary"
+                          variant="body1"
+                        >
+                          {data?.deadline}
+                        </Typography>
+                        <Typography
+                          fontWeight={700}
+                          color="GrayText"
+                          variant="body1"
+                        >
+                          Details
+                        </Typography>
+                      </Box>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Typography
+                        fontWeight={700}
+                        color="text.primary"
+                        variant="body1"
+                      >
+                        {data?.details}
+                      </Typography>
+                    </AccordionDetails>
+                  </Accordion>
+                );
+              })}
+            </Box>
+
+            {/* ROW 3 */}
+            <Box
+              sx={{
+                ...FlexBox,
+                width: "100%",
+                flexDirection: "column",
+                alignItems: { xs: "center", lg: "flex-start" },
+                justifyContent: "flex-start",
+                gap: 0,
+              }}
+            >
+              <Typography
+                sx={{ fontWeight: 500, my: 5 }}
+                variant={isXS ? "h5" : "h4"}
+                color="primary.main"
+              >
+                Completed Tasks ({completedTasks?.length})
+              </Typography>
+
+              <Box
+                sx={{
+                  ...FlexBox,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  px: 2.5,
+                }}
+              >
+                <Typography fontWeight={700} color="GrayText" variant="body1">
+                  Priority
+                </Typography>
+                <Typography fontWeight={700} color="GrayText" variant="body1">
+                  Task Name
+                </Typography>
+                <Typography fontWeight={700} color="GrayText" variant="body1">
+                  Deadline
+                </Typography>
+                <Typography fontWeight={700} color="GrayText" variant="body1">
+                  Details
+                </Typography>
+              </Box>
+
+              {completedTasks?.map((data: any) => {
+                return (
+                  <Accordion
+                    key={data?._id}
+                    elevation={3}
+                    sx={{ flex: 1, width: "100%", p: 1, m: 1 }}
                   >
                     <AccordionSummary
                       expandIcon={<ExpandMore />}

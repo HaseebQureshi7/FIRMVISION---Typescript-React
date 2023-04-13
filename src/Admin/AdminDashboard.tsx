@@ -14,7 +14,7 @@ import {
   Paper,
 } from "@mui/material";
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import {
   getEmpsQD,
@@ -32,13 +32,48 @@ export default function AdminDashboard() {
   const themeInstance = useTheme();
   const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
 
+  const [upTime, setUpTime] = useState<number>(0);
+
   const user: any | null = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user")!)
     : null;
 
+  useEffect(() => {
+    let intervalId: any;
+    if (localStorage.getItem("active-time")) {
+      intervalId = setInterval(() => {
+        const activeTimeRaw: string | null =
+          localStorage.getItem("active-time");
+        const activeTime: number = parseInt(activeTimeRaw ?? "0");
+        const one: any = 1;
+        localStorage.setItem("active-time", activeTime + one);
+        secondsToMinutes(localStorage.getItem("active-time"));
+      }, 1000);
+    } else {
+      const ls: any = 0;
+      localStorage.setItem("active-time", ls);
+    }
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  function secondsToMinutes(seconds: any) {
+    const minutes = seconds / 60;
+    const roundedMinutes: number = Math.floor(minutes * 10) / 10;
+    setUpTime(roundedMinutes);
+  }
+
   const { data: taskData } = getTasksQD();
   const { data: empData } = getEmpsQD();
   const { data: remsData } = getRemsQD();
+
+  // TEAM EFFICIENCY PERCENTAGE
+  const teamEfficiencyData = taskData?.filter((data: any) => {
+    return data.status == "incomplete";
+  });
+  const teamEfficientcyPercentage =
+    (teamEfficiencyData?.length / taskData?.length) * 100;
 
   // REPORTED TASKS.
   // LOOKS FOR STATUS COMPLETION WITH NO SUBMITTION REPORT.
@@ -157,19 +192,19 @@ export default function AdminDashboard() {
             sx={{
               ...FlexBox,
               width: "100%",
-              flexDirection: { xs: "column", lg: "row" },
+              flexDirection: { xs: "column", lg: "row-reverse" },
               justifyContent: "flex-start",
               alignItems: "flex-start",
             }}
           >
-            <Box sx={{ width: { xs: "90%", lg: "50%" } }}>
+            <Box sx={{ width: { xs: "90%", lg: "60%" } }}>
               <StatisticsChart data={data} />
             </Box>
             <Paper
               elevation={0}
               sx={{
                 ...FlexBox,
-                width: { xs: "90%", lg: "50%" },
+                width: { xs: "90%", lg: "40%" },
                 alignItems: "flex-start",
                 p: 2.5,
                 borderRadius: "5px",
@@ -183,9 +218,16 @@ export default function AdminDashboard() {
               </Typography>
               {/* <Typography variant="h5" color="text.primary">Notifications Received : <span style={{fontWeight:700, color:'navy'}}>{5}</span></Typography> */}
               <Typography variant={isXS ? "h5" : "h4"} color="text.primary">
+                Team Efficiency :
+                <span style={{ fontWeight: 700, color: "navy" }}>
+                  {" "}
+                  {teamEfficientcyPercentage}%
+                </span>
+              </Typography>
+              <Typography variant={isXS ? "h5" : "h4"} color="text.primary">
                 Active Time (Today) :{" "}
                 <span style={{ fontWeight: 700, color: "navy" }}>
-                  {"4.7 hours"}
+                  {upTime + " mins"}
                 </span>
               </Typography>
             </Paper>
