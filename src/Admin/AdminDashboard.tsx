@@ -68,6 +68,19 @@ export default function AdminDashboard() {
   const { data: empData } = getEmpsQD();
   const { data: remsData } = getRemsQD();
 
+  // COMPLETED TASKS
+  const completedTasks = taskData?.filter((data: any) => {
+    return data.status == "complete";
+  });
+
+  // REPORTED TASKS.
+  // LOOKS FOR STATUS COMPLETION WITH NO SUBMITTION REPORT.
+  const reportedTasks = taskData?.filter((data: any) => {
+    return data.status == "reported";
+  });
+
+  // console.log(reportedTasks);
+
   // TEAM EFFICIENCY PERCENTAGE
   const teamEfficiencyData = taskData?.filter((data: any) => {
     return data.status == "incomplete";
@@ -75,22 +88,16 @@ export default function AdminDashboard() {
   const teamEfficientcyPercentage =
     (teamEfficiencyData?.length / taskData?.length) * 100;
 
-  // REPORTED TASKS.
-  // LOOKS FOR STATUS COMPLETION WITH NO SUBMITTION REPORT.
-  const reportedTasks = taskData?.filter((data: any) => {
-    return data.status == "complete" && data.submittionReport == "NA";
-  });
-
   const data = [
     {
       name: "Completed Tasks",
       // assignedTasks : 17,
-      completedTasks: 12,
+      completedTasks: completedTasks?.length,
       // reportedTasks : 0,
     },
     {
       name: "Assigned Tasks",
-      assignedTasks: 17,
+      assignedTasks: taskData?.length,
       // completedTasks : 0,
       // reportedTasks : 0,
     },
@@ -98,7 +105,7 @@ export default function AdminDashboard() {
       name: "Reported Tasks",
       // assignedTasks : 17,
       // completedTasks : 0,
-      reportedTasks: 5,
+      reportedTasks: reportedTasks?.length,
     },
   ];
 
@@ -200,37 +207,62 @@ export default function AdminDashboard() {
             <Box sx={{ width: { xs: "90%", lg: "60%" } }}>
               <StatisticsChart data={data} />
             </Box>
-            <Paper
-              elevation={0}
+            <Box
               sx={{
                 ...FlexBox,
                 width: { xs: "90%", lg: "40%" },
                 alignItems: "flex-start",
                 p: 2.5,
+                ml: 3,
+                gap: 1,
                 borderRadius: "5px",
               }}
             >
-              <Typography variant={isXS ? "h5" : "h4"} color="text.primary">
+              <Typography variant={isXS ? "h5" : "h5"} color="text.primary">
                 Last Login :{" "}
-                <span style={{ fontWeight: 700, color: "navy" }}>
+                <Box
+                  component="span"
+                  sx={{
+                    fontSize: { xs: "2rem", lg: "2.5rem" },
+                    fontWeight: 700,
+                    color: "info.main",
+                  }}
+                >
                   {localStorage.getItem("last-login")}
-                </span>
+                </Box>
               </Typography>
               {/* <Typography variant="h5" color="text.primary">Notifications Received : <span style={{fontWeight:700, color:'navy'}}>{5}</span></Typography> */}
-              <Typography variant={isXS ? "h5" : "h4"} color="text.primary">
+              <Typography variant={isXS ? "h5" : "h5"} color="text.primary">
                 Team Efficiency :
-                <span style={{ fontWeight: 700, color: "navy" }}>
+                <Box
+                  component="span"
+                  sx={{
+                    fontSize: { xs: "2rem", lg: "2.5rem" },
+                    fontWeight: 700,
+                    color:
+                      teamEfficientcyPercentage <= 50
+                        ? "error.main"
+                        : "success.main",
+                  }}
+                >
                   {" "}
                   {teamEfficientcyPercentage}%
-                </span>
+                </Box>
               </Typography>
-              <Typography variant={isXS ? "h5" : "h4"} color="text.primary">
+              <Typography variant={isXS ? "h5" : "h5"} color="text.primary">
                 Active Time (Today) :{" "}
-                <span style={{ fontWeight: 700, color: "navy" }}>
+                <Box
+                  component="span"
+                  sx={{
+                    fontSize: { xs: "2rem", lg: "2.5rem" },
+                    fontWeight: 700,
+                    color: "primary.main",
+                  }}
+                >
                   {upTime + " mins"}
-                </span>
+                </Box>
               </Typography>
-            </Paper>
+            </Box>
           </Box>
           {/* ROW 3 */}
           <Box

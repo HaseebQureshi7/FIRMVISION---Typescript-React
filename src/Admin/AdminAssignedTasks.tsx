@@ -143,6 +143,7 @@ export default function AdminAssignedTasks() {
                 <Add />
               </IconButton>
             </Box>
+
             {/* ROW 2 */}
             <Box
               sx={{
@@ -358,10 +359,17 @@ export default function AdminAssignedTasks() {
                     <AccordionDetails>
                       <Typography
                         fontWeight={700}
-                        color="text.primary"
+                        color="primary.main"
                         variant="body1"
                       >
                         {data?.details}
+                      </Typography>
+                      <Typography
+                        fontWeight={700}
+                        color="text.primary"
+                        variant="body1"
+                      >
+                        Report - {data?.submittionReport}
                       </Typography>
                     </AccordionDetails>
                   </Accordion>

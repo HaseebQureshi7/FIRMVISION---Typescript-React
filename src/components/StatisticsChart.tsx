@@ -19,7 +19,7 @@ export default function StatisticsChart({ data }: any) {
       <ResponsiveContainer width="100%" aspect={isXS ? 1 : 4}>
         <BarChart
           width={500}
-          height={300}
+          height={350}
           data={data}
           margin={{
             top: 5,
