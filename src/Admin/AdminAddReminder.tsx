@@ -167,7 +167,7 @@ export default function AdminAddReminder() {
                   />
                 </Grid>
                 <Grid item xs={12} lg={6}>
-                  {/* NO REQUIRED SUPPORT !!! HANDLE IT BY YOURSELF */}
+                  {/* NO FORM "REQUIRED" SUPPORT !!! HANDLE IT BY YOURSELF */}
                   <MobileDatePicker
                     sx={{ width: { xs: "100%", lg: "100%" } }}
                     onChange={(newValue: any) =>

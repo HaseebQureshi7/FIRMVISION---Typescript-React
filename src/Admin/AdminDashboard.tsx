@@ -38,6 +38,7 @@ export default function AdminDashboard() {
     ? JSON.parse(localStorage.getItem("user")!)
     : null;
 
+  // TOTAL TIME SPENT (ACTIVE TIME)
   useEffect(() => {
     let intervalId: any;
     if (localStorage.getItem("active-time")) {
@@ -58,6 +59,7 @@ export default function AdminDashboard() {
     };
   }, []);
 
+  // CONVERSION OF SECONDS INTO MINUTES
   function secondsToMinutes(seconds: any) {
     const minutes = seconds / 60;
     const roundedMinutes: number = Math.floor(minutes * 10) / 10;
@@ -79,8 +81,6 @@ export default function AdminDashboard() {
     return data.status == "reported";
   });
 
-  // console.log(reportedTasks);
-
   // TEAM EFFICIENCY PERCENTAGE
   const teamEfficiencyData = taskData?.filter((data: any) => {
     return data.status == "incomplete";
@@ -88,23 +88,17 @@ export default function AdminDashboard() {
   const teamEfficientcyPercentage =
     (teamEfficiencyData?.length / taskData?.length) * 100;
 
-  const data = [
+  const StatisticalData = [
     {
       name: "Completed Tasks",
-      // assignedTasks : 17,
       completedTasks: completedTasks?.length,
-      // reportedTasks : 0,
     },
     {
       name: "Assigned Tasks",
       assignedTasks: taskData?.length,
-      // completedTasks : 0,
-      // reportedTasks : 0,
     },
     {
       name: "Reported Tasks",
-      // assignedTasks : 17,
-      // completedTasks : 0,
       reportedTasks: reportedTasks?.length,
     },
   ];
@@ -205,7 +199,7 @@ export default function AdminDashboard() {
             }}
           >
             <Box sx={{ width: { xs: "90%", lg: "60%" } }}>
-              <StatisticsChart data={data} />
+              <StatisticsChart data={StatisticalData} />
             </Box>
             <Box
               sx={{
