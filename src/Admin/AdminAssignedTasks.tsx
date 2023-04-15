@@ -111,7 +111,7 @@ export default function AdminAssignedTasks() {
                       sx={{ width: "auto", height: "auto" }}
                       position="start"
                     >
-                      <Badge sx={{ p: 0.15, mr: 1 }} />
+                      <Badge sx={{ mb:1, mr: 1 }} fontSize={isXS ? "small" : "medium"} />
                     </InputAdornment>
                   ),
                 }}
@@ -120,7 +120,7 @@ export default function AdminAssignedTasks() {
                 sx={{ mr: { xs: "0%", lg: "25%" } }}
                 type="submit"
                 aria-label="search-tasks"
-                size="large"
+                size={isXS ? "small" : "large"}
                 color="primary"
               >
                 <Search />
@@ -128,7 +128,7 @@ export default function AdminAssignedTasks() {
               <IconButton
                 sx={{ mx: { xs: "0%", lg: "2.5%" } }}
                 aria-label="filter-employees"
-                size="large"
+                size={isXS ? "small" : "large"}
                 color="info"
               >
                 <FilterAlt />
@@ -137,7 +137,7 @@ export default function AdminAssignedTasks() {
                 // onClick={() => navigate("/admin/addemployee")}
                 sx={{ mx: { xs: "0%", lg: "2.5%" } }}
                 aria-label="add-employees"
-                size="large"
+                size={isXS ? "small" : "large"}
                 color="success"
               >
                 <Add />
@@ -216,28 +216,28 @@ export default function AdminAssignedTasks() {
                               ? "info.main"
                               : "success.main"
                           }
-                          variant="body1"
+                          variant={isXS ? "body2" : "body1"}
                         >
                           {data?.priority}
                         </Typography>
                         <Typography
                           fontWeight={700}
                           color="text.primary"
-                          variant="body1"
+                          variant={isXS ? "body2" : "body1"}
                         >
                           {data?.name}
                         </Typography>
                         <Typography
                           fontWeight={700}
                           color="text.primary"
-                          variant="body1"
+                          variant={isXS ? "body2" : "body1"}
                         >
                           {data?.deadline}
                         </Typography>
                         <Typography
                           fontWeight={700}
                           color="GrayText"
-                          variant="body1"
+                          variant={isXS ? "body2" : "body1"}
                         >
                           Details
                         </Typography>
@@ -246,8 +246,8 @@ export default function AdminAssignedTasks() {
                     <AccordionDetails>
                       <Typography
                         fontWeight={700}
-                        color="text.primary"
-                        variant="body1"
+                        color="primary.main"
+                        variant={isXS ? "body2" : "body1"}
                       >
                         {data?.details}
                       </Typography>
@@ -329,28 +329,28 @@ export default function AdminAssignedTasks() {
                               ? "info.main"
                               : "success.main"
                           }
-                          variant="body1"
+                          variant={isXS ? "body2" : "body1"}
                         >
                           {data?.priority}
                         </Typography>
                         <Typography
                           fontWeight={700}
                           color="text.primary"
-                          variant="body1"
+                          variant={isXS ? "body2" : "body1"}
                         >
                           {data?.name}
                         </Typography>
                         <Typography
                           fontWeight={700}
                           color="text.primary"
-                          variant="body1"
+                          variant={isXS ? "body2" : "body1"}
                         >
                           {data?.deadline}
                         </Typography>
                         <Typography
                           fontWeight={700}
                           color="GrayText"
-                          variant="body1"
+                          variant={isXS ? "body2" : "body1"}
                         >
                           Details
                         </Typography>
@@ -360,14 +360,14 @@ export default function AdminAssignedTasks() {
                       <Typography
                         fontWeight={700}
                         color="primary.main"
-                        variant="body1"
+                        variant={isXS ? "body2" : "body1"}
                       >
                         {data?.details}
                       </Typography>
                       <Typography
                         fontWeight={700}
                         color="text.primary"
-                        variant="body1"
+                        variant={isXS ? "body2" : "body1"}
                       >
                         Report - {data?.submittionReport}
                       </Typography>

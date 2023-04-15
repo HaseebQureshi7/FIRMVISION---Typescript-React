@@ -24,6 +24,8 @@ import {
   Button,
   Select,
   MenuItem,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
 import { getEmpsQD } from "./AdminGlobalDataHandler";
@@ -46,6 +48,9 @@ export default function EmployeeTable() {
   const { data: empData } = getEmpsQD();
 
   const { openSnack, setOpenSnack } = useContext(GlobalSnackbarContext);
+
+  const themeInstance = useTheme();
+  const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
 
   const [openAddTaskModal, setOpenAddTaskModal] = useState<boolean>(false);
   const [openActiveTasks, setOpenActiveTasks] = useState<boolean>(false);
@@ -90,9 +95,9 @@ export default function EmployeeTable() {
           <Box
             sx={{
               ...FlexBox,
-              p: 2.5,
+              p: { xs: 1, lg: 2.5 },
               height: "75vh",
-              width: "75%",
+              width: { xs: "100%", lg: "75%" },
               borderRadius: "5px",
               alignItems: "flex-start",
               justifyContent: "flex-start",
@@ -106,10 +111,10 @@ export default function EmployeeTable() {
                 flexDirection: "row",
                 justifyContent: "space-between",
                 p: 1,
-                pr: 2.5,
+                pr: { xs: 1, lg: 2.5 },
               }}
             >
-              <Typography variant="h4">
+              <Typography color="text.primary" variant={isXS ? "h5" : "h4"}>
                 Assign a new task to{" "}
                 <Box
                   component="span"
@@ -122,9 +127,9 @@ export default function EmployeeTable() {
                 </Box>
               </Typography>
               <Clear
-                sx={{ cursor: "pointer" }}
+                sx={{ cursor: "pointer", color:"text.primary" }}
                 onClick={() => setOpenAddTaskModal(!openAddTaskModal)}
-                fontSize="large"
+                fontSize={"large"}
               />
             </Box>
             {/* MODAL BODY */}
@@ -157,7 +162,7 @@ export default function EmployeeTable() {
                 <TextField
                   required
                   inputRef={taskNameRef}
-                  sx={{ width: "50%" }}
+                  sx={{ width: { xs: "100%", lg: "50%" } }}
                   placeholder="Enter the Task Name"
                   InputProps={{
                     startAdornment: (
@@ -288,7 +293,7 @@ export default function EmployeeTable() {
                   endIcon={<Clear fontSize="large" />}
                   sx={{ p: "8px 25px", fontWeight: 700 }}
                   variant="contained"
-                  size="large"
+                  size={isXS ? "small" : "large"}
                   color="error"
                 >
                   Cancel Action
@@ -299,7 +304,7 @@ export default function EmployeeTable() {
                   endIcon={<Add fontSize="large" />}
                   sx={{ p: "8px 25px", fontWeight: 700 }}
                   variant="contained"
-                  size="large"
+                  size={isXS ? "small" : "large"}
                   color="success"
                 >
                   Assign Task

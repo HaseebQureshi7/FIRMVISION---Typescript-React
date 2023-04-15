@@ -27,10 +27,13 @@ import StatisticsChart from "../components/StatisticsChart";
 import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
 import AdminPagesContainer from "./AdminPagesContainer";
 import EmployeeTable from "../components/EmployeeTable";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminDashboard() {
   const themeInstance = useTheme();
   const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
+
+  const navigate = useNavigate();
 
   const [upTime, setUpTime] = useState<number>(0);
 
@@ -271,10 +274,12 @@ export default function AdminDashboard() {
           >
             <Tooltip title="Total Employees">
               <Box
+                onClick={() => navigate("/admin/searchemployees")}
                 sx={{
                   ...FlexBox,
                   flexDirection: { xs: "column", lg: "row" },
                   gap: 2.5,
+                  cursor: "pointer",
                   backgroundColor: "info.main",
                   borderRadius: 2,
                   p: 1,
@@ -294,10 +299,12 @@ export default function AdminDashboard() {
             </Tooltip>
             <Tooltip title="All Assigned Tasks">
               <Box
+                onClick={() => navigate("/admin/assignedtasks")}
                 sx={{
                   ...FlexBox,
                   flexDirection: { xs: "column", lg: "row" },
                   gap: 2.5,
+                  cursor: "pointer",
                   backgroundColor: "success.main",
                   borderRadius: 2,
                   p: 1,
@@ -315,10 +322,12 @@ export default function AdminDashboard() {
             </Tooltip>
             <Tooltip title="All Reported Tasks">
               <Box
+                onClick={() => navigate("/admin/assignedtasks")}
                 sx={{
                   ...FlexBox,
                   flexDirection: { xs: "column", lg: "row" },
                   gap: 2.5,
+                  cursor: "pointer",
                   backgroundColor: "error.main",
                   borderRadius: 2,
                   p: 1,
@@ -338,10 +347,12 @@ export default function AdminDashboard() {
             </Tooltip>
             <Tooltip title="Upcoming Reminders">
               <Box
+                onClick={() => navigate("/admin/addreminders")}
                 sx={{
                   ...FlexBox,
                   flexDirection: { xs: "column", lg: "row" },
                   gap: 2.5,
+                  cursor: "pointer",
                   backgroundColor: "warning.main",
                   borderRadius: 2,
                   p: 1,
