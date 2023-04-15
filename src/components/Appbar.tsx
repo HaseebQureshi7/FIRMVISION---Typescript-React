@@ -76,6 +76,7 @@ export default function Appbar({ user, openSidebar, setOpenSidebar }: any) {
                 width: "25px",
                 height: "25px",
                 color: "text.primary",
+                cursor: "pointer",
                 "&:hover": {
                   rotate: "45deg",
                   filter: "invert(0.5)",
@@ -100,6 +101,7 @@ export default function Appbar({ user, openSidebar, setOpenSidebar }: any) {
                 width: "25px",
                 height: "25px",
                 color: "text.primary",
+                cursor: "pointer",
                 "&:hover": {
                   rotate: "25deg",
                   filter: "invert(0.5)",
@@ -121,6 +123,7 @@ export default function Appbar({ user, openSidebar, setOpenSidebar }: any) {
               width: "25px",
               height: "25px",
               color: "warning.main",
+              cursor: "pointer",
               "&:hover": {
                 transformOrigin:'top',
                 transform: "scale(1.25)",
