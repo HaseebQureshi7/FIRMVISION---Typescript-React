@@ -9,6 +9,7 @@ import {
   Call,
   PersonRemove,
   Message,
+  ExpandMore,
 } from "@mui/icons-material";
 import {
   TableContainer,
@@ -31,13 +32,18 @@ import {
   useTheme,
   Menu,
   Grow,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "@mui/material";
 import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
-import { getEmpsQD } from "./AdminGlobalDataHandler";
-import { useContext, useRef, useState } from "react";
+import { Authheaders, getEmpsQD } from "./AdminGlobalDataHandler";
+import { useContext, useEffect, useRef, useState } from "react";
 import { MobileDatePicker } from "@mui/x-date-pickers";
 import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
 import PopupModal from "./PopupModal";
+import axios from "axios";
+import { useMutation } from "react-query";
 
 type proirity = "Low" | "Medium " | "High";
 
@@ -45,9 +51,9 @@ interface assignTaskDataTypes {
   assignedTo: string;
   assignedBy: string;
   name: string;
-  detail: string;
+  details: string;
   deadline: string;
-  proirity: proirity;
+  priority: proirity;
 }
 
 export default function EmployeeTable() {
@@ -57,6 +63,11 @@ export default function EmployeeTable() {
 
   const themeInstance = useTheme();
   const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
+
+  const [allEmployeeTasks, setAllEmployeeTasks] = useState<Array<any>>([]);
+  const [singleEmployeeTasks, setSingleAllEmployeeTasks] = useState<Array<any>>(
+    []
+  );
 
   const [openAddTaskModal, setOpenAddTaskModal] = useState<boolean>(false);
   const [openActiveTasks, setOpenActiveTasks] = useState<boolean>(false);
@@ -68,6 +79,33 @@ export default function EmployeeTable() {
   const [taskDeadline, setTaskDeadline] = useState<string>("not-set");
   const taskNameRef = useRef<HTMLInputElement>();
   const taskDetailRef = useRef<HTMLInputElement>();
+
+  // ASSIGN TASK TO EMPLOYEE QF
+  const AssignTaskQF = (assignTaskData: any) => {
+    return axios.post(
+      import.meta.env.VITE_BASE_URL + "task/createtask",
+      assignTaskData,
+      Authheaders
+    );
+  };
+
+  // ASSIGN TASK TO EMPLOYEE MF
+  const { mutate: AssignTaskMutation } = useMutation(AssignTaskQF, {
+    onSuccess: (data: any) => {
+      setOpenSnack({
+        open: true,
+        message: "Task Assignment was successful!",
+        severity: "success",
+      });
+    },
+    onError: (err: any) => {
+      setOpenSnack({
+        open: true,
+        message: err?.response?.data,
+        severity: "error",
+      });
+    },
+  });
 
   function AssignTaskToEmployee(e: Event) {
     e.preventDefault();
@@ -82,13 +120,33 @@ export default function EmployeeTable() {
         assignedTo: currentUserDetails.userId,
         assignedBy: currentUserDetails.adminId,
         name: taskNameRef?.current?.value || "null",
-        detail: taskDetailRef?.current?.value || "null",
+        details: taskDetailRef?.current?.value || "null",
         deadline: taskDeadline,
-        proirity: taskPriority,
+        priority: taskPriority,
       };
-      console.log(assignTaskData);
+      AssignTaskMutation(assignTaskData);
     }
   }
+
+  function GetEmployeeTasks(eid: number) {
+    const thisEmployeesTasks: any = allEmployeeTasks.filter(
+      (data: any) => data.assignedTo == eid
+    );
+    return thisEmployeesTasks;
+  }
+
+  useEffect(() => {
+    axios
+      .get(
+        import.meta.env.VITE_BASE_URL + "task/viewassignedadmintasks/",
+        Authheaders
+      )
+      .then((res) => {
+        setAllEmployeeTasks(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <>
@@ -361,6 +419,84 @@ export default function EmployeeTable() {
               fontSize={"large"}
             />
           </Box>
+          {/* MODAL BODY */}
+          <Box
+            sx={{
+              ...FlexBox,
+              flexDirection: "column",
+              gap: 1,
+            }}
+          >
+            {singleEmployeeTasks?.map((data: any) => {
+              return (
+                <Accordion
+                  key={data?._id}
+                  elevation={3}
+                  sx={{ width: "100%", m: 1, p: 1 }}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMore />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Box
+                      sx={{
+                        ...FlexBox,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Typography
+                        fontWeight={700}
+                        color={
+                          data?.priority === "High"
+                            ? "error.main"
+                            : data?.priority === "Low"
+                            ? "success.main"
+                            : data?.priority === "Neutral"
+                            ? "info.main"
+                            : "success.main"
+                        }
+                        variant={isXS ? "body2" : "body1"}
+                      >
+                        {data?.priority}
+                      </Typography>
+                      <Typography
+                        fontWeight={700}
+                        color="text.primary"
+                        variant={isXS ? "body2" : "body1"}
+                      >
+                        {data?.name}
+                      </Typography>
+                      <Typography
+                        fontWeight={700}
+                        color="text.primary"
+                        variant={isXS ? "body2" : "body1"}
+                      >
+                        {data?.deadline}
+                      </Typography>
+                      <Typography
+                        fontWeight={700}
+                        color="GrayText"
+                        variant={isXS ? "body2" : "body1"}
+                      >
+                        Details
+                      </Typography>
+                    </Box>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography
+                      fontWeight={700}
+                      color="primary.main"
+                      variant={isXS ? "body2" : "body1"}
+                    >
+                      {data?.details}
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+              );
+            })}
+          </Box>
         </Box>
       </PopupModal>
 
@@ -471,7 +607,9 @@ export default function EmployeeTable() {
                     {data.name}
                   </TableCell>
                   <TableCell align="left">{data.position}</TableCell>
-                  <TableCell align="center">{7}</TableCell>
+                  <TableCell align="center">
+                    {GetEmployeeTasks(data._id).length}
+                  </TableCell>
                   <TableCell align="right">
                     <Box
                       sx={{
@@ -504,6 +642,9 @@ export default function EmployeeTable() {
                             userId: data._id,
                             adminId: data.employeeOf,
                           });
+                          setSingleAllEmployeeTasks(
+                            GetEmployeeTasks(data?._id)
+                          );
                         }}
                         sx={{ color: "primary.light", cursor: "pointer" }}
                       />

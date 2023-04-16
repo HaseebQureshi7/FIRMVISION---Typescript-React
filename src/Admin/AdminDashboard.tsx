@@ -86,10 +86,12 @@ export default function AdminDashboard() {
 
   // TEAM EFFICIENCY PERCENTAGE
   const teamEfficiencyData = taskData?.filter((data: any) => {
-    return data.status == "incomplete";
+    return data.status == "complete";
   });
-  const teamEfficientcyPercentage =
-    (teamEfficiencyData?.length / taskData?.length) * 100;
+
+  const teamEfficientcyPercentage: number = Math.floor(
+    (teamEfficiencyData?.length / taskData?.length) * 100
+  );
 
   const StatisticalData = [
     {

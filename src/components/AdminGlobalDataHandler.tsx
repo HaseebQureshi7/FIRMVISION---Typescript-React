@@ -2,7 +2,7 @@ import axios from "axios";
 import { useMutation, useQuery } from "react-query";
 
 const authToken = localStorage.getItem("admin-token");
-const Authheaders = {
+export const Authheaders = {
   headers: {
     Authorization: `Bearer ${authToken}`,
   },
