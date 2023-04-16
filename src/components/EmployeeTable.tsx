@@ -44,6 +44,7 @@ import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
 import PopupModal from "./PopupModal";
 import axios from "axios";
 import { useMutation } from "react-query";
+import { DateFormatter } from "./DateFormatter";
 
 type proirity = "Low" | "Medium " | "High";
 
@@ -128,10 +129,11 @@ export default function EmployeeTable() {
     }
   }
 
-  function GetEmployeeTasks(eid: number) {
+  function GetActiveEmployeeTasks(eid: number) {
     const thisEmployeesTasks: any = allEmployeeTasks.filter(
-      (data: any) => data.assignedTo == eid
+      (data: any) => data.assignedTo == eid && data.status == "incomplete"
     );
+    // console.log(thisEmployeesTasks)
     return thisEmployeesTasks;
   }
 
@@ -427,6 +429,27 @@ export default function EmployeeTable() {
               gap: 1,
             }}
           >
+            <Box
+              sx={{
+                ...FlexBox,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                px: 2.5,
+              }}
+            >
+              <Typography fontWeight={700} color="GrayText" variant="body1">
+                Priority
+              </Typography>
+              <Typography fontWeight={700} color="GrayText" variant="body1">
+                Task Name
+              </Typography>
+              <Typography fontWeight={700} color="GrayText" variant="body1">
+                Deadline
+              </Typography>
+              <Typography fontWeight={700} color="GrayText" variant="body1">
+                Details
+              </Typography>
+            </Box>
             {singleEmployeeTasks?.map((data: any) => {
               return (
                 <Accordion
@@ -473,15 +496,13 @@ export default function EmployeeTable() {
                         color="text.primary"
                         variant={isXS ? "body2" : "body1"}
                       >
-                        {data?.deadline}
+                        {DateFormatter(data?.deadline)}
                       </Typography>
                       <Typography
                         fontWeight={700}
                         color="GrayText"
                         variant={isXS ? "body2" : "body1"}
-                      >
-                        Details
-                      </Typography>
+                      ></Typography>
                     </Box>
                   </AccordionSummary>
                   <AccordionDetails>
@@ -608,7 +629,7 @@ export default function EmployeeTable() {
                   </TableCell>
                   <TableCell align="left">{data.position}</TableCell>
                   <TableCell align="center">
-                    {GetEmployeeTasks(data._id).length}
+                    {GetActiveEmployeeTasks(data._id).length}
                   </TableCell>
                   <TableCell align="right">
                     <Box
@@ -643,7 +664,7 @@ export default function EmployeeTable() {
                             adminId: data.employeeOf,
                           });
                           setSingleAllEmployeeTasks(
-                            GetEmployeeTasks(data?._id)
+                            GetActiveEmployeeTasks(data?._id)
                           );
                         }}
                         sx={{ color: "primary.light", cursor: "pointer" }}

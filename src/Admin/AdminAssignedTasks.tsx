@@ -36,6 +36,7 @@ import AdminPagesContainer from "./AdminPagesContainer";
 import invite from "../assets/images/invite.png";
 import { useNavigate } from "react-router-dom";
 import { getTasksQD } from "../components/AdminGlobalDataHandler";
+import { DateFormatter } from "../components/DateFormatter";
 
 export default function AdminAssignedTasks() {
   const navigate = useNavigate();
@@ -232,14 +233,14 @@ export default function AdminAssignedTasks() {
                           color="text.primary"
                           variant={isXS ? "body2" : "body1"}
                         >
-                          {data?.deadline}
+                          {DateFormatter(data?.deadline)}
                         </Typography>
                         <Typography
                           fontWeight={700}
                           color="GrayText"
                           variant={isXS ? "body2" : "body1"}
                         >
-                          Details
+                          
                         </Typography>
                       </Box>
                     </AccordionSummary>
