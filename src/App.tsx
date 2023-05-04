@@ -24,6 +24,8 @@ import AdminAddEmployee from "./Admin/AdminAddEmployee";
 import AdminSearchEmployee from "./Admin/AdminSearchEmployee";
 import AdminAddReminder from "./Admin/AdminAddReminder";
 import AdminSettings from "./Admin/AdminSettings";
+import EmployeeLogin from "./Employee/EmployeeLogin";
+import EmployeeDashboard from "./Employee/EmployeeDashboard";
 
 function App() {
   const location = useLocation();
@@ -54,12 +56,11 @@ function App() {
       const token = localStorage.getItem("employee-token")?.replace(/"/g, "");
       axios
         .post(import.meta.env.VITE_BASE_URL + "employee/login", { token })
-        .then(() => navigate("/employee/dashbaord"))
+        .then(() => navigate("/employee/dashboard"))
         .catch((err) => console.log(err));
+    } else {
+      navigate("/");
     }
-    // else {
-    //   console.log("no token found!");
-    // }
 
     // LAST LOGIN TIME
     const date = new Date();
@@ -107,6 +108,10 @@ function App() {
                   element={<AdminAddReminder />}
                 />
                 <Route path="admin/settings" element={<AdminSettings />} />
+
+                {/* Employee Routes */}
+                <Route path="/employee" element={<EmployeeLogin />} />
+                <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
               </Routes>
             </AnimatePresence>
           </ThemeProvider>

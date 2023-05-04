@@ -73,6 +73,7 @@ export default function AdminLanding() {
               }}
             >
               <Button
+              onClick={()=> navigate('/employee')}
                 sx={{ p: "8px 50px", fontWeight: 700 }}
                 variant="outlined"
                 color="secondary"

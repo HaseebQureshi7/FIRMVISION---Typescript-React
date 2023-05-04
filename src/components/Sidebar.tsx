@@ -1,7 +1,9 @@
 import {
   Assignment,
+  Grading,
   Home,
   NotificationAdd,
+  Person,
   Person2,
   PersonAdd,
   PersonSearch,
@@ -102,218 +104,391 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
             }}
             variant="body2"
           >
-            Admin
+            {user?.position || "Admin"}
           </Typography>
         </Box>
         <Divider sx={{ width: "100%", my: 2 }} />
 
-        {/* ACTIONS */}
-        <Box sx={{ ...FlexBox, flex: 6, gap: 0 }}>
-          <ButtonBase
-            sx={{
-              ...FlexBox,
-              width: "100%",
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              pl: 2.5,
-              py: 1.75,
-            }}
-            onClick={() => navigate("/admin/addemployee")}
-          >
-            <PersonAdd
+        {/* ADMIN ACTIONS */}
+        {!user?.position && (
+          <Box sx={{ ...FlexBox, flex: 6, gap: 0 }}>
+            <ButtonBase
               sx={{
-                width: "35px",
-                height: "35px",
-                color: location.pathname.includes("addemployee")
-                  ? "primary.main"
-                  : "text.secondary",
+                ...FlexBox,
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                pl: 2.5,
+                py: 1.75,
               }}
-            />
-            <Typography
-              sx={{
-                opacity: openSidebar == "5vw" ? "0" : "1",
-                color: location.pathname.includes("addemployee")
-                  ? "primary.main"
-                  : "text.secondary",
-                fontWeight: 700,
-                whiteSpace: "nowrap",
-                transition: "0.1s opacity",
-                transitionDelay: "0.15s",
-                display: { xs: "none", lg: "inherit" },
-              }}
-              variant="body1"
-              color="text.primary"
+              onClick={() => navigate("/admin/addemployee")}
             >
-              Add Employees
-            </Typography>
-          </ButtonBase>
-          {/* <Divider sx={{width:'100%'}}/> */}
+              <PersonAdd
+                sx={{
+                  width: "35px",
+                  height: "35px",
+                  color: location.pathname.includes("addemployee")
+                    ? "primary.main"
+                    : "text.secondary",
+                }}
+              />
+              <Typography
+                sx={{
+                  opacity: openSidebar == "5vw" ? "0" : "1",
+                  color: location.pathname.includes("addemployee")
+                    ? "primary.main"
+                    : "text.secondary",
+                  fontWeight: 700,
+                  whiteSpace: "nowrap",
+                  transition: "0.1s opacity",
+                  transitionDelay: "0.15s",
+                  display: { xs: "none", lg: "inherit" },
+                }}
+                variant="body1"
+                color="text.primary"
+              >
+                Add Employees
+              </Typography>
+            </ButtonBase>
+            {/* <Divider sx={{width:'100%'}}/> */}
 
-          <ButtonBase
-            sx={{
-              ...FlexBox,
-              width: "100%",
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              pl: 2.5,
-              py: 1.75,
-            }}
-            onClick={() => navigate("/admin/searchemployees")}
-          >
-            <PersonSearch
+            <ButtonBase
               sx={{
-                width: "35px",
-                height: "35px",
-                color: location.pathname.includes("searchemployee")
-                  ? "primary.main"
-                  : "text.secondary",
+                ...FlexBox,
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                pl: 2.5,
+                py: 1.75,
               }}
-            />
-            <Typography
-              sx={{
-                opacity: openSidebar == "5vw" ? "0" : "1",
-                color: location.pathname.includes("searchemployee")
-                  ? "primary.main"
-                  : "text.secondary",
-                fontWeight: 700,
-                whiteSpace: "nowrap",
-                transition: "0.1s opacity",
-                transitionDelay: "0.25s",
-                display: { xs: "none", lg: "inherit" },
-              }}
-              variant="body1"
-              color="text.primary"
+              onClick={() => navigate("/admin/searchemployees")}
             >
-              Search Employees
-            </Typography>
-          </ButtonBase>
-          {/* <Divider sx={{width:'100%'}}/> */}
+              <PersonSearch
+                sx={{
+                  width: "35px",
+                  height: "35px",
+                  color: location.pathname.includes("searchemployee")
+                    ? "primary.main"
+                    : "text.secondary",
+                }}
+              />
+              <Typography
+                sx={{
+                  opacity: openSidebar == "5vw" ? "0" : "1",
+                  color: location.pathname.includes("searchemployee")
+                    ? "primary.main"
+                    : "text.secondary",
+                  fontWeight: 700,
+                  whiteSpace: "nowrap",
+                  transition: "0.1s opacity",
+                  transitionDelay: "0.25s",
+                  display: { xs: "none", lg: "inherit" },
+                }}
+                variant="body1"
+                color="text.primary"
+              >
+                Search Employees
+              </Typography>
+            </ButtonBase>
+            {/* <Divider sx={{width:'100%'}}/> */}
 
-          <ButtonBase
-            sx={{
-              ...FlexBox,
-              width: "100%",
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              pl: 2.5,
-              py: 1.75,
-            }}
-            onClick={() => navigate("/admin/assignedtasks")}
-          >
-            <Assignment
+            <ButtonBase
               sx={{
-                width: "35px",
-                height: "35px",
-                color: location.pathname.includes("assignedtasks")
-                  ? "primary.main"
-                  : "text.secondary",
+                ...FlexBox,
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                pl: 2.5,
+                py: 1.75,
               }}
-            />
-            <Typography
-              sx={{
-                opacity: openSidebar == "5vw" ? "0" : "1",
-                color: location.pathname.includes("assignedatasks")
-                  ? "primary.main"
-                  : "text.secondary",
-                fontWeight: 700,
-                whiteSpace: "nowrap",
-                transition: "0.1s opacity",
-                transitionDelay: "0.35s",
-                display: { xs: "none", lg: "inherit" },
-              }}
-              variant="body1"
-              color="text.primary"
+              onClick={() => navigate("/admin/assignedtasks")}
             >
-              Assigned Tasks
-            </Typography>
-          </ButtonBase>
+              <Assignment
+                sx={{
+                  width: "35px",
+                  height: "35px",
+                  color: location.pathname.includes("assignedtasks")
+                    ? "primary.main"
+                    : "text.secondary",
+                }}
+              />
+              <Typography
+                sx={{
+                  opacity: openSidebar == "5vw" ? "0" : "1",
+                  color: location.pathname.includes("assignedatasks")
+                    ? "primary.main"
+                    : "text.secondary",
+                  fontWeight: 700,
+                  whiteSpace: "nowrap",
+                  transition: "0.1s opacity",
+                  transitionDelay: "0.35s",
+                  display: { xs: "none", lg: "inherit" },
+                }}
+                variant="body1"
+                color="text.primary"
+              >
+                Assigned Tasks
+              </Typography>
+            </ButtonBase>
 
-          <ButtonBase
-            sx={{
-              ...FlexBox,
-              width: "100%",
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              pl: 2.5,
-              py: 1.75,
-            }}
-            onClick={() =>
-              setOpenSnack({
-                open: true,
-                message: "Feature not yet implemented!",
-                severity: "warning",
-              })
-            }
-          >
-            <QuestionAnswer
+            <ButtonBase
               sx={{
-                width: "35px",
-                height: "35px",
-                color: location.pathname.includes("conversation")
-                  ? "primary.main"
-                  : "text.secondary",
+                ...FlexBox,
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                pl: 2.5,
+                py: 1.75,
               }}
-            />
-            <Typography
-              sx={{
-                opacity: openSidebar == "5vw" ? "0" : "1",
-                color: location.pathname.includes("conversation")
-                  ? "primary.main"
-                  : "text.secondary",
-                fontWeight: 700,
-                whiteSpace: "nowrap",
-                transition: "0.1s opacity",
-                transitionDelay: "0.45s",
-                display: { xs: "none", lg: "inherit" },
-              }}
-              variant="body1"
-              color="text.primary"
+              onClick={() =>
+                setOpenSnack({
+                  open: true,
+                  message: "Feature not yet implemented!",
+                  severity: "warning",
+                })
+              }
             >
-              Conversations
-            </Typography>
-          </ButtonBase>
-          {/* <Divider sx={{width:'100%'}}/> */}
+              <QuestionAnswer
+                sx={{
+                  width: "35px",
+                  height: "35px",
+                  color: location.pathname.includes("conversation")
+                    ? "primary.main"
+                    : "text.secondary",
+                }}
+              />
+              <Typography
+                sx={{
+                  opacity: openSidebar == "5vw" ? "0" : "1",
+                  color: location.pathname.includes("conversation")
+                    ? "primary.main"
+                    : "text.secondary",
+                  fontWeight: 700,
+                  whiteSpace: "nowrap",
+                  transition: "0.1s opacity",
+                  transitionDelay: "0.45s",
+                  display: { xs: "none", lg: "inherit" },
+                }}
+                variant="body1"
+                color="text.primary"
+              >
+                Conversations
+              </Typography>
+            </ButtonBase>
+            {/* <Divider sx={{width:'100%'}}/> */}
 
-          <ButtonBase
-            sx={{
-              ...FlexBox,
-              width: "100%",
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              pl: 2.5,
-              py: 1.75,
-            }}
-            onClick={() => navigate("/admin/addreminders")}
-          >
-            <NotificationAdd
+            <ButtonBase
               sx={{
-                width: "35px",
-                height: "35px",
-                color: location.pathname.includes("reminder")
-                  ? "primary.main"
-                  : "text.secondary",
+                ...FlexBox,
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                pl: 2.5,
+                py: 1.75,
               }}
-            />
-            <Typography
-              sx={{
-                opacity: openSidebar == "5vw" ? "0" : "1",
-                color: location.pathname.includes("reminder")
-                  ? "primary.main"
-                  : "text.secondary",
-                fontWeight: 700,
-                whiteSpace: "nowrap",
-                transition: "0.1s opacity",
-                transitionDelay: "0.55s",
-                display: { xs: "none", lg: "inherit" },
-              }}
-              variant="body1"
-              color="text.primary"
+              onClick={() => navigate("/admin/addreminders")}
             >
-              Add Reminders
-            </Typography>
-          </ButtonBase>
-          {/* <Divider sx={{width:'100%'}}/> */}
-        </Box>
+              <NotificationAdd
+                sx={{
+                  width: "35px",
+                  height: "35px",
+                  color: location.pathname.includes("reminder")
+                    ? "primary.main"
+                    : "text.secondary",
+                }}
+              />
+              <Typography
+                sx={{
+                  opacity: openSidebar == "5vw" ? "0" : "1",
+                  color: location.pathname.includes("reminder")
+                    ? "primary.main"
+                    : "text.secondary",
+                  fontWeight: 700,
+                  whiteSpace: "nowrap",
+                  transition: "0.1s opacity",
+                  transitionDelay: "0.55s",
+                  display: { xs: "none", lg: "inherit" },
+                }}
+                variant="body1"
+                color="text.primary"
+              >
+                Add Reminders
+              </Typography>
+            </ButtonBase>
+            {/* <Divider sx={{width:'100%'}}/> */}
+          </Box>
+        )}
+
+        {/* EMPLOYEE ACTIONS */}
+        {user?.position && (
+          <Box sx={{ ...FlexBox, flex: 6, gap: 0 }}>
+            <ButtonBase
+              sx={{
+                ...FlexBox,
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                pl: 2.5,
+                py: 1.75,
+              }}
+              onClick={() => navigate("/admin/assignedtasks")}
+            >
+              <Grading
+                sx={{
+                  width: "35px",
+                  height: "35px",
+                  color: location.pathname.includes("assignedtasks")
+                    ? "primary.main"
+                    : "text.secondary",
+                }}
+              />
+              <Typography
+                sx={{
+                  opacity: openSidebar == "5vw" ? "0" : "1",
+                  color: location.pathname.includes("assignedatasks")
+                    ? "primary.main"
+                    : "text.secondary",
+                  fontWeight: 700,
+                  whiteSpace: "nowrap",
+                  transition: "0.1s opacity",
+                  transitionDelay: "0.35s",
+                  display: { xs: "none", lg: "inherit" },
+                }}
+                variant="body1"
+                color="text.primary"
+              >
+                Your Tasks
+              </Typography>
+            </ButtonBase>
+            {/* <Divider sx={{width:'100%'}}/> */}
+
+            <ButtonBase
+              sx={{
+                ...FlexBox,
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                pl: 2.5,
+                py: 1.75,
+              }}
+              onClick={() => navigate("/admin/searchemployees")}
+            >
+              <Person
+                sx={{
+                  width: "35px",
+                  height: "35px",
+                  color: location.pathname.includes("searchemployee")
+                    ? "primary.main"
+                    : "text.secondary",
+                }}
+              />
+              <Typography
+                sx={{
+                  opacity: openSidebar == "5vw" ? "0" : "1",
+                  color: location.pathname.includes("searchemployee")
+                    ? "primary.main"
+                    : "text.secondary",
+                  fontWeight: 700,
+                  whiteSpace: "nowrap",
+                  transition: "0.1s opacity",
+                  transitionDelay: "0.25s",
+                  display: { xs: "none", lg: "inherit" },
+                }}
+                variant="body1"
+                color="text.primary"
+              >
+                Your Team
+              </Typography>
+            </ButtonBase>
+            {/* <Divider sx={{width:'100%'}}/> */}
+
+            <ButtonBase
+              sx={{
+                ...FlexBox,
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                pl: 2.5,
+                py: 1.75,
+              }}
+              onClick={() =>
+                setOpenSnack({
+                  open: true,
+                  message: "Feature not yet implemented!",
+                  severity: "warning",
+                })
+              }
+            >
+              <QuestionAnswer
+                sx={{
+                  width: "35px",
+                  height: "35px",
+                  color: location.pathname.includes("conversation")
+                    ? "primary.main"
+                    : "text.secondary",
+                }}
+              />
+              <Typography
+                sx={{
+                  opacity: openSidebar == "5vw" ? "0" : "1",
+                  color: location.pathname.includes("conversation")
+                    ? "primary.main"
+                    : "text.secondary",
+                  fontWeight: 700,
+                  whiteSpace: "nowrap",
+                  transition: "0.1s opacity",
+                  transitionDelay: "0.45s",
+                  display: { xs: "none", lg: "inherit" },
+                }}
+                variant="body1"
+                color="text.primary"
+              >
+                Conversations
+              </Typography>
+            </ButtonBase>
+            {/* <Divider sx={{width:'100%'}}/> */}
+
+            <ButtonBase
+              sx={{
+                ...FlexBox,
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                pl: 2.5,
+                py: 1.75,
+              }}
+              onClick={() => navigate("/admin/addreminders")}
+            >
+              <NotificationAdd
+                sx={{
+                  width: "35px",
+                  height: "35px",
+                  color: location.pathname.includes("reminder")
+                    ? "primary.main"
+                    : "text.secondary",
+                }}
+              />
+              <Typography
+                sx={{
+                  opacity: openSidebar == "5vw" ? "0" : "1",
+                  color: location.pathname.includes("reminder")
+                    ? "primary.main"
+                    : "text.secondary",
+                  fontWeight: 700,
+                  whiteSpace: "nowrap",
+                  transition: "0.1s opacity",
+                  transitionDelay: "0.55s",
+                  display: { xs: "none", lg: "inherit" },
+                }}
+                variant="body1"
+                color="text.primary"
+              >
+                Add Reminders
+              </Typography>
+            </ButtonBase>
+            {/* <Divider sx={{width:'100%'}}/> */}
+          </Box>
+        )}
 
         <Divider sx={{ width: "100%", my: 0 }} />
 
