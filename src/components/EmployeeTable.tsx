@@ -45,22 +45,16 @@ import PopupModal from "./PopupModal";
 import axios from "axios";
 import { useMutation } from "react-query";
 import { DateFormatter } from "./DateFormatter";
-
-type proirity = "Low" | "Medium " | "High";
-
-interface assignTaskDataTypes {
-  assignedTo: string;
-  assignedBy: string;
-  name: string;
-  details: string;
-  deadline: string;
-  priority: proirity;
-}
+import { ExtractedSnackBarTypes, SnackbarTypes } from "../types/SnackbarTypes";
+import { PriorityTypes } from "../types/priorityTypes";
+import { TaskTypes } from "../types/TaskTypes";
 
 export default function EmployeeTable() {
   const { data: empData } = getEmpsQD();
 
-  const { openSnack, setOpenSnack } = useContext(GlobalSnackbarContext);
+  const { openSnack, setOpenSnack } = useContext<ExtractedSnackBarTypes>(
+    GlobalSnackbarContext
+  );
 
   const themeInstance = useTheme();
   const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
@@ -76,7 +70,7 @@ export default function EmployeeTable() {
   const [menuAnchorElement, setMenuAnchorElement] = useState<any>();
 
   const [currentUserDetails, setCurrentUserDetails] = useState<any>({});
-  const [taskPriority, setTaskPriority] = useState<proirity>("Low");
+  const [taskPriority, setTaskPriority] = useState<PriorityTypes>("Low");
   const [taskDeadline, setTaskDeadline] = useState<string>("not-set");
   const taskNameRef = useRef<HTMLInputElement>();
   const taskDetailRef = useRef<HTMLInputElement>();
@@ -117,7 +111,7 @@ export default function EmployeeTable() {
         severity: "warning",
       });
     } else {
-      const assignTaskData: assignTaskDataTypes = {
+      const assignTaskData: TaskTypes = {
         assignedTo: currentUserDetails.userId,
         assignedBy: currentUserDetails.adminId,
         name: taskNameRef?.current?.value || "null",
@@ -536,7 +530,15 @@ export default function EmployeeTable() {
         onClose={() => setOpenOptions(!openOptions)}
         TransitionComponent={Grow}
       >
-        <MenuItem onClick={() => setOpenOptions(!openOptions)}>
+        <MenuItem
+          onClick={() =>
+            setOpenSnack({
+              open: true,
+              message: "Feature not yet implemented!",
+              severity: "warning",
+            })
+          }
+        >
           <Box
             sx={{
               ...FlexBox,

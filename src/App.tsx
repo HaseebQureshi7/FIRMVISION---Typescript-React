@@ -67,7 +67,12 @@ function App() {
     // localStorage.setItem("last-login", date.toLocaleString());   //Full Date
     localStorage.setItem(
       "last-login",
-      date.toLocaleTimeString([], { hour12: true, hour: '2-digit', minute:'2-digit', second: undefined })
+      date.toLocaleTimeString([], {
+        hour12: true,
+        hour: "2-digit",
+        minute: "2-digit",
+        second: undefined,
+      })
     ); //Only Time
   }, []);
 

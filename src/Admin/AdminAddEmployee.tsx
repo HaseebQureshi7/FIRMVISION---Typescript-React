@@ -15,18 +15,24 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { SideFade } from "../components/PageTransition";
 import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
 import AdminPagesContainer from "./AdminPagesContainer";
 import invite from "../assets/images/invite.png";
 import { useNavigate } from "react-router-dom";
+import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
+import { ExtractedSnackBarTypes } from "../types/SnackbarTypes";
 
 export default function AdminAddEmployee() {
   const navigate = useNavigate();
 
   const themeInstance = useTheme();
   const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
+
+  const { openSnack, setOpenSnack } = useContext<ExtractedSnackBarTypes>(
+    GlobalSnackbarContext
+  );
 
   const nameRef = useRef<HTMLInputElement>();
   const emailRef = useRef<HTMLInputElement>();
@@ -36,6 +42,11 @@ export default function AdminAddEmployee() {
 
   function HandleSubmit(e: Event) {
     e.preventDefault();
+    setOpenSnack({
+      open: true,
+      message: "Feature not yet implemented!",
+      severity: "warning",
+    });
   }
 
   return (
@@ -52,7 +63,7 @@ export default function AdminAddEmployee() {
           <Box sx={{ ...FlexBox, alignItems: "flex-start" }}>
             <Typography
               sx={{ fontWeight: 500 }}
-              variant={isXS ? "h4" :"h3"}
+              variant={isXS ? "h4" : "h3"}
               color="text.primary"
             >
               Add An Employee

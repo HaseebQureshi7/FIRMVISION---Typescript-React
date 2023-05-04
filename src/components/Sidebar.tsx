@@ -15,12 +15,18 @@ import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
 import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
+import {
+  ExtractedSnackBarTypes,
+  SnackbarTypes,
+} from "./../types/SnackbarTypes";
 
 export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { openSnack, setOpenSnack } = useContext(GlobalSnackbarContext);
+  const { openSnack, setOpenSnack } = useContext<ExtractedSnackBarTypes>(
+    GlobalSnackbarContext
+  );
 
   return (
     <Box
@@ -39,7 +45,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
           height: "100vh",
           backgroundColor: "background.default",
           // boxShadow: "2px 2px 10px rgba(0, 0, 0, 0.2)",
-          borderRight:'2px solid lightgrey',
+          borderRight: "2px solid lightgrey",
           transition: "width 0.1s ease-in-out",
           position: "fixed",
         }}
@@ -231,6 +237,13 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
               pl: 2.5,
               py: 1.75,
             }}
+            onClick={() =>
+              setOpenSnack({
+                open: true,
+                message: "Feature not yet implemented!",
+                severity: "warning",
+              })
+            }
           >
             <QuestionAnswer
               sx={{
@@ -397,7 +410,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
               setOpenSnack({
                 open: true,
                 message: "Logout was Successful",
-                serverity: "info",
+                severity: "warning",
               });
             }}
             sx={{
