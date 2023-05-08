@@ -53,6 +53,17 @@ export default function AdminLogin() {
       // console.log(data.data.token);
       localStorage.setItem("admin-token", JSON.stringify(data.data.token));
       localStorage.setItem("user", JSON.stringify(data.data.user));
+      // SET LAST LOGIN TIME
+      const date = new Date();
+      localStorage.setItem(
+        "last-login",
+        date.toLocaleTimeString([], {
+          hour12: true,
+          hour: "2-digit",
+          minute: "2-digit",
+          second: undefined,
+        })
+      );
     },
     onError: (err: any) => {
       setOpenSnack({
@@ -83,6 +94,17 @@ export default function AdminLogin() {
       console.log(data.data);
       localStorage.setItem("admin-token", JSON.stringify(data.data.token));
       localStorage.setItem("user", JSON.stringify(data.data.user));
+      // SET LAST LOGIN TIME
+      const date = new Date();
+      localStorage.setItem(
+        "last-login",
+        date.toLocaleTimeString([], {
+          hour12: true,
+          hour: "2-digit",
+          minute: "2-digit",
+          second: undefined,
+        })
+      );
     },
     onError: (err: any) => {
       setOpenSnack({

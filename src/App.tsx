@@ -51,8 +51,7 @@ function App() {
           localStorage.setItem("user", JSON.stringify(res?.data?.user));
         })
         .catch((err) => console.log(err));
-    }
-    if (localStorage.getItem("employee-token")) {
+    } else if (localStorage.getItem("employee-token")) {
       const token = localStorage.getItem("employee-token")?.replace(/"/g, "");
       axios
         .post(import.meta.env.VITE_BASE_URL + "employee/login", { token })
@@ -90,28 +89,43 @@ function App() {
                 <Route path="admin" element={<AdminLanding />} />
                 <Route path="admin/login" element={<AdminLogin />} />
                 <Route path="admin/signup" element={<AdminSignup />} />
-                <Route path="admin/dashboard" element={<AdminDashboard />} />
-                <Route
-                  path="admin/assignedtasks"
-                  element={<AdminAssignedTasks />}
-                />
-                <Route
-                  path="admin/addemployee"
-                  element={<AdminAddEmployee />}
-                />
-                <Route
-                  path="admin/searchemployees"
-                  element={<AdminSearchEmployee />}
-                />
-                <Route
-                  path="admin/addreminders"
-                  element={<AdminAddReminder />}
-                />
-                <Route path="admin/settings" element={<AdminSettings />} />
+
+                {localStorage.getItem("admin-token") ? (
+                  <>
+                    <Route
+                      path="admin/dashboard"
+                      element={<AdminDashboard />}
+                    />
+                    <Route
+                      path="admin/assignedtasks"
+                      element={<AdminAssignedTasks />}
+                    />
+                    <Route
+                      path="admin/addemployee"
+                      element={<AdminAddEmployee />}
+                    />
+                    <Route
+                      path="admin/searchemployees"
+                      element={<AdminSearchEmployee />}
+                    />
+                    <Route
+                      path="admin/addreminders"
+                      element={<AdminAddReminder />}
+                    />
+                    <Route path="admin/settings" element={<AdminSettings />} />
+                  </>
+                ) : null}
 
                 {/* Employee Routes */}
                 <Route path="/employee" element={<EmployeeLogin />} />
-                <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
+                {localStorage.getItem("employee-token") ? (
+                  <>
+                    <Route
+                      path="/employee/dashboard"
+                      element={<EmployeeDashboard />}
+                    />
+                  </>
+                ) : null}
               </Routes>
             </AnimatePresence>
           </ThemeProvider>
