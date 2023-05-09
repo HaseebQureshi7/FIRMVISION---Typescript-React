@@ -37,9 +37,29 @@ export default function EmployeeDashboard() {
 
   const [upTime, setUpTime] = useState<number>(0);
 
+  // const { data: empData } = getEmpsQD();
+
   const user: any | null = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user")!)
     : null;
+
+  const StatisticalData = [
+    {
+      name: "Completed Tasks",
+      // completedTasks: completedTasks?.length,
+      completedTasks: 2,
+    },
+    {
+      name: "Assigned Tasks",
+      // assignedTasks: taskData?.length,
+      assignedTasks: 4,
+    },
+    {
+      name: "Reported Tasks",
+      // reportedTasks: reportedTasks?.length,
+      reportedTasks: 1,
+    },
+  ];
 
   // TOTAL TIME SPENT (ACTIVE TIME)
   useEffect(() => {
@@ -153,6 +173,199 @@ export default function EmployeeDashboard() {
                 <LiveClock />
               </Typography>
             </Box>
+          </Box>
+          {/* ROW 2 */}
+          <Box
+            sx={{
+              ...FlexBox,
+              width: "100%",
+              flexDirection: { xs: "column", lg: "row-reverse" },
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
+            }}
+          >
+            <Box sx={{ width: { xs: "90%", lg: "60%" } }}>
+              <StatisticsChart data={StatisticalData} />
+            </Box>
+            <Box
+              sx={{
+                ...FlexBox,
+                width: { xs: "90%", lg: "40%" },
+                alignItems: "flex-start",
+                p: 2.5,
+                ml: 3,
+                gap: 1,
+                borderRadius: "5px",
+              }}
+            >
+              <Typography variant={isXS ? "h5" : "h5"} color="text.primary">
+                Last Login :{" "}
+                <Box
+                  component="span"
+                  sx={{
+                    fontSize: { xs: "2rem", lg: "2.5rem" },
+                    fontWeight: 700,
+                    color: "info.main",
+                  }}
+                >
+                  {localStorage.getItem("last-login")}
+                </Box>
+              </Typography>
+              {/* <Typography variant="h5" color="text.primary">Notifications Received : <span style={{fontWeight:700, color:'navy'}}>{5}</span></Typography> */}
+              <Typography variant={isXS ? "h5" : "h5"} color="text.primary">
+                Your Efficiency :
+                <Box
+                  component="span"
+                  sx={{
+                    fontSize: { xs: "2rem", lg: "2.5rem" },
+                    fontWeight: 700,
+                    color:
+                      "teamEfficientcyPercentage" <= "50"
+                        ? "error.main"
+                        : "success.main",
+                  }}
+                >
+                  {" "}
+                  {"teamEfficientcyPercentage"}%
+                </Box>
+              </Typography>
+              <Typography variant={isXS ? "h5" : "h5"} color="text.primary">
+                Active Time (Today) :{" "}
+                <Box
+                  component="span"
+                  sx={{
+                    fontSize: { xs: "2rem", lg: "2.5rem" },
+                    fontWeight: 700,
+                    color: "primary.main",
+                  }}
+                >
+                  {"upTime" + " mins"}
+                </Box>
+              </Typography>
+            </Box>
+          </Box>
+          {/* ROW 3 */}
+          <Box
+            sx={{
+              ...FlexBox,
+              gap: { xs: 1, lg: 7.5 },
+              flexDirection: "row",
+              justifyContent: "space-between",
+              px: { xs: 2.5, lg: 5 },
+              py: 2.5,
+            }}
+          >
+            <Tooltip title="Total Employees">
+              <Box
+                onClick={() => navigate("/admin/searchemployees")}
+                sx={{
+                  ...FlexBox,
+                  flexDirection: { xs: "column", lg: "row" },
+                  gap: 2.5,
+                  cursor: "pointer",
+                  backgroundColor: "info.main",
+                  borderRadius: 2,
+                  p: 1,
+                }}
+              >
+                <AssignmentInd
+                  sx={{ width: "40px", height: "40px", color: "white" }}
+                />
+                <Typography
+                  fontWeight={700}
+                  variant={isXS ? "h5" : "h4"}
+                  color="white"
+                >
+                  {"empData?.length"}
+                </Typography>
+              </Box>
+            </Tooltip>
+            <Tooltip title="All Assigned Tasks">
+              <Box
+                onClick={() => navigate("/admin/assignedtasks")}
+                sx={{
+                  ...FlexBox,
+                  flexDirection: { xs: "column", lg: "row" },
+                  gap: 2.5,
+                  cursor: "pointer",
+                  backgroundColor: "success.main",
+                  borderRadius: 2,
+                  p: 1,
+                }}
+              >
+                <Task sx={{ width: "40px", height: "40px", color: "white" }} />
+                <Typography
+                  fontWeight={700}
+                  variant={isXS ? "h5" : "h4"}
+                  color="white"
+                >
+                  {"taskData?.length"}
+                </Typography>
+              </Box>
+            </Tooltip>
+            <Tooltip title="All Reported Tasks">
+              <Box
+                onClick={() => navigate("/admin/assignedtasks")}
+                sx={{
+                  ...FlexBox,
+                  flexDirection: { xs: "column", lg: "row" },
+                  gap: 2.5,
+                  cursor: "pointer",
+                  backgroundColor: "error.main",
+                  borderRadius: 2,
+                  p: 1,
+                }}
+              >
+                <ReportProblem
+                  sx={{ width: "40px", height: "40px", color: "white" }}
+                />
+                <Typography
+                  fontWeight={700}
+                  variant={isXS ? "h5" : "h4"}
+                  color="white"
+                >
+                  {"reportedTasks?.length"}
+                </Typography>
+              </Box>
+            </Tooltip>
+            <Tooltip title="Upcoming Reminders">
+              <Box
+                onClick={() => navigate("/admin/addreminders")}
+                sx={{
+                  ...FlexBox,
+                  flexDirection: { xs: "column", lg: "row" },
+                  gap: 2.5,
+                  cursor: "pointer",
+                  backgroundColor: "warning.main",
+                  borderRadius: 2,
+                  p: 1,
+                }}
+              >
+                <NotificationImportant
+                  sx={{ width: "40px", height: "40px", color: "white" }}
+                />
+                <Typography
+                  fontWeight={700}
+                  variant={isXS ? "h5" : "h4"}
+                  color="white"
+                >
+                  {"remsData?.length"}
+                </Typography>
+              </Box>
+            </Tooltip>
+          </Box>
+          {/* ROW 4 */}
+          <Box
+            sx={{
+              ...FlexBox,
+              gap: { xs: 1, lg: 7.5 },
+              flexDirection: "row",
+              justifyContent: "space-between",
+              px: { xs: 2.5, lg: 5 },
+              py: 2.5,
+            }}
+          >
+            <EmployeeTable />
           </Box>
         </Box>
       </SideFade>

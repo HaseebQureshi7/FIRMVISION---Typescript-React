@@ -1,4 +1,5 @@
 import {
+  AdminPanelSettings,
   Assignment,
   Grading,
   Home,
@@ -331,13 +332,13 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
                 pl: 2.5,
                 py: 1.75,
               }}
-              onClick={() => navigate("/admin/assignedtasks")}
+              onClick={() => navigate("/employee/yourtasks")}
             >
               <Grading
                 sx={{
                   width: "35px",
                   height: "35px",
-                  color: location.pathname.includes("assignedtasks")
+                  color: location.pathname.includes("yourtasks")
                     ? "primary.main"
                     : "text.secondary",
                 }}
@@ -345,7 +346,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
               <Typography
                 sx={{
                   opacity: openSidebar == "5vw" ? "0" : "1",
-                  color: location.pathname.includes("assignedatasks")
+                  color: location.pathname.includes("yourtasks")
                     ? "primary.main"
                     : "text.secondary",
                   fontWeight: 700,
@@ -371,13 +372,13 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
                 pl: 2.5,
                 py: 1.75,
               }}
-              onClick={() => navigate("/admin/searchemployees")}
+              onClick={() => navigate("/employee/yourteam")}
             >
               <Person
                 sx={{
                   width: "35px",
                   height: "35px",
-                  color: location.pathname.includes("searchemployee")
+                  color: location.pathname.includes("yourteam")
                     ? "primary.main"
                     : "text.secondary",
                 }}
@@ -385,7 +386,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
               <Typography
                 sx={{
                   opacity: openSidebar == "5vw" ? "0" : "1",
-                  color: location.pathname.includes("searchemployee")
+                  color: location.pathname.includes("yourteam")
                     ? "primary.main"
                     : "text.secondary",
                   fontWeight: 700,
@@ -457,13 +458,13 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
                 pl: 2.5,
                 py: 1.75,
               }}
-              onClick={() => navigate("/admin/addreminders")}
+              onClick={() => navigate("/employee/adminactions")}
             >
-              <NotificationAdd
+              <AdminPanelSettings
                 sx={{
                   width: "35px",
                   height: "35px",
-                  color: location.pathname.includes("reminder")
+                  color: location.pathname.includes("adminactions")
                     ? "primary.main"
                     : "text.secondary",
                 }}
@@ -471,7 +472,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
               <Typography
                 sx={{
                   opacity: openSidebar == "5vw" ? "0" : "1",
-                  color: location.pathname.includes("reminder")
+                  color: location.pathname.includes("adminactions")
                     ? "primary.main"
                     : "text.secondary",
                   fontWeight: 700,
@@ -483,7 +484,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
                 variant="body1"
                 color="text.primary"
               >
-                Add Reminders
+                Admin Actions
               </Typography>
             </ButtonBase>
             {/* <Divider sx={{width:'100%'}}/> */}
@@ -503,7 +504,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
               pl: 2.5,
               py: 1.75,
             }}
-            onClick={() => navigate("/admin/dashboard")}
+            onClick={() => navigate("/employee/dashboard")}
           >
             <Home
               sx={{
@@ -542,7 +543,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
               pl: 2.5,
               py: 1.75,
             }}
-            onClick={() => navigate("/admin/settings")}
+            onClick={() => navigate("/employee/settings")}
           >
             <Settings
               sx={{

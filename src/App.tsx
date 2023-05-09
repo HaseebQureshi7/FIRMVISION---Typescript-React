@@ -26,6 +26,10 @@ import AdminAddReminder from "./Admin/AdminAddReminder";
 import AdminSettings from "./Admin/AdminSettings";
 import EmployeeLogin from "./Employee/EmployeeLogin";
 import EmployeeDashboard from "./Employee/EmployeeDashboard";
+import EmployeeAssignedTasks from "./Employee/EmployeeAssignedTasks";
+import EmployeeTeam from "./Employee/EmployeeTeam";
+import EmployeeSettings from "./Employee/EmployeeSettings";
+import EmployeeAdminActions from "./Employee/EmployeeAdminActions";
 
 function App() {
   const location = useLocation();
@@ -86,6 +90,7 @@ function App() {
               <Routes location={location} key={location.pathname}>
                 {/* Admin Routes */}
                 <Route path="/" element={<Navigate to="admin" replace />} />
+                <Route path="*" element={<AdminLanding />} />
                 <Route path="admin" element={<AdminLanding />} />
                 <Route path="admin/login" element={<AdminLogin />} />
                 <Route path="admin/signup" element={<AdminSignup />} />
@@ -123,6 +128,22 @@ function App() {
                     <Route
                       path="/employee/dashboard"
                       element={<EmployeeDashboard />}
+                    />
+                    <Route
+                      path="/employee/yourtasks"
+                      element={<EmployeeAssignedTasks />}
+                    />
+                    <Route
+                      path="/employee/yourteam"
+                      element={<EmployeeTeam />}
+                    />
+                    <Route
+                      path="/employee/settings"
+                      element={<EmployeeSettings />}
+                    />
+                    <Route
+                      path="/employee/adminactions"
+                      element={<EmployeeAdminActions />}
                     />
                   </>
                 ) : null}
