@@ -9,12 +9,13 @@ import { Box, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import { DarkModeContext } from "../context/DarkModeContext";
 import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Appbar({ user, openSidebar, setOpenSidebar }: any) {
   const { themeMode, setThemeMode } = useContext(DarkModeContext);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <>
@@ -125,7 +126,7 @@ export default function Appbar({ user, openSidebar, setOpenSidebar }: any) {
               color: "warning.main",
               cursor: "pointer",
               "&:hover": {
-                transformOrigin:'top',
+                transformOrigin: "top",
                 transform: "scale(1.25)",
                 animation: "bell 1s ease forwards infinite",
                 transition: "all 1s ease ",
@@ -147,12 +148,16 @@ export default function Appbar({ user, openSidebar, setOpenSidebar }: any) {
                 },
                 "90%": {
                   rotate: "-45deg",
-                }
-              }
+                },
+              },
             }}
           />
           <Settings
-            onClick={() => navigate("/admin/settings")}
+            onClick={() => {
+              location.pathname.includes("employee")
+                ? navigate("/employee/settings")
+                : navigate("/admin/settings");
+            }}
             sx={{
               width: "25px",
               height: "25px",

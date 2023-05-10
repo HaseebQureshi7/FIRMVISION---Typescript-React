@@ -1,9 +1,12 @@
 import {
   AssignmentInd,
+  EmojiEvents,
+  ExpandMore,
   Groups,
   NotificationImportant,
   ReportProblem,
   Task,
+  TaskAlt,
 } from "@mui/icons-material";
 import {
   Box,
@@ -12,6 +15,9 @@ import {
   useTheme,
   Tooltip,
   Paper,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -28,6 +34,11 @@ import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
 import EmployeePagesContainer from "./EmployeePagesContainer";
 import EmployeeTable from "../components/EmployeeTable";
 import { useNavigate } from "react-router-dom";
+import {
+  getEmpTasksQD,
+  getEmpTeamQD,
+} from "../components/EmployeeGlobalDataHandler";
+import { DateFormatter } from "../components/DateFormatter";
 
 export default function EmployeeDashboard() {
   const themeInstance = useTheme();
@@ -37,27 +48,48 @@ export default function EmployeeDashboard() {
 
   const [upTime, setUpTime] = useState<number>(0);
 
-  // const { data: empData } = getEmpsQD();
+  const { data: empTaskData } = getEmpTasksQD();
+  const { data: empTeam } = getEmpTeamQD();
 
   const user: any | null = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user")!)
     : null;
 
+  // ACTIVE TASKS
+  const activeTasks = empTaskData?.filter((data: any) => {
+    return data.status == "incomplete";
+  });
+
+  // COMPLETED TASKS
+  const completedTasks = empTaskData?.filter((data: any) => {
+    return data.status == "complete";
+  });
+
+  // REPORTED TASKS.
+  // LOOKS FOR STATUS COMPLETION WITH NO SUBMITTION REPORT.
+  const reportedTasks = empTaskData?.filter((data: any) => {
+    return data.status == "reported";
+  });
+
+  // YOUR EFFICIENCY
+  const yourEfficiency =
+    (completedTasks?.length / empTaskData?.length) * 100 + "%";
+
   const StatisticalData = [
     {
       name: "Completed Tasks",
-      // completedTasks: completedTasks?.length,
-      completedTasks: 2,
+      completedTasks: completedTasks?.length,
+      // completedTasks: 2
     },
     {
       name: "Assigned Tasks",
-      // assignedTasks: taskData?.length,
-      assignedTasks: 4,
+      assignedTasks: empTaskData?.length,
+      // assignedTasks: 4,
     },
     {
       name: "Reported Tasks",
-      // reportedTasks: reportedTasks?.length,
-      reportedTasks: 1,
+      reportedTasks: reportedTasks?.length,
+      // reportedTasks: 1,
     },
   ];
 
@@ -226,7 +258,7 @@ export default function EmployeeDashboard() {
                   }}
                 >
                   {" "}
-                  {"teamEfficientcyPercentage"}%
+                  {yourEfficiency}
                 </Box>
               </Typography>
               <Typography variant={isXS ? "h5" : "h5"} color="text.primary">
@@ -239,7 +271,7 @@ export default function EmployeeDashboard() {
                     color: "primary.main",
                   }}
                 >
-                  {"upTime" + " mins"}
+                  {upTime + " mins"}
                 </Box>
               </Typography>
             </Box>
@@ -252,10 +284,157 @@ export default function EmployeeDashboard() {
               flexDirection: "row",
               justifyContent: "space-between",
               px: { xs: 2.5, lg: 5 },
+              py: 0,
+            }}
+          >
+            {/* <Newest Tasks /> */}
+            <Box
+              sx={{
+                ...FlexBox,
+                width: "100%",
+                flexDirection: "column",
+                alignItems: { xs: "center", lg: "flex-start" },
+                justifyContent: "flex-start",
+                gap: 0,
+              }}
+            >
+              <Typography
+                sx={{ fontWeight: 500, my: 5 }}
+                variant={isXS ? "h5" : "h4"}
+                color="primary.main"
+              >
+                Newest Tasks ({activeTasks?.length})
+              </Typography>
+
+              <Box
+                sx={{
+                  ...FlexBox,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  px: 2.5,
+                }}
+              >
+                <Typography fontWeight={700} color="GrayText" variant="body1">
+                  Priority
+                </Typography>
+                <Typography fontWeight={700} color="GrayText" variant="body1">
+                  Task Name
+                </Typography>
+                <Typography fontWeight={700} color="GrayText" variant="body1">
+                  Deadline
+                </Typography>
+                <Typography fontWeight={700} color="GrayText" variant="body1">
+                  Details
+                </Typography>
+              </Box>
+
+              {activeTasks?.map((data: any) => {
+                return (
+                  <Accordion
+                    key={data?._id}
+                    elevation={3}
+                    sx={{ flex: 1, width: "100%", p: 1, m: 1 }}
+                  >
+                    <AccordionSummary
+                      expandIcon={<ExpandMore />}
+                      aria-label="Expand"
+                      aria-controls="-content"
+                      id="-header"
+                    >
+                      <Box
+                        sx={{
+                          ...FlexBox,
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Typography
+                          fontWeight={700}
+                          color={
+                            data?.priority === "High"
+                              ? "error.main"
+                              : data?.priority === "Low"
+                              ? "success.main"
+                              : data?.priority === "Neutral"
+                              ? "info.main"
+                              : "success.main"
+                          }
+                          variant={isXS ? "body2" : "body1"}
+                        >
+                          {data?.priority}
+                        </Typography>
+                        <Typography
+                          fontWeight={700}
+                          color="text.primary"
+                          variant={isXS ? "body2" : "body1"}
+                        >
+                          {data?.name}
+                        </Typography>
+                        <Typography
+                          fontWeight={700}
+                          color="text.primary"
+                          variant={isXS ? "body2" : "body1"}
+                        >
+                          {DateFormatter(data?.deadline)}
+                        </Typography>
+                        <Typography
+                          fontWeight={700}
+                          color="GrayText"
+                          variant={isXS ? "body2" : "body1"}
+                        ></Typography>
+                      </Box>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Typography
+                        fontWeight={700}
+                        color="primary.main"
+                        variant={isXS ? "body2" : "body1"}
+                      >
+                        {data?.details}
+                      </Typography>
+                    </AccordionDetails>
+                  </Accordion>
+                );
+              })}
+            </Box>
+          </Box>
+          {/* ROW 4 */}
+          <Box
+            sx={{
+              ...FlexBox,
+              gap: { xs: 1, lg: 7.5 },
+              flexDirection: "row",
+              justifyContent: "space-between",
+              px: { xs: 2.5, lg: 5 },
               py: 2.5,
             }}
           >
-            <Tooltip title="Total Employees">
+            <Tooltip title="Your Efficiency">
+              <Box
+                // onClick={() => navigate("/admin/addreminders")}
+                sx={{
+                  ...FlexBox,
+                  flexDirection: { xs: "column", lg: "row" },
+                  gap: 2.5,
+                  cursor: "pointer",
+                  backgroundColor: "warning.main",
+                  borderRadius: 2,
+                  p: 1,
+                }}
+              >
+                <EmojiEvents
+                  sx={{ width: "40px", height: "40px", color: "white" }}
+                />
+                <Typography
+                  fontWeight={700}
+                  variant={isXS ? "h5" : "h4"}
+                  color="white"
+                >
+                  {yourEfficiency}
+                </Typography>
+              </Box>
+            </Tooltip>
+            <Tooltip title="Completed Tasks">
               <Box
                 onClick={() => navigate("/admin/searchemployees")}
                 sx={{
@@ -268,7 +447,7 @@ export default function EmployeeDashboard() {
                   p: 1,
                 }}
               >
-                <AssignmentInd
+                <TaskAlt
                   sx={{ width: "40px", height: "40px", color: "white" }}
                 />
                 <Typography
@@ -276,7 +455,7 @@ export default function EmployeeDashboard() {
                   variant={isXS ? "h5" : "h4"}
                   color="white"
                 >
-                  {"empData?.length"}
+                  {completedTasks?.length}
                 </Typography>
               </Box>
             </Tooltip>
@@ -299,7 +478,7 @@ export default function EmployeeDashboard() {
                   variant={isXS ? "h5" : "h4"}
                   color="white"
                 >
-                  {"taskData?.length"}
+                  {empTaskData?.length}
                 </Typography>
               </Box>
             </Tooltip>
@@ -324,48 +503,10 @@ export default function EmployeeDashboard() {
                   variant={isXS ? "h5" : "h4"}
                   color="white"
                 >
-                  {"reportedTasks?.length"}
+                  {reportedTasks?.length}
                 </Typography>
               </Box>
             </Tooltip>
-            <Tooltip title="Upcoming Reminders">
-              <Box
-                onClick={() => navigate("/admin/addreminders")}
-                sx={{
-                  ...FlexBox,
-                  flexDirection: { xs: "column", lg: "row" },
-                  gap: 2.5,
-                  cursor: "pointer",
-                  backgroundColor: "warning.main",
-                  borderRadius: 2,
-                  p: 1,
-                }}
-              >
-                <NotificationImportant
-                  sx={{ width: "40px", height: "40px", color: "white" }}
-                />
-                <Typography
-                  fontWeight={700}
-                  variant={isXS ? "h5" : "h4"}
-                  color="white"
-                >
-                  {"remsData?.length"}
-                </Typography>
-              </Box>
-            </Tooltip>
-          </Box>
-          {/* ROW 4 */}
-          <Box
-            sx={{
-              ...FlexBox,
-              gap: { xs: 1, lg: 7.5 },
-              flexDirection: "row",
-              justifyContent: "space-between",
-              px: { xs: 2.5, lg: 5 },
-              py: 2.5,
-            }}
-          >
-            <EmployeeTable />
           </Box>
         </Box>
       </SideFade>
