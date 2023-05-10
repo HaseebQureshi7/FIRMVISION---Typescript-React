@@ -9,10 +9,10 @@ import { FadeIn } from "./PageTransition";
 import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
 import { ReplayOutlined, ReportProblem } from "@mui/icons-material";
 import logo from "../assets/images/Logo-easework.png";
+import isXSmall from "./isXSmall";
 
 export default function ErrorPage() {
-  const themeInstance = useTheme();
-  const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
+  const { isXS } = isXSmall();
 
   return (
     <FadeIn>

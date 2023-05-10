@@ -23,12 +23,12 @@ import invite from "../assets/images/invite.png";
 import { useNavigate } from "react-router-dom";
 import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
 import { ExtractedSnackBarTypes } from "../types/SnackbarTypes";
+import isXSmall from "../components/isXSmall";
 
 export default function AdminAddEmployee() {
   const navigate = useNavigate();
 
-  const themeInstance = useTheme();
-  const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
+  const { isXS } = isXSmall();
 
   const { openSnack, setOpenSnack } = useContext<ExtractedSnackBarTypes>(
     GlobalSnackbarContext

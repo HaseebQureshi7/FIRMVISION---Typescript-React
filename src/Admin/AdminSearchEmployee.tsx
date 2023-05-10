@@ -32,12 +32,12 @@ import invite from "../assets/images/invite.png";
 import { useNavigate } from "react-router-dom";
 import { getEmpsQD } from "../components/AdminGlobalDataHandler";
 import EmployeeTable from "../components/EmployeeTable";
+import isXSmall from "../components/isXSmall";
 
 export default function AdminSearchEmployee() {
   const navigate = useNavigate();
 
-  const themeInstance = useTheme();
-  const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
+  const { isXS } = isXSmall();
 
   const nameRef = useRef<HTMLInputElement>();
 

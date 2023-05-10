@@ -46,8 +46,9 @@ import axios from "axios";
 import { useMutation } from "react-query";
 import { DateFormatter } from "./DateFormatter";
 import { ExtractedSnackBarTypes, SnackbarTypes } from "../types/SnackbarTypes";
-import { PriorityTypes } from "../types/priorityTypes";
 import { TaskTypes } from "../types/TaskTypes";
+import { PriorityTypes } from "../types/priorityTypes";
+import isXSmall from "./isXSmall";
 
 export default function EmployeeTable() {
   const { data: empData } = getEmpsQD();
@@ -56,8 +57,7 @@ export default function EmployeeTable() {
     GlobalSnackbarContext
   );
 
-  const themeInstance = useTheme();
-  const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
+  const { isXS } = isXSmall();
 
   const [allEmployeeTasks, setAllEmployeeTasks] = useState<Array<any>>([]);
   const [singleEmployeeTasks, setSingleAllEmployeeTasks] = useState<Array<any>>(

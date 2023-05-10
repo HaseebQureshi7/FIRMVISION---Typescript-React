@@ -29,6 +29,7 @@ import { MobileDatePicker } from "@mui/x-date-pickers";
 import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
 import { useMutation } from "react-query";
 import axios from "axios";
+import isXSmall from "../components/isXSmall";
 
 export default function AdminAddReminder() {
   const navigate = useNavigate();
@@ -39,8 +40,7 @@ export default function AdminAddReminder() {
 
   const { openSnack, setOpenSnack } = useContext(GlobalSnackbarContext);
 
-  const themeInstance = useTheme();
-  const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
+  const { isXS } = isXSmall();
 
   const nameRef = useRef<HTMLInputElement>();
   const detailsRef = useRef<HTMLInputElement>();

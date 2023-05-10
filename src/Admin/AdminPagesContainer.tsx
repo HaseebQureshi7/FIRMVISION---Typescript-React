@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import Appbar from "../components/Appbar";
 import Sidebar from "../components/Sidebar";
 import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
+import isXSmall from "../components/isXSmall";
 
 export default function AdminPagesContainer({ children }: any) {
-  const themeInstance = useTheme();
-  const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
+  const { isXS } = isXSmall();
 
   const user: string | null = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user")!)

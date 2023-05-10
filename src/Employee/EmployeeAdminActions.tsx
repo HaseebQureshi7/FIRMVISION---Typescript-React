@@ -16,10 +16,10 @@ import {
   InsertPageBreak,
   Receipt,
 } from "@mui/icons-material";
+import isXSmall from "../components/isXSmall";
 
 export default function EmployeeAdminActions() {
-  const themeInstance = useTheme();
-  const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
+  const { isXS } = isXSmall();
 
   return (
     <EmployeePagesContainer>

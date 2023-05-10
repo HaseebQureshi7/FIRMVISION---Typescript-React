@@ -28,10 +28,11 @@ import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
 import AdminPagesContainer from "./AdminPagesContainer";
 import EmployeeTable from "../components/EmployeeTable";
 import { useNavigate } from "react-router-dom";
+import isXSmall from "../components/isXSmall";
 
 export default function AdminDashboard() {
-  const themeInstance = useTheme();
-  const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
+  
+  const { isXS } = isXSmall();
 
   const navigate = useNavigate();
 

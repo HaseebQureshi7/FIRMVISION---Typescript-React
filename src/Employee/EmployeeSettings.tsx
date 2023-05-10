@@ -17,10 +17,10 @@ import { Cancel, Done, Edit, Password, Photo } from "@mui/icons-material";
 import axios from "axios";
 import { useMutation } from "react-query";
 import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
+import isXSmall from "../components/isXSmall";
 
 export default function EmployeeSettings() {
-  const themeInstance = useTheme();
-  const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
+  const { isXS } = isXSmall();
 
   const user: any | null = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user")!)

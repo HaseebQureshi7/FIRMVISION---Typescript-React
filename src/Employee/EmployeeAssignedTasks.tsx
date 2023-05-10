@@ -37,24 +37,26 @@ import invite from "../assets/images/invite.png";
 import { useNavigate } from "react-router-dom";
 import { getTasksQD } from "../components/AdminGlobalDataHandler";
 import { DateFormatter } from "../components/DateFormatter";
+import isXSmall from "../components/isXSmall";
+import { getEmpTasksQD } from "../components/EmployeeGlobalDataHandler";
+import TaskCard from "../components/TaskCard";
 
 export default function EmployeeAssignedTasks() {
   const navigate = useNavigate();
 
-  const themeInstance = useTheme();
-  const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
+  const { isXS } = isXSmall();
 
   const nameRef = useRef<HTMLInputElement>();
 
-  const { data: taskData } = getTasksQD();
+  const { data: empTaskData } = getEmpTasksQD();
 
   // ACTIVE TASKS
-  const activeTasks = taskData?.filter((data: any) => {
+  const activeTasks = empTaskData?.filter((data: any) => {
     return data.status == "incomplete";
   });
 
   // COMPLETED TASKS
-  const completedTasks = taskData?.filter((data: any) => {
+  const completedTasks = empTaskData?.filter((data: any) => {
     return data.status == "complete";
   });
 
@@ -191,70 +193,9 @@ export default function EmployeeAssignedTasks() {
 
               {activeTasks?.map((data: any) => {
                 return (
-                  <Accordion
-                    key={data?._id}
-                    elevation={3}
-                    sx={{ flex: 1, width: "100%", p: 1, m: 1 }}
-                  >
-                    <AccordionSummary
-                      expandIcon={<ExpandMore />}
-                      aria-label="Expand"
-                      aria-controls="-content"
-                      id="-header"
-                    >
-                      <Box
-                        sx={{
-                          ...FlexBox,
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <Typography
-                          fontWeight={700}
-                          color={
-                            data?.priority === "High"
-                              ? "error.main"
-                              : data?.priority === "Low"
-                              ? "success.main"
-                              : data?.priority === "Neutral"
-                              ? "info.main"
-                              : "success.main"
-                          }
-                          variant={isXS ? "body2" : "body1"}
-                        >
-                          {data?.priority}
-                        </Typography>
-                        <Typography
-                          fontWeight={700}
-                          color="text.primary"
-                          variant={isXS ? "body2" : "body1"}
-                        >
-                          {data?.name}
-                        </Typography>
-                        <Typography
-                          fontWeight={700}
-                          color="text.primary"
-                          variant={isXS ? "body2" : "body1"}
-                        >
-                          {DateFormatter(data?.deadline)}
-                        </Typography>
-                        <Typography
-                          fontWeight={700}
-                          color="GrayText"
-                          variant={isXS ? "body2" : "body1"}
-                        ></Typography>
-                      </Box>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography
-                        fontWeight={700}
-                        color="primary.main"
-                        variant={isXS ? "body2" : "body1"}
-                      >
-                        {data?.details}
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
+                  <Box key={data._id} sx={{ width: "100%" }}>
+                    <TaskCard data={data} />
+                  </Box>
                 );
               })}
             </Box>
@@ -302,79 +243,9 @@ export default function EmployeeAssignedTasks() {
 
               {completedTasks?.map((data: any) => {
                 return (
-                  <Accordion
-                    key={data?._id}
-                    elevation={3}
-                    sx={{ flex: 1, width: "100%", p: 1, m: 1 }}
-                  >
-                    <AccordionSummary
-                      expandIcon={<ExpandMore />}
-                      aria-label="Expand"
-                      aria-controls="-content"
-                      id="-header"
-                    >
-                      <Box
-                        sx={{
-                          ...FlexBox,
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <Typography
-                          fontWeight={700}
-                          color={
-                            data?.priority === "High"
-                              ? "error.main"
-                              : data?.priority === "Low"
-                              ? "success.main"
-                              : data?.priority === "Neutral"
-                              ? "info.main"
-                              : "success.main"
-                          }
-                          variant={isXS ? "body2" : "body1"}
-                        >
-                          {data?.priority}
-                        </Typography>
-                        <Typography
-                          fontWeight={700}
-                          color="text.primary"
-                          variant={isXS ? "body2" : "body1"}
-                        >
-                          {data?.name}
-                        </Typography>
-                        <Typography
-                          fontWeight={700}
-                          color="text.primary"
-                          variant={isXS ? "body2" : "body1"}
-                        >
-                          {data?.deadline}
-                        </Typography>
-                        <Typography
-                          fontWeight={700}
-                          color="GrayText"
-                          variant={isXS ? "body2" : "body1"}
-                        >
-                          Details
-                        </Typography>
-                      </Box>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography
-                        fontWeight={700}
-                        color="primary.main"
-                        variant={isXS ? "body2" : "body1"}
-                      >
-                        {data?.details}
-                      </Typography>
-                      <Typography
-                        fontWeight={700}
-                        color="text.primary"
-                        variant={isXS ? "body2" : "body1"}
-                      >
-                        Report - {data?.submittionReport}
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
+                  <Box key={data._id} sx={{ width: "100%" }}>
+                    <TaskCard data={data} />
+                  </Box>
                 );
               })}
             </Box>

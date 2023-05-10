@@ -9,10 +9,10 @@ import {
   Legend,
   Tooltip,
 } from "recharts";
+import isXSmall from "./isXSmall";
 
 export default function StatisticsChart({ data }: any) {
-  const themeInstance = useTheme();
-  const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
+  const { isXS } = isXSmall();
 
   return (
     <>
