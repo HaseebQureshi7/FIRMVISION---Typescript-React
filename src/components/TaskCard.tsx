@@ -7,8 +7,9 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
+  Button,
 } from "@mui/material";
-import { ExpandMore } from "@mui/icons-material";
+import { Done, ExpandMore, Report } from "@mui/icons-material";
 import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
 import { DateFormatter } from "./DateFormatter";
 import isXSmall from "./isXSmall";
@@ -73,13 +74,56 @@ export default function TaskCard({ data }: any) {
           </Box>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography
-            fontWeight={700}
-            color="primary.main"
-            variant={isXS ? "body2" : "body1"}
-          >
-            {data?.details}
+          <Typography variant={isXS ? "body2" : "body1"}>
+            Task Details -{" "}
+            <Box
+              component={"span"}
+              sx={{ color: "primary.main", fontWeight: 700 }}
+            >
+              {data?.details}
+            </Box>
           </Typography>
+          {data?.status == "complete" ? (
+            <Typography variant={isXS ? "body2" : "body1"}>
+              Report -{" "}
+              <Box
+                component={"span"}
+                sx={{ color: "info.main", fontWeight: 700 }}
+              >
+                {data?.submittionReport}
+              </Box>
+            </Typography>
+          ) : (
+            ""
+          )}
+          {localStorage.getItem("employee-token") &&
+          data?.status == "incomplete" ? (
+            <Box
+              sx={{
+                ...FlexBox,
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                mt: 2.5,
+              }}
+            >
+              <Button
+                size={isXS ? "small" : "large"}
+                startIcon={<Done />}
+                variant="contained"
+                color="primary"
+              >
+                Submit Report
+              </Button>
+              <Button
+                size={isXS ? "small" : "large"}
+                startIcon={<Report />}
+                variant="contained"
+                color="error"
+              >
+                Report Problem
+              </Button>
+            </Box>
+          ) : null}
         </AccordionDetails>
       </Accordion>
     </SideFade>

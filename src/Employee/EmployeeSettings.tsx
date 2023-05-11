@@ -32,14 +32,9 @@ export default function EmployeeSettings() {
 
   const nameRef = useRef<HTMLInputElement>();
   const phoneRef = useRef<HTMLInputElement>();
-  const companyNameRef = useRef<HTMLInputElement>();
   const [currImg, setCurrImg] = useState<any>(user?.picture);
 
-  const [directMessage, setDirectMessage] = useState<boolean>(
-    user?.directMessage
-  );
-
-  const authToken = localStorage.getItem("admin-token");
+  const authToken = localStorage.getItem("employee-token");
   const Authheaders = {
     headers: {
       Authorization: `Bearer ${authToken}`,
@@ -48,7 +43,7 @@ export default function EmployeeSettings() {
 
   const editSettingsQF = (editSettingsQD: any) => {
     return axios.put(
-      import.meta.env.VITE_BASE_URL + "admin/editprofile",
+      import.meta.env.VITE_BASE_URL + "employee/editprofile",
       editSettingsQD,
       Authheaders
     );
@@ -76,34 +71,10 @@ export default function EmployeeSettings() {
     const editQueryData: any = {
       name: nameRef?.current?.value,
       phone: phoneRef?.current?.value,
-      companyName: companyNameRef?.current?.value,
       picture: currImg ? currImg : user?.picture,
     };
 
     mutateEditQuery(editQueryData);
-  }
-
-  function UpdatePermissions(directMessage: any) {
-    axios
-      .put(
-        import.meta.env.VITE_BASE_URL + "admin/editprofile",
-        { directMessage },
-        Authheaders
-      )
-      .then((res) =>
-        setOpenSnack({
-          open: true,
-          message: "Permission change was successful!",
-          severity: "success",
-        })
-      )
-      .catch((err) =>
-        setOpenSnack({
-          open: true,
-          message: "Failed to change permission!",
-          severity: "error",
-        })
-      );
   }
 
   function FakePathToBase64(e: any) {
@@ -252,6 +223,7 @@ export default function EmployeeSettings() {
                     Phone
                   </Typography>
                   <TextField
+                    type="number"
                     inputRef={phoneRef}
                     sx={{ width: "65%" }}
                     id="standard-basic"
@@ -278,16 +250,13 @@ export default function EmployeeSettings() {
                   <Typography variant="body2" color="text.secondary">
                     Organization Name
                   </Typography>
-                  <TextField
-                    inputRef={companyNameRef}
-                    sx={{ width: "65%" }}
-                    id="standard-basic"
-                    variant="standard"
-                    defaultValue={user?.companyName}
-                    InputProps={{
-                      sx: { fontSize: "1.25rem", fontWeight: 700 },
-                    }}
-                  />
+                  <Typography
+                    variant={isXS ? "h6" : "h5"}
+                    fontWeight={700}
+                    color="text.secondary"
+                  >
+                    {user?.companyName}
+                  </Typography>
                 </Box>
               </Box>
             )}
