@@ -23,7 +23,30 @@ export default function TaskCard({ data }: any) {
   const [openSubmitModal, setOpenSubmitModal] = useState<boolean>();
   const [openReportModal, setOpenReportModal] = useState<boolean>();
 
-  const reportRef = useRef<HTMLInputElement>();
+  const submittionReportRef = useRef<HTMLInputElement>();
+  const reportTaskRef = useRef<HTMLInputElement>();
+
+  const date = new Date();
+
+  function HandleSubmit(e: Event) {
+    e.preventDefault();
+    console.log({
+      id: data?._id,
+      report: submittionReportRef?.current?.value,
+      status: "complete",
+      completionDate: date.toISOString(),
+    });
+  }
+
+  function HandleReport(e: Event) {
+    e.preventDefault();
+    console.log({
+      id: data?._id,
+      report: reportTaskRef?.current?.value,
+      status: "reported",
+      completionDate: date.toISOString(),
+    });
+  }
 
   return (
     <SideFade>
@@ -33,9 +56,14 @@ export default function TaskCard({ data }: any) {
         setOpenModal={setOpenSubmitModal}
         headerText={"Submit Completion Report"}
       >
-        <Stack sx={{ p: 2, width: "100%" }}>
+        <Stack
+          component={"form"}
+          onSubmit={(e: any) => HandleSubmit(e)}
+          sx={{ p: 2, width: "100%" }}
+        >
           <TextField
-            inputRef={reportRef}
+            inputRef={submittionReportRef}
+            required
             multiline
             rows={4}
             label="Task Report"
@@ -56,7 +84,7 @@ export default function TaskCard({ data }: any) {
               Cancel
             </Button>
             <Button
-              // onClick={() => UpdateTask()}
+              type="submit"
               size="large"
               startIcon={<Done />}
               variant="contained"
@@ -73,13 +101,17 @@ export default function TaskCard({ data }: any) {
         setOpenModal={setOpenReportModal}
         headerText={"Report this Task"}
       >
-        <Stack sx={{ p: 2, width: "100%" }}>
+        <Stack
+          component={"form"}
+          onSubmit={(e: any) => HandleReport(e)}
+          sx={{ p: 2, width: "100%" }}
+        >
           <TextField
-            inputRef={reportRef}
+            inputRef={reportTaskRef}
             multiline
+            required
             rows={4}
-            label="Task Report"
-            // defaultValue="Default Value"
+            label="Report you issue"
           />
           <Stack
             sx={{ width: "100%", mt: 2, justifyContent: "flex-end" }}
@@ -96,7 +128,7 @@ export default function TaskCard({ data }: any) {
               Cancel
             </Button>
             <Button
-              // onClick={() => UpdateTask()}
+              type="submit"
               size="large"
               endIcon={<Report />}
               variant="contained"

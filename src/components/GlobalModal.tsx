@@ -20,7 +20,7 @@ import { MobileDatePicker } from "@mui/x-date-pickers";
 import isXSmall from "./isXSmall";
 
 export default function GlobalModal({
-  openModal,
+  openModal = false,
   setOpenModal,
   headerText,
   children,
