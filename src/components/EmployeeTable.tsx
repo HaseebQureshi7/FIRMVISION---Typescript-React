@@ -49,6 +49,7 @@ import { ExtractedSnackBarTypes, SnackbarTypes } from "../types/SnackbarTypes";
 import { TaskTypes } from "../types/TaskTypes";
 import { PriorityTypes } from "../types/priorityTypes";
 import isXSmall from "./isXSmall";
+import TaskCard from "./TaskCard";
 
 export default function EmployeeTable() {
   const { data: empData } = getEmpsQD();
@@ -446,69 +447,9 @@ export default function EmployeeTable() {
             </Box>
             {singleEmployeeTasks?.map((data: any) => {
               return (
-                <Accordion
-                  key={data?._id}
-                  elevation={3}
-                  sx={{ width: "100%", m: 1, p: 1 }}
-                >
-                  <AccordionSummary
-                    expandIcon={<ExpandMore />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Box
-                      sx={{
-                        ...FlexBox,
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Typography
-                        fontWeight={700}
-                        color={
-                          data?.priority === "High"
-                            ? "error.main"
-                            : data?.priority === "Low"
-                            ? "success.main"
-                            : data?.priority === "Neutral"
-                            ? "info.main"
-                            : "success.main"
-                        }
-                        variant={isXS ? "body2" : "body1"}
-                      >
-                        {data?.priority}
-                      </Typography>
-                      <Typography
-                        fontWeight={700}
-                        color="text.primary"
-                        variant={isXS ? "body2" : "body1"}
-                      >
-                        {data?.name}
-                      </Typography>
-                      <Typography
-                        fontWeight={700}
-                        color="text.primary"
-                        variant={isXS ? "body2" : "body1"}
-                      >
-                        {DateFormatter(data?.deadline)}
-                      </Typography>
-                      <Typography
-                        fontWeight={700}
-                        color="GrayText"
-                        variant={isXS ? "body2" : "body1"}
-                      ></Typography>
-                    </Box>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography
-                      fontWeight={700}
-                      color="primary.main"
-                      variant={isXS ? "body2" : "body1"}
-                    >
-                      {data?.details}
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
+                <Box sx={{ width: "100%" }}>
+                  <TaskCard data={data} />
+                </Box>
               );
             })}
           </Box>

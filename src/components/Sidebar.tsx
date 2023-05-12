@@ -504,7 +504,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
               pl: 2.5,
               py: 1.75,
             }}
-            onClick={() => navigate("/employee/dashboard")}
+            onClick={() => {location.pathname.includes('employee') ? navigate("/employee/dashboard") : navigate("/admin/dashboard")}}
           >
             <Home
               sx={{
@@ -543,7 +543,7 @@ export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
               pl: 2.5,
               py: 1.75,
             }}
-            onClick={() => navigate("/employee/settings")}
+            onClick={() => {location.pathname.includes('employee') ? navigate("/employee/settings") : navigate("/admin/settings")}}
           >
             <Settings
               sx={{

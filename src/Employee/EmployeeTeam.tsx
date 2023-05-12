@@ -162,55 +162,56 @@ export default function EmployeeTeam() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {empTeam?.map((data: any) => {
-                    return (
-                      <TableRow
-                        key={data._id}
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }}
-                      >
-                        <TableCell align="center">
-                          <Avatar src={data.picture} />
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                          {data.name}
-                        </TableCell>
-                        <TableCell align="left">{data.position}</TableCell>
-                        <TableCell align="center">{"X"}</TableCell>
-                        <TableCell align="right">
-                          <Box
-                            sx={{
-                              ...FlexBox,
-                              flexDirection: "row",
-                              justifyContent: "flex-end",
-                              "& > svg": {
-                                margin: "15px",
-                              },
-                            }}
-                          >
+                  {empTeam &&
+                    empTeam?.map((data: any) => {
+                      return (
+                        <TableRow
+                          key={data._id}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                        >
+                          <TableCell align="center">
+                            <Avatar src={data.picture} />
+                          </TableCell>
+                          <TableCell component="th" scope="row">
+                            {data.name}
+                          </TableCell>
+                          <TableCell align="left">{data.position}</TableCell>
+                          <TableCell align="center">{"X"}</TableCell>
+                          <TableCell align="right">
                             <Box
-                              component={"a"}
-                              href={`tel:${data?.phone}`}
                               sx={{
-                                textDecoration: "none",
+                                ...FlexBox,
+                                flexDirection: "row",
+                                justifyContent: "flex-end",
+                                "& > svg": {
+                                  margin: "15px",
+                                },
                               }}
                             >
-                              <Call
+                              <Box
+                                component={"a"}
+                                href={`tel:${data?.phone}`}
                                 sx={{
-                                  color: "success.main",
-                                  cursor: "pointer",
+                                  textDecoration: "none",
                                 }}
+                              >
+                                <Call
+                                  sx={{
+                                    color: "success.main",
+                                    cursor: "pointer",
+                                  }}
+                                />
+                              </Box>
+                              <Message
+                                sx={{ color: "info.main", cursor: "pointer" }}
                               />
                             </Box>
-                            <Message
-                              sx={{ color: "info.main", cursor: "pointer" }}
-                            />
-                          </Box>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
                 </TableBody>
               </Table>
             </TableContainer>

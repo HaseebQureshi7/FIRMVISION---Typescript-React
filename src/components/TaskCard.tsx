@@ -13,12 +13,19 @@ import { Done, ExpandMore, Report } from "@mui/icons-material";
 import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
 import { DateFormatter } from "./DateFormatter";
 import isXSmall from "./isXSmall";
+import PopupModal from "./PopupModal";
+import { useState } from "react";
 
 export default function TaskCard({ data }: any) {
   const { isXS } = isXSmall();
+  const [openModal, setOpenModal] = useState<boolean>();
 
   return (
     <SideFade>
+      <PopupModal
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+      ></PopupModal>
       <Accordion
         key={data?._id}
         elevation={3}
@@ -107,6 +114,7 @@ export default function TaskCard({ data }: any) {
               }}
             >
               <Button
+                onClick={() => setOpenModal(!openModal)}
                 size={isXS ? "small" : "large"}
                 startIcon={<Done />}
                 variant="contained"

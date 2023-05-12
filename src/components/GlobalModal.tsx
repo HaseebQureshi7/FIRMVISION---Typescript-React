@@ -1,0 +1,72 @@
+import {
+  Box,
+  Button,
+  InputAdornment,
+  MenuItem,
+  Modal,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
+import {
+  Clear,
+  DriveFileRenameOutline,
+  Details,
+  Add,
+} from "@mui/icons-material";
+import { MobileDatePicker } from "@mui/x-date-pickers";
+import isXSmall from "./isXSmall";
+
+export default function GlobalModal({
+  openModal,
+  setOpenModal,
+  headerText,
+  children,
+}: any) {
+  const { isXS } = isXSmall();
+  return (
+    <>
+      <Modal
+        sx={{ ...FlexBox, width: "100%", height: "100%" }}
+        open={openModal}
+        onClose={() => setOpenModal(!openModal)}
+      >
+        <Box
+          sx={{
+            ...FlexBox,
+            p: { xs: 1, lg: 2.5 },
+            height: "75vh",
+            width: { xs: "100%", lg: "75%" },
+            borderRadius: "5px",
+            alignItems: "flex-start",
+            justifyContent: "flex-start",
+            backgroundColor: "background.default",
+          }}
+        >
+          {/* MODAL HEADER */}
+          <Box
+            sx={{
+              ...FlexBox,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              p: 1,
+              pr: { xs: 1, lg: 2.5 },
+            }}
+          >
+            <Typography color="text.primary" variant={isXS ? "h5" : "h4"}>
+              {headerText}
+            </Typography>
+            <Clear
+              sx={{ cursor: "pointer", color: "text.primary" }}
+              onClick={() => setOpenModal(!openModal)}
+              fontSize={"large"}
+            />
+          </Box>
+          {/* MODAL BODY */}
+          <>{children}</>
+        </Box>
+      </Modal>
+    </>
+  );
+}
