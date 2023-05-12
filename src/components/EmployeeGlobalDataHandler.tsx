@@ -1,23 +1,12 @@
 import axios from "axios";
 import { useQuery } from "react-query";
-
-const authToken = localStorage.getItem("admin-token")
-  ? localStorage.getItem("admin-token")
-  : localStorage.getItem("employee-token");
-
-//   console.log(authToken)
-
-export const Authheaders = {
-  headers: {
-    Authorization: `Bearer ${authToken}`,
-  },
-};
+import AuthHeaders from "./AuthHeaders";
 
 // ALL EMP TASKS QUERY FUNCTION
 const getEmpTasksQF = () => {
   return axios.get(
     import.meta.env.VITE_BASE_URL + "task/viewemployeetasks",
-    Authheaders
+    AuthHeaders()
   );
 };
 
@@ -35,7 +24,7 @@ export const getEmpTasksQD = () => {
 const getEmpTeamQF = () => {
   return axios.get(
     import.meta.env.VITE_BASE_URL + "employee/getteam",
-    Authheaders
+    AuthHeaders()
   );
 };
 

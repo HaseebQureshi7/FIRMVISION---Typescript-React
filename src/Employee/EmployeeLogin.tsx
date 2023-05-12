@@ -49,10 +49,9 @@ export default function EmployeeLogin() {
         message: "Logged in successfully!",
         severity: "success",
       });
-      navigate("/employee/dashboard");
-      // console.log(data.data.token);
       localStorage.setItem("employee-token", JSON.stringify(data.data.token));
       localStorage.setItem("user", JSON.stringify(data.data.user));
+      navigate("/employee/dashboard");
       // SET LAST LOGIN TIME
       const date = new Date();
       localStorage.setItem(
@@ -90,10 +89,9 @@ export default function EmployeeLogin() {
         message: "Logged in successfully!",
         severity: "success",
       });
-      navigate("/employee/dashboard");
-      console.log(data.data);
       localStorage.setItem("employee-token", JSON.stringify(data.data.token));
       localStorage.setItem("user", JSON.stringify(data.data.user));
+      navigate("/employee/dashboard");
       // SET LAST LOGIN TIME
       const date = new Date();
       localStorage.setItem(
@@ -121,7 +119,6 @@ export default function EmployeeLogin() {
       email: emailRef?.current?.value,
       password: passwordRef?.current?.value,
     };
-    console.log(loginQueryData);
     mutate(loginQueryData);
   }
 

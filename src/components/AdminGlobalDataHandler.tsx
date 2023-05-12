@@ -1,18 +1,13 @@
 import axios from "axios";
 import { useMutation, useQuery } from "react-query";
-
-const authToken = localStorage.getItem("admin-token");
-export const Authheaders = {
-  headers: {
-    Authorization: `Bearer ${authToken}`,
-  },
-};
+import AuthHeaders from "./AuthHeaders";
 
 const getEmpsQF = () => {
+  console.log(AuthHeaders());
   return axios.post(
     import.meta.env.VITE_BASE_URL + "admin/getemployees",
     {},
-    Authheaders
+    AuthHeaders()
   );
 };
 
@@ -20,7 +15,7 @@ const getTasksQF = () => {
   return axios.post(
     import.meta.env.VITE_BASE_URL + "admin/getallassignedtasks",
     {},
-    Authheaders
+    AuthHeaders()
   );
 };
 
@@ -28,7 +23,7 @@ const getRemsQF = () => {
   return axios.post(
     import.meta.env.VITE_BASE_URL + "admin/getreminders",
     {},
-    Authheaders
+    AuthHeaders()
   );
 };
 

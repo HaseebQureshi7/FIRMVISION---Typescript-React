@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Divider,
   InputAdornment,
   MenuItem,
   Modal,
@@ -36,9 +37,10 @@ export default function GlobalModal({
           sx={{
             ...FlexBox,
             p: { xs: 1, lg: 2.5 },
-            height: "75vh",
+            height: "auto",
             width: { xs: "100%", lg: "75%" },
             borderRadius: "5px",
+            gap: 1,
             alignItems: "flex-start",
             justifyContent: "flex-start",
             backgroundColor: "background.default",
@@ -54,7 +56,11 @@ export default function GlobalModal({
               pr: { xs: 1, lg: 2.5 },
             }}
           >
-            <Typography color="text.primary" variant={isXS ? "h5" : "h4"}>
+            <Typography
+              color="text.primary"
+              fontWeight={500}
+              variant={isXS ? "h5" : "h4"}
+            >
               {headerText}
             </Typography>
             <Clear
@@ -63,6 +69,7 @@ export default function GlobalModal({
               fontSize={"large"}
             />
           </Box>
+          <Divider sx={{ width: "100%" }} />
           {/* MODAL BODY */}
           <>{children}</>
         </Box>

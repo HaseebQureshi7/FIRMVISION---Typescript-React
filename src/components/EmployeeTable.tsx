@@ -37,11 +37,10 @@ import {
   AccordionDetails,
 } from "@mui/material";
 import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
-import { Authheaders, getEmpsQD } from "./AdminGlobalDataHandler";
+import { getEmpsQD } from "./AdminGlobalDataHandler";
 import { useContext, useEffect, useRef, useState } from "react";
 import { MobileDatePicker } from "@mui/x-date-pickers";
 import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
-import PopupModal from "./PopupModal";
 import axios from "axios";
 import { useMutation } from "react-query";
 import { DateFormatter } from "./DateFormatter";
@@ -50,6 +49,8 @@ import { TaskTypes } from "../types/TaskTypes";
 import { PriorityTypes } from "../types/priorityTypes";
 import isXSmall from "./isXSmall";
 import TaskCard from "./TaskCard";
+import GlobalModal from "./GlobalModal";
+import AuthHeaders from "./AuthHeaders";
 
 export default function EmployeeTable() {
   const { data: empData } = getEmpsQD();
@@ -81,7 +82,7 @@ export default function EmployeeTable() {
     return axios.post(
       import.meta.env.VITE_BASE_URL + "task/createtask",
       assignTaskData,
-      Authheaders
+      AuthHeaders()
     );
   };
 
@@ -136,7 +137,7 @@ export default function EmployeeTable() {
     axios
       .get(
         import.meta.env.VITE_BASE_URL + "task/viewassignedadmintasks/",
-        Authheaders
+        AuthHeaders()
       )
       .then((res) => {
         setAllEmployeeTasks(res.data);
@@ -148,313 +149,234 @@ export default function EmployeeTable() {
   return (
     <>
       {/* ADD TASK MODAL */}
-      <PopupModal
+      <GlobalModal
         openModal={openAddTaskModal}
         setOpenModal={setOpenAddTaskModal}
+        headerText={`Assign a new task to ${currentUserDetails?.userName}`}
+      >
+        <Box
+          component="form"
+          onSubmit={(e: any) => AssignTaskToEmployee(e)}
+          sx={{
+            ...FlexBox,
+            flexDirection: "column",
+            gap: 1,
+          }}
+        >
+          {/* INPUT */}
+          <Box
+            sx={{
+              ...FlexBox,
+              alignItems: "flex-start",
+              justifyContent: "space-evenly",
+              p: 1,
+              gap: 1,
+            }}
+          >
+            <Typography
+              variant="subtitle1"
+              fontWeight={700}
+              color="text.secondary"
+            >
+              Name
+            </Typography>
+            <TextField
+              required
+              inputRef={taskNameRef}
+              sx={{ width: { xs: "100%", lg: "50%" } }}
+              placeholder="Enter the Task Name"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment
+                    sx={{ width: "auto", height: "auto" }}
+                    position="start"
+                  >
+                    <DriveFileRenameOutline sx={{ p: 0.15, mr: 1 }} />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Box>
+          {/* ROW INPUTS  */}
+          <Box sx={{ ...FlexBox, flexDirection: "row" }}>
+            {/* SELECT */}
+            <Box
+              sx={{
+                ...FlexBox,
+                alignItems: "flex-start",
+                justifyContent: "space-evenly",
+                p: 1,
+                gap: 1,
+              }}
+            >
+              <Typography
+                variant="subtitle1"
+                fontWeight={700}
+                color="text.secondary"
+              >
+                Priority
+              </Typography>
+              <Select
+                sx={{
+                  width: "100%",
+                  color:
+                    taskPriority == "Low"
+                      ? "success.main"
+                      : taskPriority == "High"
+                      ? "error.main"
+                      : "info.main",
+                  fontWeight: 700,
+                }}
+                value={taskPriority}
+                onChange={(e: any) => setTaskPriority(e?.target?.value)}
+              >
+                <MenuItem value={"Low"}>Low</MenuItem>
+                <MenuItem value={"Medium"}>Medium</MenuItem>
+                <MenuItem value={"High"}>High</MenuItem>
+              </Select>
+            </Box>
+            {/* MUI-X DATEFIELD */}
+            <Box
+              sx={{
+                ...FlexBox,
+                alignItems: "flex-start",
+                justifyContent: "space-evenly",
+                p: 1,
+                gap: 1,
+              }}
+            >
+              <Typography
+                variant="subtitle1"
+                fontWeight={700}
+                color="text.secondary"
+              >
+                Deadline
+              </Typography>
+              <MobileDatePicker
+                sx={{ width: { xs: "100%", lg: "100%" } }}
+                onChange={(newValue: any) =>
+                  setTaskDeadline(newValue.$d.toISOString())
+                }
+              />
+            </Box>
+          </Box>
+          {/* INPUT */}
+          <Box
+            sx={{
+              ...FlexBox,
+              alignItems: "flex-start",
+              justifyContent: "space-evenly",
+              p: 1,
+              gap: 1,
+            }}
+          >
+            <Typography
+              variant="subtitle1"
+              fontWeight={700}
+              color="text.secondary"
+            >
+              Details
+            </Typography>
+            <TextField
+              required
+              inputRef={taskDetailRef}
+              sx={{ width: "100%" }}
+              placeholder="Enter the Task Details"
+              multiline
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment
+                    sx={{ width: "auto", height: "auto" }}
+                    position="start"
+                  >
+                    <Details sx={{ p: 0.15, mr: 1 }} />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Box>
+          {/* BUTTON */}
+          <Box
+            sx={{
+              ...FlexBox,
+              flexDirection: "row",
+              alignItems: "flex-end",
+              justifyContent: "flex-end",
+              p: 1,
+              gap: 1,
+            }}
+          >
+            {/* CANCEL BTN */}
+            <Button
+              onClick={() => {
+                setOpenAddTaskModal(false);
+              }}
+              endIcon={<Clear fontSize="large" />}
+              sx={{ p: "8px 25px", fontWeight: 700 }}
+              variant="contained"
+              size={isXS ? "small" : "large"}
+              color="error"
+            >
+              Cancel Action
+            </Button>
+            {/* ADD BTN */}
+            <Button
+              type="submit"
+              endIcon={<Add fontSize="large" />}
+              sx={{ p: "8px 25px", fontWeight: 700 }}
+              variant="contained"
+              size={isXS ? "small" : "large"}
+              color="success"
+            >
+              Assign Task
+            </Button>
+          </Box>
+        </Box>
+      </GlobalModal>
+
+      {/* VIEW EMPLOYEE TASKS MODAL */}
+      <GlobalModal
+        openModal={openActiveTasks}
+        setOpenModal={setOpenActiveTasks}
+        headerText={`Active tasks assigned to ${currentUserDetails?.userName}`}
       >
         <Box
           sx={{
             ...FlexBox,
-            p: { xs: 1, lg: 2.5 },
-            height: "75vh",
-            width: { xs: "100%", lg: "75%" },
-            borderRadius: "5px",
-            alignItems: "flex-start",
-            justifyContent: "flex-start",
-            backgroundColor: "background.default",
+            flexDirection: "column",
+            gap: 1,
           }}
         >
-          {/* MODAL HEADER */}
           <Box
             sx={{
               ...FlexBox,
               flexDirection: "row",
               justifyContent: "space-between",
-              p: 1,
-              pr: { xs: 1, lg: 2.5 },
+              px: 2.5,
             }}
           >
-            <Typography color="text.primary" variant={isXS ? "h5" : "h4"}>
-              Assign a new task to{" "}
-              <Box
-                component="span"
-                sx={{
-                  fontWeight: 700,
-                  color: "primary.main",
-                }}
-              >
-                {currentUserDetails?.userName}
-              </Box>
+            <Typography fontWeight={700} color="GrayText" variant="body1">
+              Priority
             </Typography>
-            <Clear
-              sx={{ cursor: "pointer", color: "text.primary" }}
-              onClick={() => setOpenAddTaskModal(!openAddTaskModal)}
-              fontSize={"large"}
-            />
-          </Box>
-          {/* MODAL BODY */}
-          <Box
-            component="form"
-            onSubmit={(e: any) => AssignTaskToEmployee(e)}
-            sx={{
-              ...FlexBox,
-              flexDirection: "column",
-              gap: 1,
-            }}
-          >
-            {/* INPUT */}
-            <Box
-              sx={{
-                ...FlexBox,
-                alignItems: "flex-start",
-                justifyContent: "space-evenly",
-                p: 1,
-                gap: 1,
-              }}
-            >
-              <Typography
-                variant="subtitle1"
-                fontWeight={700}
-                color="text.secondary"
-              >
-                Name
-              </Typography>
-              <TextField
-                required
-                inputRef={taskNameRef}
-                sx={{ width: { xs: "100%", lg: "50%" } }}
-                placeholder="Enter the Task Name"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment
-                      sx={{ width: "auto", height: "auto" }}
-                      position="start"
-                    >
-                      <DriveFileRenameOutline sx={{ p: 0.15, mr: 1 }} />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Box>
-            {/* ROW INPUTS  */}
-            <Box sx={{ ...FlexBox, flexDirection: "row" }}>
-              {/* SELECT */}
-              <Box
-                sx={{
-                  ...FlexBox,
-                  alignItems: "flex-start",
-                  justifyContent: "space-evenly",
-                  p: 1,
-                  gap: 1,
-                }}
-              >
-                <Typography
-                  variant="subtitle1"
-                  fontWeight={700}
-                  color="text.secondary"
-                >
-                  Priority
-                </Typography>
-                <Select
-                  sx={{
-                    width: "100%",
-                    color:
-                      taskPriority == "Low"
-                        ? "success.main"
-                        : taskPriority == "High"
-                        ? "error.main"
-                        : "info.main",
-                    fontWeight: 700,
-                  }}
-                  value={taskPriority}
-                  onChange={(e: any) => setTaskPriority(e?.target?.value)}
-                >
-                  <MenuItem value={"Low"}>Low</MenuItem>
-                  <MenuItem value={"Medium"}>Medium</MenuItem>
-                  <MenuItem value={"High"}>High</MenuItem>
-                </Select>
-              </Box>
-              {/* MUI-X DATEFIELD */}
-              <Box
-                sx={{
-                  ...FlexBox,
-                  alignItems: "flex-start",
-                  justifyContent: "space-evenly",
-                  p: 1,
-                  gap: 1,
-                }}
-              >
-                <Typography
-                  variant="subtitle1"
-                  fontWeight={700}
-                  color="text.secondary"
-                >
-                  Deadline
-                </Typography>
-                <MobileDatePicker
-                  sx={{ width: { xs: "100%", lg: "100%" } }}
-                  onChange={(newValue: any) =>
-                    setTaskDeadline(newValue.$d.toISOString())
-                  }
-                />
-              </Box>
-            </Box>
-            {/* INPUT */}
-            <Box
-              sx={{
-                ...FlexBox,
-                alignItems: "flex-start",
-                justifyContent: "space-evenly",
-                p: 1,
-                gap: 1,
-              }}
-            >
-              <Typography
-                variant="subtitle1"
-                fontWeight={700}
-                color="text.secondary"
-              >
-                Details
-              </Typography>
-              <TextField
-                required
-                inputRef={taskDetailRef}
-                sx={{ width: "100%" }}
-                placeholder="Enter the Task Details"
-                multiline
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment
-                      sx={{ width: "auto", height: "auto" }}
-                      position="start"
-                    >
-                      <Details sx={{ p: 0.15, mr: 1 }} />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Box>
-            {/* BUTTON */}
-            <Box
-              sx={{
-                ...FlexBox,
-                flexDirection: "row",
-                alignItems: "flex-end",
-                justifyContent: "flex-end",
-                p: 1,
-                gap: 1,
-              }}
-            >
-              {/* CANCEL BTN */}
-              <Button
-                onClick={() => {
-                  setOpenAddTaskModal(false);
-                }}
-                endIcon={<Clear fontSize="large" />}
-                sx={{ p: "8px 25px", fontWeight: 700 }}
-                variant="contained"
-                size={isXS ? "small" : "large"}
-                color="error"
-              >
-                Cancel Action
-              </Button>
-              {/* ADD BTN */}
-              <Button
-                type="submit"
-                endIcon={<Add fontSize="large" />}
-                sx={{ p: "8px 25px", fontWeight: 700 }}
-                variant="contained"
-                size={isXS ? "small" : "large"}
-                color="success"
-              >
-                Assign Task
-              </Button>
-            </Box>
-          </Box>
-        </Box>
-      </PopupModal>
-
-      {/* VIEW EMPLOYEE TASKS MODAL */}
-      <PopupModal openModal={openActiveTasks} setOpenModal={setOpenActiveTasks}>
-        <Box
-          sx={{
-            ...FlexBox,
-            p: { xs: 1, lg: 2.5 },
-            height: "75vh",
-            width: { xs: "100%", lg: "75%" },
-            borderRadius: "5px",
-            alignItems: "flex-start",
-            justifyContent: "flex-start",
-            backgroundColor: "background.default",
-          }}
-        >
-          {/* MODAL HEADER */}
-          <Box
-            sx={{
-              ...FlexBox,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              p: 1,
-              pr: { xs: 1, lg: 2.5 },
-            }}
-          >
-            <Typography color="text.primary" variant={isXS ? "h5" : "h4"}>
-              Active tasks assigned to{" "}
-              <Box
-                component="span"
-                sx={{
-                  fontWeight: 700,
-                  color: "primary.main",
-                }}
-              >
-                {currentUserDetails?.userName}
-              </Box>
+            <Typography fontWeight={700} color="GrayText" variant="body1">
+              Task Name
             </Typography>
-            <Clear
-              sx={{ cursor: "pointer", color: "text.primary" }}
-              onClick={() => setOpenActiveTasks(!openActiveTasks)}
-              fontSize={"large"}
-            />
+            <Typography fontWeight={700} color="GrayText" variant="body1">
+              Deadline
+            </Typography>
+            <Typography fontWeight={700} color="GrayText" variant="body1">
+              Details
+            </Typography>
           </Box>
-          {/* MODAL BODY */}
-          <Box
-            sx={{
-              ...FlexBox,
-              flexDirection: "column",
-              gap: 1,
-            }}
-          >
-            <Box
-              sx={{
-                ...FlexBox,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                px: 2.5,
-              }}
-            >
-              <Typography fontWeight={700} color="GrayText" variant="body1">
-                Priority
-              </Typography>
-              <Typography fontWeight={700} color="GrayText" variant="body1">
-                Task Name
-              </Typography>
-              <Typography fontWeight={700} color="GrayText" variant="body1">
-                Deadline
-              </Typography>
-              <Typography fontWeight={700} color="GrayText" variant="body1">
-                Details
-              </Typography>
-            </Box>
-            {singleEmployeeTasks?.map((data: any) => {
-              return (
-                <Box sx={{ width: "100%" }}>
-                  <TaskCard data={data} />
-                </Box>
-              );
-            })}
-          </Box>
+          {singleEmployeeTasks?.map((data: any) => {
+            return (
+              <Box sx={{ width: "100%" }}>
+                <TaskCard data={data} />
+              </Box>
+            );
+          })}
         </Box>
-      </PopupModal>
+      </GlobalModal>
 
       {/* OPEN EMPLOYEE OPTIONS MENU */}
       <Menu

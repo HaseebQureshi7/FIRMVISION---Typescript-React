@@ -43,16 +43,15 @@ export default function AdminLogin() {
 
   // CONVENTIONAL LOGIN QF
   const { mutate, isLoading } = useMutation(loginQF, {
-    onSuccess: (data) => {
+    onSuccess: (data) =>  {
       setOpenSnack({
         open: true,
         message: "Logged in successfully!",
         severity: "success",
       });
-      navigate("/admin/dashboard");
-      // console.log(data.data.token);
       localStorage.setItem("admin-token", JSON.stringify(data.data.token));
       localStorage.setItem("user", JSON.stringify(data.data.user));
+      navigate("/admin/dashboard");
       // SET LAST LOGIN TIME
       const date = new Date();
       localStorage.setItem(
@@ -90,10 +89,9 @@ export default function AdminLogin() {
         message: "Logged in successfully!",
         severity: "success",
       });
-      navigate("/admin/dashboard");
-      console.log(data.data);
       localStorage.setItem("admin-token", JSON.stringify(data.data.token));
       localStorage.setItem("user", JSON.stringify(data.data.user));
+      navigate("/admin/dashboard");
       // SET LAST LOGIN TIME
       const date = new Date();
       localStorage.setItem(

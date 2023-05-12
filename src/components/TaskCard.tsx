@@ -8,24 +8,107 @@ import {
   useMediaQuery,
   useTheme,
   Button,
+  Stack,
+  TextField,
 } from "@mui/material";
-import { Done, ExpandMore, Report } from "@mui/icons-material";
+import { Cancel, Done, ExpandMore, Report } from "@mui/icons-material";
 import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
 import { DateFormatter } from "./DateFormatter";
 import isXSmall from "./isXSmall";
-import PopupModal from "./PopupModal";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import GlobalModal from "./GlobalModal";
 
 export default function TaskCard({ data }: any) {
   const { isXS } = isXSmall();
-  const [openModal, setOpenModal] = useState<boolean>();
+  const [openSubmitModal, setOpenSubmitModal] = useState<boolean>();
+  const [openReportModal, setOpenReportModal] = useState<boolean>();
+
+  const reportRef = useRef<HTMLInputElement>();
 
   return (
     <SideFade>
-      <PopupModal
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-      ></PopupModal>
+      {/* SUBMITTION REPORT MODAL */}
+      <GlobalModal
+        openModal={openSubmitModal}
+        setOpenModal={setOpenSubmitModal}
+        headerText={"Submit Completion Report"}
+      >
+        <Stack sx={{ p: 2, width: "100%" }}>
+          <TextField
+            inputRef={reportRef}
+            multiline
+            rows={4}
+            label="Task Report"
+            // defaultValue="Default Value"
+          />
+          <Stack
+            sx={{ width: "100%", mt: 2, justifyContent: "flex-end" }}
+            direction={"row"}
+          >
+            <Button
+              onClick={() => setOpenSubmitModal(!openSubmitModal)}
+              size="large"
+              startIcon={<Cancel />}
+              sx={{ mx: 1 }}
+              variant="contained"
+              color={"error"}
+            >
+              Cancel
+            </Button>
+            <Button
+              // onClick={() => UpdateTask()}
+              size="large"
+              startIcon={<Done />}
+              variant="contained"
+              color="success"
+            >
+              Submit Report
+            </Button>
+          </Stack>
+        </Stack>
+      </GlobalModal>
+      {/* REPORT TASK MODAL */}
+      <GlobalModal
+        openModal={openReportModal}
+        setOpenModal={setOpenReportModal}
+        headerText={"Report this Task"}
+      >
+        <Stack sx={{ p: 2, width: "100%" }}>
+          <TextField
+            inputRef={reportRef}
+            multiline
+            rows={4}
+            label="Task Report"
+            // defaultValue="Default Value"
+          />
+          <Stack
+            sx={{ width: "100%", mt: 2, justifyContent: "flex-end" }}
+            direction={"row"}
+          >
+            <Button
+              onClick={() => setOpenReportModal(!openReportModal)}
+              size="large"
+              startIcon={<Cancel />}
+              sx={{ mx: 1 }}
+              variant="contained"
+              color={"error"}
+            >
+              Cancel
+            </Button>
+            <Button
+              // onClick={() => UpdateTask()}
+              size="large"
+              endIcon={<Report />}
+              variant="contained"
+              color="warning"
+            >
+              Report Task
+            </Button>
+          </Stack>
+        </Stack>
+      </GlobalModal>
+
+      {/* TASK CARD */}
       <Accordion
         key={data?._id}
         elevation={3}
@@ -114,7 +197,7 @@ export default function TaskCard({ data }: any) {
               }}
             >
               <Button
-                onClick={() => setOpenModal(!openModal)}
+                onClick={() => setOpenSubmitModal(!openSubmitModal)}
                 size={isXS ? "small" : "large"}
                 startIcon={<Done />}
                 variant="contained"
@@ -123,6 +206,7 @@ export default function TaskCard({ data }: any) {
                 Submit Report
               </Button>
               <Button
+                onClick={() => setOpenReportModal(!openReportModal)}
                 size={isXS ? "small" : "large"}
                 startIcon={<Report />}
                 variant="contained"
