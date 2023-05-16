@@ -46,7 +46,7 @@ import { useMutation } from "react-query";
 import { DateFormatter } from "./DateFormatter";
 import { ExtractedSnackBarTypes, SnackbarTypes } from "../types/SnackbarTypes";
 import { TaskTypes } from "../types/TaskTypes";
-import { PriorityTypes } from "../types/priorityTypes";
+import { PriorityTypes } from "../types/PriorityTypes";
 import isXSmall from "./isXSmall";
 import TaskCard from "./TaskCard";
 import GlobalModal from "./GlobalModal";
