@@ -80,7 +80,6 @@ export default function AdminDashboard() {
   });
 
   // REPORTED TASKS.
-  // LOOKS FOR STATUS COMPLETION WITH NO SUBMITTION REPORT.
   const reportedTasks = taskData?.filter((data: any) => {
     return data.status == "reported";
   });
@@ -89,7 +88,6 @@ export default function AdminDashboard() {
   const teamEfficiencyData = taskData?.filter((data: any) => {
     return data.status == "complete";
   });
-
   const teamEfficientcyPercentage: number = Math.floor(
     (teamEfficiencyData?.length / taskData?.length) * 100
   );
