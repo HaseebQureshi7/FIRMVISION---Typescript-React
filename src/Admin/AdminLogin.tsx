@@ -19,7 +19,6 @@ import { useNavigate } from "react-router-dom";
 import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
 import { useContext, useEffect, useRef, useState } from "react";
 import jwt_decode from "jwt-decode";
-import google from "../types/GoogleType";
 
 export default function AdminLogin() {
   const navigate = useNavigate();

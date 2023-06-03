@@ -27,7 +27,6 @@ import axios from "axios";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
-import google from "../types/GoogleType";
 
 export default function AdminSignup() {
   const [userDetails, setUserDetails] = useState<any>({});
