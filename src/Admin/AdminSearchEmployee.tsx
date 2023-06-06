@@ -81,13 +81,14 @@ export default function AdminSearchEmployee() {
               sx={{
                 ...FlexBox,
                 flexDirection: "row",
+                justifyContent:'flex-start',
                 alignItems: { xs: "center", lg: "flex-start" },
               }}
             >
               <TextField
                 required
                 onChange={(e: any) => {
-                  setSearchEmp(e.target.value), console.log(e.target.value);
+                  setSearchEmp(e.target.value);
                 }}
                 variant="standard"
                 sx={{ width: { xs: "100%", lg: "50%" } }}
@@ -98,12 +99,12 @@ export default function AdminSearchEmployee() {
                       sx={{ width: "auto", height: "auto" }}
                       position="start"
                     >
-                      <Badge sx={{ p: 0.15, mr: 1 }} />
+                      <Search sx={{ p: 0.15, mr: 1 }} />
                     </InputAdornment>
                   ),
                 }}
               />
-              <IconButton
+              {/* <IconButton
                 sx={{ mr: { xs: "0%", lg: "25%" } }}
                 type="submit"
                 aria-label="search-employees"
@@ -111,16 +112,16 @@ export default function AdminSearchEmployee() {
                 color="primary"
               >
                 <Search />
-              </IconButton>
-              <IconButton
+              </IconButton> */}
+              {/* <IconButton
                 sx={{ mx: { xs: "0%", lg: "2.5%" } }}
                 aria-label="filter-employees"
                 size="large"
                 color="info"
               >
                 <FilterAlt />
-              </IconButton>
-              <IconButton
+              </IconButton> */}
+              {/* <IconButton
                 onClick={() => navigate("/admin/addemployee")}
                 sx={{ mx: { xs: "0%", lg: "2.5%" } }}
                 aria-label="add-employees"
@@ -128,7 +129,7 @@ export default function AdminSearchEmployee() {
                 color="success"
               >
                 <PersonAdd />
-              </IconButton>
+              </IconButton> */}
             </Box>
             {/* ROW 2 */}
             <EmployeeTable sort={searchEmp} />

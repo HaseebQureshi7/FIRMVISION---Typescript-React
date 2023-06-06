@@ -57,7 +57,7 @@ export default function EmployeeTeam() {
   // FINDS THE ELEMENT THROUGH REG EXP SEARCH AND REUTRNS ONLY THAT ELEMENT
   const sortedEmps = empTeam && [
     ...empTeam.filter((data: any) =>
-      data?.name.toLowerCase().includes(searchEmp)
+      data?.name.toLowerCase().includes(searchEmp.toLowerCase())
     ),
   ];
 
@@ -100,6 +100,7 @@ export default function EmployeeTeam() {
               sx={{
                 ...FlexBox,
                 flexDirection: "row",
+                justifyContent: "flex-start",
                 alignItems: { xs: "center", lg: "flex-start" },
               }}
             >
@@ -115,12 +116,12 @@ export default function EmployeeTeam() {
                       sx={{ width: "auto", height: "auto" }}
                       position="start"
                     >
-                      <Badge sx={{ p: 0.15, mr: 1 }} />
+                      <Search sx={{ p: 0.15, mr: 1 }} />
                     </InputAdornment>
                   ),
                 }}
               />
-              <IconButton
+              {/* <IconButton
                 sx={{ mr: { xs: "0%", lg: "25%" } }}
                 type="submit"
                 aria-label="search-employees"
@@ -145,7 +146,7 @@ export default function EmployeeTeam() {
                 color="success"
               >
                 <PersonAdd />
-              </IconButton>
+              </IconButton> */}
             </Box>
             {/* ROW 2 */}
             {/* TABLE */}

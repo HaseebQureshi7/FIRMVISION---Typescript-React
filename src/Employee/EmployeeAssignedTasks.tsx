@@ -55,7 +55,13 @@ export default function EmployeeAssignedTasks() {
   // SEARCHED TASKS
   const searchedTasks = empTaskData && [
     empTaskData.find((data: any) =>
-      data.name.toLowerCase().includes(searchedTaskText)
+      data.name
+        .toLowerCase()
+        .includes(
+          searchedTaskText == undefined
+            ? searchedTaskText
+            : searchedTaskText.toLowerCase()
+        )
     ),
   ];
 
@@ -108,6 +114,7 @@ export default function EmployeeAssignedTasks() {
               sx={{
                 ...FlexBox,
                 flexDirection: "row",
+                justifyContent: "flex-start",
                 alignItems: { xs: "center", lg: "flex-start" },
               }}
             >
@@ -123,7 +130,7 @@ export default function EmployeeAssignedTasks() {
                       sx={{ width: "auto", height: "auto" }}
                       position="start"
                     >
-                      <Badge
+                      <Search
                         sx={{ mb: 1, mr: 1 }}
                         fontSize={isXS ? "small" : "medium"}
                       />
@@ -131,7 +138,7 @@ export default function EmployeeAssignedTasks() {
                   ),
                 }}
               />
-              <IconButton
+              {/* <IconButton
                 sx={{ mr: { xs: "0%", lg: "25%" } }}
                 type="submit"
                 aria-label="search-tasks"
@@ -156,7 +163,7 @@ export default function EmployeeAssignedTasks() {
                 color="success"
               >
                 <Add />
-              </IconButton>
+              </IconButton> */}
             </Box>
             {/* SEARCH RESULTS */}
             {searchedTaskText?.length >= 1 && searchedTasks[0] != undefined && (

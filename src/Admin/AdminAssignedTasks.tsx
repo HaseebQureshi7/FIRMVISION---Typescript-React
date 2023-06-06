@@ -52,10 +52,16 @@ export default function AdminAssignedTasks() {
   // SEARCHED TASKS
   const searchedTasks = taskData && [
     taskData.find((data: any) =>
-      data.name.toLowerCase().includes(searchedTaskText)
+      data.name
+        .toLowerCase()
+        .includes(
+          searchedTaskText == undefined
+            ? searchedTaskText
+            : searchedTaskText.toLowerCase()
+        )
     ),
   ];
-  console.log(searchedTasks);
+  console.log(searchedTaskText);
 
   // ACTIVE TASKS
   const activeTasks = taskData?.filter((data: any) => {
@@ -106,6 +112,7 @@ export default function AdminAssignedTasks() {
               sx={{
                 ...FlexBox,
                 flexDirection: "row",
+                justifyContent: "flex-start",
                 alignItems: { xs: "center", lg: "flex-start" },
               }}
             >
@@ -121,7 +128,7 @@ export default function AdminAssignedTasks() {
                       sx={{ width: "auto", height: "auto" }}
                       position="start"
                     >
-                      <Badge
+                      <Search
                         sx={{ mb: 1, mr: 1 }}
                         fontSize={isXS ? "small" : "medium"}
                       />
@@ -129,7 +136,7 @@ export default function AdminAssignedTasks() {
                   ),
                 }}
               />
-              <IconButton
+              {/* <IconButton
                 sx={{ mr: { xs: "0%", lg: "25%" } }}
                 type="submit"
                 aria-label="search-tasks"
@@ -137,16 +144,16 @@ export default function AdminAssignedTasks() {
                 color="primary"
               >
                 <Search />
-              </IconButton>
-              <IconButton
+              </IconButton> */}
+              {/* <IconButton
                 sx={{ mx: { xs: "0%", lg: "2.5%" } }}
                 aria-label="filter-employees"
                 size={isXS ? "small" : "large"}
                 color="info"
               >
                 <FilterAlt />
-              </IconButton>
-              <IconButton
+              </IconButton> */}
+              {/* <IconButton
                 onClick={() => navigate("/admin/searchemployees")}
                 sx={{ mx: { xs: "0%", lg: "2.5%" } }}
                 aria-label="add-employees"
@@ -154,7 +161,7 @@ export default function AdminAssignedTasks() {
                 color="success"
               >
                 <Add />
-              </IconButton>
+              </IconButton> */}
             </Box>
             {/* SEARCH RESULTS */}
             {searchedTaskText?.length >= 1 && searchedTasks[0] != undefined && (

@@ -88,7 +88,7 @@ export default function EmployeeTable({ sort = "" }) {
 
   // FINDS THE ELEMENT THROUGH REG EXP SEARCH AND REUTRNS ONLY THAT ELEMENT
   const sortedEmps = empData && [
-    ...empData.filter((data: any) => data?.name.toLowerCase().includes(sort)),
+    ...empData.filter((data: any) => data?.name.toLowerCase().includes(sort.toLowerCase())),
   ];
 
   // ASSIGN TASK TO EMPLOYEE MF
