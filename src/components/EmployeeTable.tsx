@@ -94,6 +94,7 @@ export default function EmployeeTable() {
         message: "Task Assignment was successful!",
         severity: "success",
       });
+      setOpenAddTaskModal(!openAddTaskModal);
     },
     onError: (err: any) => {
       setOpenSnack({

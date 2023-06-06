@@ -30,6 +30,7 @@ import EmployeeAssignedTasks from "./Employee/EmployeeAssignedTasks";
 import EmployeeTeam from "./Employee/EmployeeTeam";
 import EmployeeSettings from "./Employee/EmployeeSettings";
 import EmployeeAdminActions from "./Employee/EmployeeAdminActions";
+import EmployeeSignup from "./Employee/EmployeeSignup";
 
 function App() {
   const location = useLocation();
@@ -62,7 +63,7 @@ function App() {
         .then(() => navigate("/employee/dashboard"))
         .catch((err) => console.log(err));
     } else {
-      navigate("/");
+      // navigate("/");
     }
 
     // LAST LOGIN TIME
@@ -123,6 +124,7 @@ function App() {
 
                 {/* Employee Routes */}
                 <Route path="/employee" element={<EmployeeLogin />} />
+                <Route path="/employee/signup/:uid" element={<EmployeeSignup />} />
                 {localStorage.getItem("employee-token") ? (
                   <>
                     <Route

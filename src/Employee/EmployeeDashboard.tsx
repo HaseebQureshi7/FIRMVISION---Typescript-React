@@ -73,7 +73,9 @@ export default function EmployeeDashboard() {
 
   // YOUR EFFICIENCY
   const yourEfficiency =
-    (completedTasks?.length / empTaskData?.length) * 100 + "%";
+    completedTasks?.length == 0 && empTaskData?.length == 0
+      ? "No Data"
+      : (completedTasks?.length / empTaskData?.length) * 100 + "%";
 
   const StatisticalData = [
     {
@@ -375,7 +377,7 @@ export default function EmployeeDashboard() {
             </Tooltip>
             <Tooltip title="Completed Tasks">
               <Box
-                onClick={() => navigate("/admin/searchemployees")}
+                onClick={() => navigate("/employee/yourtasks")}
                 sx={{
                   ...FlexBox,
                   flexDirection: { xs: "column", lg: "row" },
@@ -400,7 +402,7 @@ export default function EmployeeDashboard() {
             </Tooltip>
             <Tooltip title="All Assigned Tasks">
               <Box
-                onClick={() => navigate("/admin/assignedtasks")}
+                onClick={() => navigate("/employee/yourtasks")}
                 sx={{
                   ...FlexBox,
                   flexDirection: { xs: "column", lg: "row" },
@@ -423,7 +425,7 @@ export default function EmployeeDashboard() {
             </Tooltip>
             <Tooltip title="All Reported Tasks">
               <Box
-                onClick={() => navigate("/admin/assignedtasks")}
+                onClick={() => navigate("/employee/yourtasks")}
                 sx={{
                   ...FlexBox,
                   flexDirection: { xs: "column", lg: "row" },

@@ -24,6 +24,9 @@ import { useNavigate } from "react-router-dom";
 import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
 import { ExtractedSnackBarTypes } from "../types/SnackbarTypes";
 import isXSmall from "../components/isXSmall";
+import axios from "axios";
+import { useMutation } from "react-query";
+import AuthHeaders from "../components/AuthHeaders";
 
 export default function AdminAddEmployee() {
   const navigate = useNavigate();
@@ -34,19 +37,56 @@ export default function AdminAddEmployee() {
     GlobalSnackbarContext
   );
 
+  const user: any | null = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")!)
+    : null;
+
+  const redirectToTeamURL = `http://localhost:5173/employee/signup/${user?._id}`;
+
   const nameRef = useRef<HTMLInputElement>();
   const emailRef = useRef<HTMLInputElement>();
+  const formRef = useRef<HTMLFormElement>();
+
+  const AddEmployeeQF = (AddEmpQueryData: any) => {
+    return axios.post(
+      import.meta.env.VITE_BASE_URL + "admin/addemployee",
+      AddEmpQueryData,
+      AuthHeaders()
+    );
+  };
+
+  const { mutate, isLoading } = useMutation(AddEmployeeQF, {
+    onSuccess: () => {
+      setOpenSnack({
+        open: true,
+        message: "Invitation Sent!",
+        severity: "success",
+      });
+      formRef?.current?.reset();
+    },
+    onError: () => {
+      setOpenSnack({
+        open: true,
+        message: "Invalid Email!",
+        severity: "error",
+      });
+    },
+  });
 
   //   EMPLOYEE JOINING FIELDS
   //   url, employeeName, employeeEmail, adminName, companyName
 
-  function HandleSubmit(e: Event) {
+  function HandleAddEmployee(e: Event) {
     e.preventDefault();
-    setOpenSnack({
-      open: true,
-      message: "Feature not yet implemented!",
-      severity: "warning",
-    });
+    const AddEmpQueryData: any = {
+      url: redirectToTeamURL,
+      employeeName: nameRef?.current?.value,
+      employeeEmail: emailRef?.current?.value,
+      adminName: user?.name,
+      companyName: user?.companyName,
+    };
+
+    mutate(AddEmpQueryData);
   }
 
   return (
@@ -81,7 +121,8 @@ export default function AdminAddEmployee() {
             {/* LEFT SIDE */}
             <Box
               component="form"
-              onSubmit={(e: any) => HandleSubmit(e)}
+              ref={formRef}
+              onSubmit={(e: any) => HandleAddEmployee(e)}
               sx={{
                 ...FlexBox,
                 flex: 1,
