@@ -24,7 +24,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { SideFade } from "../components/PageTransition";
 import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
 import AdminPagesContainer from "./AdminPagesContainer";
@@ -39,9 +39,8 @@ export default function AdminSearchEmployee() {
 
   const { isXS } = isXSmall();
 
-  const nameRef = useRef<HTMLInputElement>();
-
   const { data: empData } = getEmpsQD();
+  const [searchEmp, setSearchEmp] = useState<any>();
 
   function HandleSubmit(e: Event) {
     e.preventDefault();
@@ -87,7 +86,9 @@ export default function AdminSearchEmployee() {
             >
               <TextField
                 required
-                inputRef={nameRef}
+                onChange={(e: any) => {
+                  setSearchEmp(e.target.value), console.log(e.target.value);
+                }}
                 variant="standard"
                 sx={{ width: { xs: "100%", lg: "50%" } }}
                 placeholder="Name of the Employee"
@@ -130,7 +131,7 @@ export default function AdminSearchEmployee() {
               </IconButton>
             </Box>
             {/* ROW 2 */}
-            <EmployeeTable />
+            <EmployeeTable sort={searchEmp} />
           </Box>
         </Box>
       </SideFade>

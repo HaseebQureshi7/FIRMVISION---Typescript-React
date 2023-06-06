@@ -52,7 +52,7 @@ import TaskCard from "./TaskCard";
 import GlobalModal from "./GlobalModal";
 import AuthHeaders from "./AuthHeaders";
 
-export default function EmployeeTable() {
+export default function EmployeeTable({ sort = "" }) {
   const { data: empData } = getEmpsQD();
 
   const { openSnack, setOpenSnack } = useContext<ExtractedSnackBarTypes>(
@@ -85,6 +85,11 @@ export default function EmployeeTable() {
       AuthHeaders()
     );
   };
+
+  // FINDS THE ELEMENT THROUGH REG EXP SEARCH AND REUTRNS ONLY THAT ELEMENT
+  const sortedEmps = empData && [
+    ...empData.filter((data: any) => data?.name.toLowerCase().includes(sort)),
+  ];
 
   // ASSIGN TASK TO EMPLOYEE MF
   const { mutate: AssignTaskMutation } = useMutation(AssignTaskQF, {
@@ -128,7 +133,7 @@ export default function EmployeeTable() {
 
   function GetActiveEmployeeTasks(eid: number) {
     const thisEmployeesTasks: any = allEmployeeTasks.filter(
-      (data: any) => data.assignedTo == eid && data.status == "incomplete"
+      (data: any) => data?.assignedTo == eid && data?.status == "incomplete"
     );
     // console.log(thisEmployeesTasks)
     return thisEmployeesTasks;
@@ -142,7 +147,7 @@ export default function EmployeeTable() {
       )
       .then((res) => {
         setAllEmployeeTasks(res.data);
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -481,21 +486,21 @@ export default function EmployeeTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {empData?.map((data: any) => {
+            {sortedEmps?.map((data: any) => {
               return (
                 <TableRow
-                  key={data._id}
+                  key={data?._id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell align="center">
-                    <Avatar src={data.picture} />
+                    <Avatar src={data?.picture} />
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    {data.name}
+                    {data?.name}
                   </TableCell>
-                  <TableCell align="left">{data.position}</TableCell>
+                  <TableCell align="left">{data?.position}</TableCell>
                   <TableCell align="center">
-                    {GetActiveEmployeeTasks(data._id).length}
+                    {GetActiveEmployeeTasks(data?._id).length}
                   </TableCell>
                   <TableCell align="right">
                     <Box
@@ -512,10 +517,10 @@ export default function EmployeeTable() {
                         onClick={(e: any) => {
                           setOpenOptions(!openOptions);
                           setCurrentUserDetails({
-                            userName: data.name,
-                            userId: data._id,
-                            userPhone: data.phone,
-                            adminId: data.employeeOf,
+                            userName: data?.name,
+                            userId: data?._id,
+                            userPhone: data?.phone,
+                            adminId: data?.employeeOf,
                           });
                           setMenuAnchorElement(e.currentTarget);
                         }}
@@ -525,9 +530,9 @@ export default function EmployeeTable() {
                         onClick={() => {
                           setOpenActiveTasks(!openActiveTasks);
                           setCurrentUserDetails({
-                            userName: data.name,
-                            userId: data._id,
-                            adminId: data.employeeOf,
+                            userName: data?.name,
+                            userId: data?._id,
+                            adminId: data?.employeeOf,
                           });
                           setSingleAllEmployeeTasks(
                             GetActiveEmployeeTasks(data?._id)
@@ -539,9 +544,9 @@ export default function EmployeeTable() {
                         onClick={() => {
                           setOpenAddTaskModal(!openAddTaskModal);
                           setCurrentUserDetails({
-                            userName: data.name,
-                            userId: data._id,
-                            adminId: data.employeeOf,
+                            userName: data?.name,
+                            userId: data?._id,
+                            adminId: data?.employeeOf,
                           });
                         }}
                         sx={{ color: "success.light", cursor: "pointer" }}
