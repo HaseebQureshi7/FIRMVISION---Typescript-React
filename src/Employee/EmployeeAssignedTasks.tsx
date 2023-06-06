@@ -29,7 +29,7 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from "@mui/material";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { SideFade } from "../components/PageTransition";
 import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
 import EmployeePagesContainer from "./EmployeePagesContainer";
@@ -49,6 +49,15 @@ export default function EmployeeAssignedTasks() {
   const nameRef = useRef<HTMLInputElement>();
 
   const { data: empTaskData } = getEmpTasksQD();
+
+  const [searchedTaskText, setSearchedTaskText] = useState<any>();
+
+  // SEARCHED TASKS
+  const searchedTasks = empTaskData && [
+    empTaskData.find((data: any) =>
+      data.name.toLowerCase().includes(searchedTaskText)
+    ),
+  ];
 
   // ACTIVE TASKS
   const activeTasks = empTaskData?.filter((data: any) => {
@@ -104,7 +113,7 @@ export default function EmployeeAssignedTasks() {
             >
               <TextField
                 required
-                inputRef={nameRef}
+                onChange={(e) => setSearchedTaskText(e.target.value)}
                 variant="standard"
                 sx={{ width: { xs: "100%", lg: "50%" } }}
                 placeholder="Name of the Task"
@@ -149,6 +158,23 @@ export default function EmployeeAssignedTasks() {
                 <Add />
               </IconButton>
             </Box>
+            {/* SEARCH RESULTS */}
+            {searchedTaskText?.length >= 1 && searchedTasks[0] != undefined && (
+              <Box
+                sx={{
+                  ...FlexBox,
+                  flexDirection: "column",
+                  alignItems: { xs: "center", lg: "flex-start" },
+                }}
+              >
+                <Typography variant="body1" color="text.secondary">
+                  Top Search Result:{" "}
+                </Typography>
+                <Box sx={{ width: "100%" }}>
+                  <TaskCard data={searchedTasks[0]} />
+                </Box>
+              </Box>
+            )}
 
             {/* ROW 2 */}
             <Box

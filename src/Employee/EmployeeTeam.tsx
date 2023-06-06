@@ -35,7 +35,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { SideFade } from "../components/PageTransition";
 import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
 import EmployeePagesContainer from "./EmployeePagesContainer";
@@ -51,9 +51,15 @@ export default function EmployeeTeam() {
   const themeInstance = useTheme();
   const isXS: boolean = useMediaQuery(themeInstance.breakpoints.only("xs"));
 
-  const nameRef = useRef<HTMLInputElement>();
-
   const { data: empTeam } = getEmpTeamQD();
+  const [searchEmp, setSearchEmp] = useState<any>("");
+
+  // FINDS THE ELEMENT THROUGH REG EXP SEARCH AND REUTRNS ONLY THAT ELEMENT
+  const sortedEmps = empTeam && [
+    ...empTeam.filter((data: any) =>
+      data?.name.toLowerCase().includes(searchEmp)
+    ),
+  ];
 
   function HandleSubmit(e: Event) {
     e.preventDefault();
@@ -99,7 +105,7 @@ export default function EmployeeTeam() {
             >
               <TextField
                 required
-                inputRef={nameRef}
+                onChange={(e) => setSearchEmp(e.target.value)}
                 variant="standard"
                 sx={{ width: { xs: "100%", lg: "50%" } }}
                 placeholder="Name of the Employee"
@@ -162,8 +168,8 @@ export default function EmployeeTeam() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {empTeam &&
-                    empTeam?.map((data: any) => {
+                  {sortedEmps &&
+                    sortedEmps?.map((data: any) => {
                       return (
                         <TableRow
                           key={data._id}

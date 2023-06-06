@@ -29,7 +29,7 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from "@mui/material";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { SideFade } from "../components/PageTransition";
 import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
 import AdminPagesContainer from "./AdminPagesContainer";
@@ -45,9 +45,17 @@ export default function AdminAssignedTasks() {
 
   const { isXS } = isXSmall();
 
-  const nameRef = useRef<HTMLInputElement>();
-
   const { data: taskData } = getTasksQD();
+
+  const [searchedTaskText, setSearchedTaskText] = useState<any>();
+
+  // SEARCHED TASKS
+  const searchedTasks = taskData && [
+    taskData.find((data: any) =>
+      data.name.toLowerCase().includes(searchedTaskText)
+    ),
+  ];
+  console.log(searchedTasks);
 
   // ACTIVE TASKS
   const activeTasks = taskData?.filter((data: any) => {
@@ -103,7 +111,7 @@ export default function AdminAssignedTasks() {
             >
               <TextField
                 required
-                inputRef={nameRef}
+                onChange={(e: any) => setSearchedTaskText(e.target.value)}
                 variant="standard"
                 sx={{ width: { xs: "100%", lg: "50%" } }}
                 placeholder="Name of the Task"
@@ -139,7 +147,7 @@ export default function AdminAssignedTasks() {
                 <FilterAlt />
               </IconButton>
               <IconButton
-                // onClick={() => navigate("/admin/addemployee")}
+                onClick={() => navigate("/admin/searchemployees")}
                 sx={{ mx: { xs: "0%", lg: "2.5%" } }}
                 aria-label="add-employees"
                 size={isXS ? "small" : "large"}
@@ -148,6 +156,23 @@ export default function AdminAssignedTasks() {
                 <Add />
               </IconButton>
             </Box>
+            {/* SEARCH RESULTS */}
+            {searchedTaskText?.length >= 1 && searchedTasks[0] != undefined && (
+              <Box
+                sx={{
+                  ...FlexBox,
+                  flexDirection: "column",
+                  alignItems: { xs: "center", lg: "flex-start" },
+                }}
+              >
+                <Typography variant="body1" color="text.secondary">
+                  Top Search Result:{" "}
+                </Typography>
+                <Box sx={{ width: "100%" }}>
+                  <TaskCard data={searchedTasks[0]} />
+                </Box>
+              </Box>
+            )}
 
             {/* ROW 2 */}
             <Box
