@@ -29,14 +29,17 @@ import AdminPagesContainer from "./AdminPagesContainer";
 import EmployeeTable from "../components/EmployeeTable";
 import { useNavigate } from "react-router-dom";
 import isXSmall from "../components/isXSmall";
+import GlobalModal from "../components/GlobalModal";
+import { DateFormatter } from "../components/DateFormatter";
+import ReminderCard from "../components/ReminderCard";
 
 export default function AdminDashboard() {
-  
   const { isXS } = isXSmall();
 
   const navigate = useNavigate();
 
   const [upTime, setUpTime] = useState<number>(0);
+  const [openReminderModal, setOpenReminderModal] = useState<boolean>(false);
 
   const user: any | null = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user")!)
@@ -112,6 +115,21 @@ export default function AdminDashboard() {
       <SideFade>
         {/* MAIN CONTIANER */}
         <Box sx={{ ...FlexBox, width: { xs: "100vw", lg: "95vw" } }}>
+          {/* VIEW REMINDERS MODAL */}
+          <GlobalModal
+            openModal={openReminderModal}
+            setOpenModal={setOpenReminderModal}
+            headerText={`Upcoming Reminders (${remsData?.length})`}
+          >
+            {remsData?.map((data: any) => {
+              return (
+                <Box key={data?._id} sx={{ width: "100%" }}>
+                  <ReminderCard data={data} />
+                </Box>
+              );
+            })}
+          </GlobalModal>
+
           {/* ROW 1 */}
           <Box
             sx={{
@@ -348,7 +366,8 @@ export default function AdminDashboard() {
             </Tooltip>
             <Tooltip title="Upcoming Reminders">
               <Box
-                onClick={() => navigate("/admin/addreminders")}
+                // onClick={() => navigate("/admin/addreminders")}
+                onClick={() => setOpenReminderModal(!openReminderModal)}
                 sx={{
                   ...FlexBox,
                   flexDirection: { xs: "column", lg: "row" },
