@@ -15,37 +15,73 @@ import { Cancel, Done, ExpandMore, Report } from "@mui/icons-material";
 import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
 import { DateFormatter } from "./DateFormatter";
 import isXSmall from "./isXSmall";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import GlobalModal from "./GlobalModal";
+import axios from "axios";
+import AuthHeaders from "./AuthHeaders";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { TaskTypes } from "../types/TaskTypes";
+import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
+import { ExtractedSnackBarTypes } from "../types/SnackbarTypes";
 
 export default function TaskCard({ data }: any) {
   const { isXS } = isXSmall();
   const [openSubmitModal, setOpenSubmitModal] = useState<boolean>();
   const [openReportModal, setOpenReportModal] = useState<boolean>();
 
+  const queryClient = useQueryClient();
+
   const submittionReportRef = useRef<HTMLInputElement>();
   const reportTaskRef = useRef<HTMLInputElement>();
 
   const date = new Date();
 
+  const { openSnack, setOpenSnack } = useContext<ExtractedSnackBarTypes>(
+    GlobalSnackbarContext
+  );
+
+  // SUBMIT/REPORT TASK QUERY FUNCTION
+  const submitEmpTaskQF = (taskMutationData: any) => {
+    const tid = data?._id;
+    return axios.put(
+      import.meta.env.VITE_BASE_URL + `task/updatetask/${tid}`,
+      taskMutationData,
+      AuthHeaders()
+    );
+  };
+
+  // SUBMIT/REPORT TASK MUTATION FUNCTION
+  const { mutate: mutateTask } = useMutation(submitEmpTaskQF, {
+    onSuccess: (data) => {
+      setOpenSubmitModal(false);
+      setOpenReportModal(false);
+      setOpenSnack({
+        open: true,
+        message: "Report Submitted!",
+        severity: "success",
+      });
+      queryClient.invalidateQueries("all_employee_tasks");
+    },
+  });
+
   function HandleSubmit(e: Event) {
     e.preventDefault();
-    console.log({
-      id: data?._id,
-      report: submittionReportRef?.current?.value,
+    const taskMutationData: any = {
       status: "complete",
       completionDate: date.toISOString(),
-    });
+      submittionReport: submittionReportRef?.current?.value,
+    };
+    mutateTask(taskMutationData);
   }
 
   function HandleReport(e: Event) {
     e.preventDefault();
-    console.log({
-      id: data?._id,
-      report: reportTaskRef?.current?.value,
+    const taskMutationData: any = {
       status: "reported",
       completionDate: date.toISOString(),
-    });
+      submittionReport: submittionReportRef?.current?.value,
+    };
+    mutateTask(taskMutationData);
   }
 
   return (
