@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Admin Routes -->
+  <url>
+    <loc>https://firmvision.vercel.app/admin</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://firmvision.vercel.app/admin/login</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://firmvision.vercel.app/admin/signup</loc>
+    <priority>0.8</priority>
+  </url>
+  <!-- Add more URLs for other admin routes -->
+
+  <!-- Employee Routes -->
+  <url>
+    <loc>https://firmvision.vercel.app/employee</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://firmvision.vercel.app/employee/signup/:uid</loc>
+    <priority>0.8</priority>
+  </url>
+  <!-- Add more URLs for other employee routes -->
+
+</urlset>
