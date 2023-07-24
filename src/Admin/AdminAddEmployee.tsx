@@ -1,10 +1,4 @@
-import {
-  AlternateEmail,
-  Badge,
-  Cancel,
-  CheckCircle,
-  Send,
-} from "@mui/icons-material";
+import { AlternateEmail, Badge, Cancel, Send } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -12,28 +6,26 @@ import {
   InputAdornment,
   TextField,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from "@mui/material";
-import React, { useContext, useRef } from "react";
+import axios from "axios";
+import { useContext, useRef } from "react";
+import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
+import invite from "../assets/images/invite.png";
+import AuthHeaders from "../components/AuthHeaders";
 import { SideFade } from "../components/PageTransition";
 import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
-import AdminPagesContainer from "./AdminPagesContainer";
-import invite from "../assets/images/invite.png";
-import { useNavigate } from "react-router-dom";
+import isXSmall from "../components/isXSmall";
 import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
 import { ExtractedSnackBarTypes } from "../types/SnackbarTypes";
-import isXSmall from "../components/isXSmall";
-import axios from "axios";
-import { useMutation } from "react-query";
-import AuthHeaders from "../components/AuthHeaders";
+import AdminPagesContainer from "./AdminPagesContainer";
 
 export default function AdminAddEmployee() {
   const navigate = useNavigate();
 
   const { isXS } = isXSmall();
 
-  const { openSnack, setOpenSnack } = useContext<ExtractedSnackBarTypes>(
+  const { setOpenSnack } = useContext<ExtractedSnackBarTypes>(
     GlobalSnackbarContext
   );
 
@@ -55,7 +47,7 @@ export default function AdminAddEmployee() {
     );
   };
 
-  const { mutate, isLoading } = useMutation(AddEmployeeQF, {
+  const { mutate } = useMutation(AddEmployeeQF, {
     onSuccess: () => {
       setOpenSnack({
         open: true,

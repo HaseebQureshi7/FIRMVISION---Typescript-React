@@ -1,27 +1,8 @@
-import {
-  Add,
-  AddCircle,
-  AlternateEmail,
-  Badge,
-  Call,
-  Cancel,
-  CheckCircle,
-  FilterAlt,
-  Message,
-  MoreHoriz,
-  PersonAdd,
-  PersonRemove,
-  Phone,
-  Search,
-  Send,
-  Visibility,
-} from "@mui/icons-material";
+import { Call, Message, Search } from "@mui/icons-material";
 import {
   Avatar,
   Box,
-  Button,
   Divider,
-  IconButton,
   InputAdornment,
   Paper,
   Table,
@@ -35,15 +16,12 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React, { useRef, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { getEmpTeamQD } from "../components/EmployeeGlobalDataHandler";
 import { SideFade } from "../components/PageTransition";
 import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
 import EmployeePagesContainer from "./EmployeePagesContainer";
-import invite from "../assets/images/invite.png";
-import { useNavigate } from "react-router-dom";
-import { getEmpsQD } from "../components/AdminGlobalDataHandler";
-import EmployeeTable from "../components/EmployeeTable";
-import { getEmpTeamQD } from "../components/EmployeeGlobalDataHandler";
 
 export default function EmployeeTeam() {
   const navigate = useNavigate();

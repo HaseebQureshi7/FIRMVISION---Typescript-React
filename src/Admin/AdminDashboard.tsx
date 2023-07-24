@@ -1,38 +1,31 @@
 import {
   AssignmentInd,
-  Groups,
   NotificationImportant,
   ReportProblem,
   Task,
 } from "@mui/icons-material";
 import {
   Box,
-  Typography,
-  useMediaQuery,
-  useTheme,
   Tooltip,
-  Paper,
+  Typography,
 } from "@mui/material";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   getEmpsQD,
   getRemsQD,
   getTasksQD,
 } from "../components/AdminGlobalDataHandler";
+import EmployeeTable from "../components/EmployeeTable";
+import GlobalModal from "../components/GlobalModal";
 import LiveClock from "../components/LiveClock";
 import { SideFade } from "../components/PageTransition";
+import ReminderCard from "../components/ReminderCard";
 import StatisticsChart from "../components/StatisticsChart";
 import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
-import AdminPagesContainer from "./AdminPagesContainer";
-import EmployeeTable from "../components/EmployeeTable";
-import { useNavigate } from "react-router-dom";
-import isXSmall from "../components/isXSmall";
-import GlobalModal from "../components/GlobalModal";
-import { DateFormatter } from "../components/DateFormatter";
-import ReminderCard from "../components/ReminderCard";
 import TaskCard from "../components/TaskCard";
+import isXSmall from "../components/isXSmall";
+import AdminPagesContainer from "./AdminPagesContainer";
 
 export default function AdminDashboard() {
   const { isXS } = isXSmall();

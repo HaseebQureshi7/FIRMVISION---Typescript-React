@@ -1,13 +1,13 @@
-import { Box, Typography, Button } from "@mui/material";
-import { FadeIn } from "../components/PageTransition";
-import { FlexBox } from "./../components/StyleExtensions.tsx/FlexBox";
+import { Box, Button, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import logo from "../assets/images/Logo-easework.png";
+import assign from "../assets/images/assign.png";
+import complete from "../assets/images/complete.png";
 import heroImage from "../assets/images/hero-illustration.png";
 import invite from "../assets/images/invite.png";
 import manage from "../assets/images/manage.png";
-import assign from "../assets/images/assign.png";
-import complete from "../assets/images/complete.png";
-import { useNavigate } from "react-router-dom";
+import { FadeIn } from "../components/PageTransition";
+import { FlexBox } from "./../components/StyleExtensions.tsx/FlexBox";
 
 export default function AdminLanding() {
   const navigate = useNavigate();
@@ -73,7 +73,7 @@ export default function AdminLanding() {
               }}
             >
               <Button
-              onClick={()=> navigate('/employee')}
+                onClick={() => navigate("/employee")}
                 sx={{ p: "8px 50px", fontWeight: 700 }}
                 variant="outlined"
                 color="secondary"

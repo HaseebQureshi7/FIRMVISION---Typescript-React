@@ -1,12 +1,8 @@
 import {
-  Accessible,
-  AlternateEmail,
   Badge,
   Cancel,
-  CheckCircle,
   ForwardToInbox,
   Info,
-  Send,
 } from "@mui/icons-material";
 import {
   Box,
@@ -16,20 +12,18 @@ import {
   InputAdornment,
   TextField,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from "@mui/material";
-import React, { useContext, useRef, useState } from "react";
+import { MobileDatePicker } from "@mui/x-date-pickers";
+import axios from "axios";
+import { useContext, useRef, useState } from "react";
+import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
+import assign from "../assets/images/assign.png";
 import { SideFade } from "../components/PageTransition";
 import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
-import AdminPagesContainer from "./AdminPagesContainer";
-import assign from "../assets/images/assign.png";
-import { useNavigate } from "react-router-dom";
-import { MobileDatePicker } from "@mui/x-date-pickers";
-import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
-import { useMutation } from "react-query";
-import axios from "axios";
 import isXSmall from "../components/isXSmall";
+import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
+import AdminPagesContainer from "./AdminPagesContainer";
 
 export default function AdminAddReminder() {
   const navigate = useNavigate();

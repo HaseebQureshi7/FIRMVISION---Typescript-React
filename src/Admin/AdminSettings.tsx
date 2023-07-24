@@ -1,6 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
-import AdminPagesContainer from "./AdminPagesContainer";
-import { SideFade } from "../components/PageTransition";
+import { Cancel, Done, Edit, Password, Photo } from "@mui/icons-material";
 import {
   Avatar,
   Box,
@@ -9,15 +7,15 @@ import {
   Switch,
   TextField,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from "@mui/material";
-import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
-import { Cancel, Done, Edit, Password, Photo } from "@mui/icons-material";
 import axios from "axios";
+import { useContext, useRef, useState } from "react";
 import { useMutation } from "react-query";
-import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
+import { SideFade } from "../components/PageTransition";
+import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
 import isXSmall from "../components/isXSmall";
+import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
+import AdminPagesContainer from "./AdminPagesContainer";
 
 export default function AdminSettings() {
   const { isXS } = isXSmall();

@@ -6,10 +6,10 @@ import {
   Settings,
 } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
-import React, { useContext } from "react";
+import { useContext } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../context/DarkModeContext";
 import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
-import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Appbar({ user, openSidebar, setOpenSidebar }: any) {
   const { themeMode, setThemeMode } = useContext(DarkModeContext);

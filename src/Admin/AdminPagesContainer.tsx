@@ -1,5 +1,5 @@
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import React, { useState } from "react";
+import { Box, Typography } from "@mui/material";
+import { useState } from "react";
 import Appbar from "../components/Appbar";
 import Sidebar from "../components/Sidebar";
 import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";

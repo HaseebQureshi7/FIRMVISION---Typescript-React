@@ -1,8 +1,7 @@
-import React from "react";
-import { SideFade } from "./PageTransition";
-import { DateFormatter } from "./DateFormatter";
-import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
 import { Box, Typography } from "@mui/material";
+import { DateFormatter } from "./DateFormatter";
+import { SideFade } from "./PageTransition";
+import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
 import isXSmall from "./isXSmall";
 
 export default function ReminderCard({ data }: any) {

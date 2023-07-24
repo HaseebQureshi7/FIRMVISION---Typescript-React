@@ -1,22 +1,13 @@
 import {
+  Clear,
+} from "@mui/icons-material";
+import {
   Box,
-  Button,
   Divider,
-  InputAdornment,
-  MenuItem,
   Modal,
-  Select,
-  TextField,
   Typography,
 } from "@mui/material";
 import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
-import {
-  Clear,
-  DriveFileRenameOutline,
-  Details,
-  Add,
-} from "@mui/icons-material";
-import { MobileDatePicker } from "@mui/x-date-pickers";
 import isXSmall from "./isXSmall";
 
 export default function GlobalModal({

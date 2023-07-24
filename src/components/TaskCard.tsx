@@ -1,28 +1,25 @@
-import { SideFade } from "./PageTransition";
+import { Cancel, Done, ExpandMore, Report } from "@mui/icons-material";
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
   Box,
-  Typography,
-  useMediaQuery,
-  useTheme,
   Button,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
-import { Cancel, Done, ExpandMore, Report } from "@mui/icons-material";
-import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
-import { DateFormatter } from "./DateFormatter";
-import isXSmall from "./isXSmall";
-import { useContext, useRef, useState } from "react";
-import GlobalModal from "./GlobalModal";
 import axios from "axios";
-import AuthHeaders from "./AuthHeaders";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { TaskTypes } from "../types/TaskTypes";
+import { useContext, useRef, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
 import { ExtractedSnackBarTypes } from "../types/SnackbarTypes";
+import AuthHeaders from "./AuthHeaders";
+import { DateFormatter } from "./DateFormatter";
+import GlobalModal from "./GlobalModal";
+import { SideFade } from "./PageTransition";
+import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
+import isXSmall from "./isXSmall";
 
 export default function TaskCard({ data }: any) {
   const { isXS } = isXSmall();

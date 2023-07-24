@@ -1,44 +1,21 @@
 import {
-  Add,
-  AddCircle,
-  AlternateEmail,
-  Badge,
-  Cancel,
-  CheckCircle,
-  FilterAlt,
-  Message,
-  PersonAdd,
-  PersonRemove,
-  Phone,
   Search,
-  Send,
-  Visibility,
-  ExpandMore,
 } from "@mui/icons-material";
 import {
   Box,
-  Button,
   Divider,
-  IconButton,
   InputAdornment,
   TextField,
   Typography,
-  useMediaQuery,
-  useTheme,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
 } from "@mui/material";
-import React, { useRef, useState } from "react";
-import { SideFade } from "../components/PageTransition";
-import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
-import AdminPagesContainer from "./AdminPagesContainer";
-import invite from "../assets/images/invite.png";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getTasksQD } from "../components/AdminGlobalDataHandler";
-import { DateFormatter } from "../components/DateFormatter";
-import isXSmall from "../components/isXSmall";
+import { SideFade } from "../components/PageTransition";
+import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
 import TaskCard from "../components/TaskCard";
+import isXSmall from "../components/isXSmall";
+import AdminPagesContainer from "./AdminPagesContainer";
 
 export default function AdminAssignedTasks() {
   const navigate = useNavigate();

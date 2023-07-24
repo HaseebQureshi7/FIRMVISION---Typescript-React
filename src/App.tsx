@@ -1,36 +1,36 @@
-import { useState, useEffect } from "react";
 import { Box, PaletteMode, ThemeProvider } from "@mui/material";
+import axios from "axios";
+import { AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import { ReactQueryDevtools } from "react-query/devtools";
 import {
-  Routes,
+  Navigate,
   Route,
+  Routes,
   useLocation,
   useNavigate,
-  Navigate,
 } from "react-router-dom";
+import AdminAddEmployee from "./Admin/AdminAddEmployee";
+import AdminAddReminder from "./Admin/AdminAddReminder";
+import AdminAssignedTasks from "./Admin/AdminAssignedTasks";
+import AdminDashboard from "./Admin/AdminDashboard";
 import AdminLanding from "./Admin/AdminLanding";
-import { DarkModeContext } from "./context/DarkModeContext";
+import AdminLogin from "./Admin/AdminLogin";
+import AdminSearchEmployee from "./Admin/AdminSearchEmployee";
+import AdminSettings from "./Admin/AdminSettings";
+import AdminSignup from "./Admin/AdminSignup";
+import EmployeeAdminActions from "./Employee/EmployeeAdminActions";
+import EmployeeAssignedTasks from "./Employee/EmployeeAssignedTasks";
+import EmployeeDashboard from "./Employee/EmployeeDashboard";
+import EmployeeLogin from "./Employee/EmployeeLogin";
+import EmployeeSettings from "./Employee/EmployeeSettings";
+import EmployeeSignup from "./Employee/EmployeeSignup";
+import EmployeeTeam from "./Employee/EmployeeTeam";
+import GlobalSnackbar from "./components/GlobalSnackbar";
 import MuiTheme from "./components/StyleExtensions.tsx/MuiTheme";
-import { AnimatePresence } from "framer-motion";
+import { DarkModeContext } from "./context/DarkModeContext";
 import { GlobalSnackbarContext } from "./context/GlobalSnackbarContext";
 import { SnackbarTypes } from "./types/SnackbarTypes";
-import GlobalSnackbar from "./components/GlobalSnackbar";
-import AdminLogin from "./Admin/AdminLogin";
-import AdminSignup from "./Admin/AdminSignup";
-import axios from "axios";
-import AdminDashboard from "./Admin/AdminDashboard";
-import { ReactQueryDevtools } from "react-query/devtools";
-import AdminAssignedTasks from "./Admin/AdminAssignedTasks";
-import AdminAddEmployee from "./Admin/AdminAddEmployee";
-import AdminSearchEmployee from "./Admin/AdminSearchEmployee";
-import AdminAddReminder from "./Admin/AdminAddReminder";
-import AdminSettings from "./Admin/AdminSettings";
-import EmployeeLogin from "./Employee/EmployeeLogin";
-import EmployeeDashboard from "./Employee/EmployeeDashboard";
-import EmployeeAssignedTasks from "./Employee/EmployeeAssignedTasks";
-import EmployeeTeam from "./Employee/EmployeeTeam";
-import EmployeeSettings from "./Employee/EmployeeSettings";
-import EmployeeAdminActions from "./Employee/EmployeeAdminActions";
-import EmployeeSignup from "./Employee/EmployeeSignup";
 
 function App() {
   const location = useLocation();
@@ -124,7 +124,10 @@ function App() {
 
                 {/* Employee Routes */}
                 <Route path="/employee" element={<EmployeeLogin />} />
-                <Route path="/employee/signup/:uid" element={<EmployeeSignup />} />
+                <Route
+                  path="/employee/signup/:uid"
+                  element={<EmployeeSignup />}
+                />
                 {localStorage.getItem("employee-token") ? (
                   <>
                     <Route

@@ -1,24 +1,24 @@
+import { AlternateEmail, CheckCircle, Password } from "@mui/icons-material";
 import {
   Box,
-  Typography,
   Button,
-  TextField,
   InputAdornment,
+  TextField,
+  Typography,
 } from "@mui/material";
-import { FadeIn } from "../components/PageTransition";
-import { FlexBox } from "./../components/StyleExtensions.tsx/FlexBox";
+import axios from "axios";
+import jwt_decode from "jwt-decode";
+import { useContext, useEffect, useRef } from "react";
+import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
 import logo from "../assets/images/Logo-easework.png";
-import invite from "../assets/images/invite.png";
-import manage from "../assets/images/manage.png";
 import assign from "../assets/images/assign.png";
 import complete from "../assets/images/complete.png";
-import { CheckCircle, AlternateEmail, Password } from "@mui/icons-material";
-import { useMutation } from "react-query";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import invite from "../assets/images/invite.png";
+import manage from "../assets/images/manage.png";
+import { FadeIn } from "../components/PageTransition";
 import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
-import { useContext, useEffect, useRef, useState } from "react";
-import jwt_decode from "jwt-decode";
+import { FlexBox } from "./../components/StyleExtensions.tsx/FlexBox";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ export default function AdminLogin() {
 
   // CONVENTIONAL LOGIN QF
   const { mutate, isLoading } = useMutation(loginQF, {
-    onSuccess: (data) =>  {
+    onSuccess: (data) => {
       setOpenSnack({
         open: true,
         message: "Logged in successfully!",

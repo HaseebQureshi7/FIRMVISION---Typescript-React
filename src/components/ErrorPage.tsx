@@ -1,14 +1,12 @@
+import { ReplayOutlined, ReportProblem } from "@mui/icons-material";
 import {
   Box,
-  Typography,
   Button,
-  useMediaQuery,
-  useTheme,
+  Typography,
 } from "@mui/material";
+import logo from "../assets/images/Logo-easework.png";
 import { FadeIn } from "./PageTransition";
 import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
-import { ReplayOutlined, ReportProblem } from "@mui/icons-material";
-import logo from "../assets/images/Logo-easework.png";
 import isXSmall from "./isXSmall";
 
 export default function ErrorPage() {

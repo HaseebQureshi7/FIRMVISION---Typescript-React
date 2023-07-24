@@ -1,12 +1,9 @@
-import { useMediaQuery, useTheme } from "@mui/material";
 import {
   ResponsiveContainer,
-  CartesianGrid,
   Bar,
   XAxis,
   YAxis,
   BarChart,
-  Legend,
   Tooltip,
 } from "recharts";
 import isXSmall from "./isXSmall";

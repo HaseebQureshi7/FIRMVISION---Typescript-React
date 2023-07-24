@@ -1,23 +1,21 @@
-import React, { useState } from "react";
-import EmployeePagesContainer from "./EmployeePagesContainer";
-import { SideFade } from "../components/PageTransition";
-import {
-  Box,
-  Divider,
-  Typography,
-  useMediaQuery,
-  useTheme,
-  Button,
-} from "@mui/material";
-import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
 import {
   Article,
   FormatItalic,
   InsertPageBreak,
   Receipt,
 } from "@mui/icons-material";
-import isXSmall from "../components/isXSmall";
+import {
+  Box,
+  Button,
+  Divider,
+  Typography,
+} from "@mui/material";
+import { useState } from "react";
 import GlobalModal from "../components/GlobalModal";
+import { SideFade } from "../components/PageTransition";
+import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
+import isXSmall from "../components/isXSmall";
+import EmployeePagesContainer from "./EmployeePagesContainer";
 
 export default function EmployeeAdminActions() {
   const { isXS } = isXSmall();

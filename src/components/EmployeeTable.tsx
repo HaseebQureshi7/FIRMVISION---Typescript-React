@@ -1,56 +1,47 @@
 import {
   Add,
-  Done,
-  Clear,
-  DriveFileRenameOutline,
-  MoreHoriz,
-  Visibility,
-  Details,
   Call,
-  PersonRemove,
+  Clear,
+  Details,
+  DriveFileRenameOutline,
   Message,
-  ExpandMore,
+  MoreHoriz,
+  PersonRemove,
+  Visibility,
 } from "@mui/icons-material";
 import {
-  TableContainer,
+  Avatar,
+  Box,
+  Button,
+  Grow,
+  InputAdornment,
+  Menu,
+  MenuItem,
   Paper,
-  Typography,
+  Select,
   Table,
+  TableBody,
+  TableCell,
+  TableContainer,
   TableHead,
   TableRow,
-  TableCell,
-  TableBody,
-  Box,
-  Avatar,
-  Modal,
   TextField,
-  InputAdornment,
-  Button,
-  Select,
-  MenuItem,
-  useMediaQuery,
-  useTheme,
-  Menu,
-  Grow,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
+  Typography,
 } from "@mui/material";
-import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
-import { getEmpsQD } from "./AdminGlobalDataHandler";
-import { useContext, useEffect, useRef, useState } from "react";
 import { MobileDatePicker } from "@mui/x-date-pickers";
-import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
 import axios from "axios";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useMutation } from "react-query";
-import { DateFormatter } from "./DateFormatter";
-import { ExtractedSnackBarTypes, SnackbarTypes } from "../types/SnackbarTypes";
-import { TaskTypes } from "../types/TaskTypes";
+import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
 import { PriorityTypes } from "../types/PriorityTypes";
-import isXSmall from "./isXSmall";
-import TaskCard from "./TaskCard";
-import GlobalModal from "./GlobalModal";
+import { ExtractedSnackBarTypes } from "../types/SnackbarTypes";
+import { TaskTypes } from "../types/TaskTypes";
+import { getEmpsQD } from "./AdminGlobalDataHandler";
 import AuthHeaders from "./AuthHeaders";
+import GlobalModal from "./GlobalModal";
+import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
+import TaskCard from "./TaskCard";
+import isXSmall from "./isXSmall";
 
 export default function EmployeeTable({ sort = "" }) {
   const { data: empData } = getEmpsQD();
@@ -88,7 +79,9 @@ export default function EmployeeTable({ sort = "" }) {
 
   // FINDS THE ELEMENT THROUGH REG EXP SEARCH AND REUTRNS ONLY THAT ELEMENT
   const sortedEmps = empData && [
-    ...empData.filter((data: any) => data?.name.toLowerCase().includes(sort.toLowerCase())),
+    ...empData.filter((data: any) =>
+      data?.name.toLowerCase().includes(sort.toLowerCase())
+    ),
   ];
 
   // ASSIGN TASK TO EMPLOYEE MF
@@ -472,7 +465,11 @@ export default function EmployeeTable({ sort = "" }) {
 
       {/* TABLE */}
       <TableContainer sx={{ p: 3 }} component={Paper}>
-        <Typography sx={{ fontWeight: 700, p:2 }} variant="h5" color="text.primary">
+        <Typography
+          sx={{ fontWeight: 700, p: 2 }}
+          variant="h5"
+          color="text.primary"
+        >
           Employees ({empData?.length})
         </Typography>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">

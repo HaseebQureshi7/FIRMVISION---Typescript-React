@@ -5,10 +5,8 @@ import {
   Home,
   NotificationAdd,
   Person,
-  Person2,
   PersonAdd,
   PersonSearch,
-  PowerOff,
   PowerSettingsNew,
   QuestionAnswer,
   Settings,
@@ -17,11 +15,8 @@ import { Avatar, Box, ButtonBase, Divider, Typography } from "@mui/material";
 import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
+import { ExtractedSnackBarTypes } from "./../types/SnackbarTypes";
 import { FlexBox } from "./StyleExtensions.tsx/FlexBox";
-import {
-  ExtractedSnackBarTypes,
-  SnackbarTypes,
-} from "./../types/SnackbarTypes";
 
 export default function Sidebar({ user, openSidebar, setOpenSidebar }: any) {
   const navigate = useNavigate();

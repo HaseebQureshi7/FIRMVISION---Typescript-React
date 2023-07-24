@@ -1,46 +1,15 @@
-import {
-  AssignmentInd,
-  EmojiEvents,
-  ExpandMore,
-  Groups,
-  NotificationImportant,
-  ReportProblem,
-  Task,
-  TaskAlt,
-} from "@mui/icons-material";
-import {
-  Box,
-  Typography,
-  useMediaQuery,
-  useTheme,
-  Tooltip,
-  Paper,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-} from "@mui/material";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
-import {
-  getEmpsQD,
-  getRemsQD,
-  getTasksQD,
-} from "../components/AdminGlobalDataHandler";
+import { EmojiEvents, ReportProblem, Task, TaskAlt } from "@mui/icons-material";
+import { Box, Tooltip, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { getEmpTasksQD } from "../components/EmployeeGlobalDataHandler";
 import LiveClock from "../components/LiveClock";
 import { SideFade } from "../components/PageTransition";
 import StatisticsChart from "../components/StatisticsChart";
 import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
-import EmployeePagesContainer from "./EmployeePagesContainer";
-import EmployeeTable from "../components/EmployeeTable";
-import { useNavigate } from "react-router-dom";
-import {
-  getEmpTasksQD,
-  getEmpTeamQD,
-} from "../components/EmployeeGlobalDataHandler";
-import { DateFormatter } from "../components/DateFormatter";
 import TaskCard from "../components/TaskCard";
 import isXSmall from "../components/isXSmall";
+import EmployeePagesContainer from "./EmployeePagesContainer";
 
 export default function EmployeeDashboard() {
   const { isXS } = isXSmall();

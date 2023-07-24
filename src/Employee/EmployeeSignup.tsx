@@ -1,4 +1,11 @@
-import { SideFade } from "../components/PageTransition";
+import {
+  Diversity3,
+  Google,
+  KeyboardArrowRight,
+  Password,
+  Person,
+  Phone,
+} from "@mui/icons-material";
 import {
   Avatar,
   Box,
@@ -9,21 +16,14 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
-import {
-  Diversity3,
-  Google,
-  KeyboardArrowRight,
-  Password,
-  Person,
-  Phone,
-} from "@mui/icons-material";
-import logo from "../assets/images/Logo-easework.png";
-import { useContext, useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
 import axios from "axios";
+import { useContext, useRef } from "react";
 import { useMutation, useQuery } from "react-query";
+import { useNavigate, useParams } from "react-router-dom";
+import logo from "../assets/images/Logo-easework.png";
+import { SideFade } from "../components/PageTransition";
+import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
+import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
 
 export default function EmployeeSignup() {
   interface AdminTypes {

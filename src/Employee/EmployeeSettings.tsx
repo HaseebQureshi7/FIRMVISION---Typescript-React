@@ -1,23 +1,20 @@
-import React, { useContext, useRef, useState } from "react";
-import EmployeePagesContainer from "./EmployeePagesContainer";
-import { SideFade } from "../components/PageTransition";
+import { Cancel, Done, Edit, Password, Photo } from "@mui/icons-material";
 import {
   Avatar,
   Box,
   Button,
   Divider,
-  Switch,
   TextField,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from "@mui/material";
-import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
-import { Cancel, Done, Edit, Password, Photo } from "@mui/icons-material";
 import axios from "axios";
+import { useContext, useRef, useState } from "react";
 import { useMutation } from "react-query";
-import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
+import { SideFade } from "../components/PageTransition";
+import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
 import isXSmall from "../components/isXSmall";
+import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
+import EmployeePagesContainer from "./EmployeePagesContainer";
 
 export default function EmployeeSettings() {
   const { isXS } = isXSmall();

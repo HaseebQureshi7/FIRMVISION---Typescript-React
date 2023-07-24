@@ -1,45 +1,19 @@
-import {
-  Add,
-  AddCircle,
-  AlternateEmail,
-  Badge,
-  Cancel,
-  CheckCircle,
-  FilterAlt,
-  Message,
-  PersonAdd,
-  PersonRemove,
-  Phone,
-  Search,
-  Send,
-  Visibility,
-  ExpandMore,
-} from "@mui/icons-material";
+import { Search } from "@mui/icons-material";
 import {
   Box,
-  Button,
   Divider,
-  IconButton,
   InputAdornment,
   TextField,
   Typography,
-  useMediaQuery,
-  useTheme,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
 } from "@mui/material";
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { getEmpTasksQD } from "../components/EmployeeGlobalDataHandler";
 import { SideFade } from "../components/PageTransition";
 import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
-import EmployeePagesContainer from "./EmployeePagesContainer";
-import invite from "../assets/images/invite.png";
-import { useNavigate } from "react-router-dom";
-import { getTasksQD } from "../components/AdminGlobalDataHandler";
-import { DateFormatter } from "../components/DateFormatter";
-import isXSmall from "../components/isXSmall";
-import { getEmpTasksQD } from "../components/EmployeeGlobalDataHandler";
 import TaskCard from "../components/TaskCard";
+import isXSmall from "../components/isXSmall";
+import EmployeePagesContainer from "./EmployeePagesContainer";
 
 export default function EmployeeAssignedTasks() {
   const navigate = useNavigate();

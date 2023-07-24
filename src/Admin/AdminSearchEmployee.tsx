@@ -1,38 +1,21 @@
 import {
-  AddCircle,
-  AlternateEmail,
-  Badge,
-  Cancel,
-  CheckCircle,
-  FilterAlt,
-  Message,
-  PersonAdd,
-  PersonRemove,
-  Phone,
   Search,
-  Send,
-  Visibility,
 } from "@mui/icons-material";
 import {
   Box,
-  Button,
   Divider,
-  IconButton,
   InputAdornment,
   TextField,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from "@mui/material";
-import React, { useRef, useState } from "react";
-import { SideFade } from "../components/PageTransition";
-import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
-import AdminPagesContainer from "./AdminPagesContainer";
-import invite from "../assets/images/invite.png";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getEmpsQD } from "../components/AdminGlobalDataHandler";
 import EmployeeTable from "../components/EmployeeTable";
+import { SideFade } from "../components/PageTransition";
+import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
 import isXSmall from "../components/isXSmall";
+import AdminPagesContainer from "./AdminPagesContainer";
 
 export default function AdminSearchEmployee() {
   const navigate = useNavigate();
@@ -104,32 +87,6 @@ export default function AdminSearchEmployee() {
                   ),
                 }}
               />
-              {/* <IconButton
-                sx={{ mr: { xs: "0%", lg: "25%" } }}
-                type="submit"
-                aria-label="search-employees"
-                size="large"
-                color="primary"
-              >
-                <Search />
-              </IconButton> */}
-              {/* <IconButton
-                sx={{ mx: { xs: "0%", lg: "2.5%" } }}
-                aria-label="filter-employees"
-                size="large"
-                color="info"
-              >
-                <FilterAlt />
-              </IconButton> */}
-              {/* <IconButton
-                onClick={() => navigate("/admin/addemployee")}
-                sx={{ mx: { xs: "0%", lg: "2.5%" } }}
-                aria-label="add-employees"
-                size="large"
-                color="success"
-              >
-                <PersonAdd />
-              </IconButton> */}
             </Box>
             {/* ROW 2 */}
             <EmployeeTable sort={searchEmp} />

@@ -1,31 +1,30 @@
 import {
-  Typography,
-  Box,
-  TextField,
-  InputAdornment,
-  Button,
-  Grid,
-  Avatar,
-} from "@mui/material";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { FadeIn } from "../components/PageTransition";
-import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
-import logo from "../assets/images/Logo-easework.png";
-import invite from "../assets/images/invite.png";
-import manage from "../assets/images/manage.png";
-import assign from "../assets/images/assign.png";
-import complete from "../assets/images/complete.png";
-import {
-  AlternateEmail,
   CheckCircle,
   CorporateFare,
   Password,
   Phone,
 } from "@mui/icons-material";
-import jwt_decode from "jwt-decode";
+import {
+  Avatar,
+  Box,
+  Button,
+  Grid,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@mui/material";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/images/Logo-easework.png";
+import assign from "../assets/images/assign.png";
+import complete from "../assets/images/complete.png";
+import invite from "../assets/images/invite.png";
+import manage from "../assets/images/manage.png";
+import { FadeIn } from "../components/PageTransition";
+import { FlexBox } from "../components/StyleExtensions.tsx/FlexBox";
 import { GlobalSnackbarContext } from "../context/GlobalSnackbarContext";
 
 export default function AdminSignup() {
@@ -129,7 +128,7 @@ export default function AdminSignup() {
         sx={{
           ...FlexBox,
           backgroundColor: "background.default",
-          minHeight:'100vh',
+          minHeight: "100vh",
           p: { xs: 2, lg: 5 },
         }}
       >
