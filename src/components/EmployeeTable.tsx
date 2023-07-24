@@ -472,7 +472,7 @@ export default function EmployeeTable({ sort = "" }) {
 
       {/* TABLE */}
       <TableContainer sx={{ p: 3 }} component={Paper}>
-        <Typography sx={{ fontWeight: 700 }} variant="h5" color="text.primary">
+        <Typography sx={{ fontWeight: 700, p:2 }} variant="h5" color="text.primary">
           Employees ({empData?.length})
         </Typography>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">

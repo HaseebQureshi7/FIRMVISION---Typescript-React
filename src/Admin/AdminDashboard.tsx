@@ -32,6 +32,7 @@ import isXSmall from "../components/isXSmall";
 import GlobalModal from "../components/GlobalModal";
 import { DateFormatter } from "../components/DateFormatter";
 import ReminderCard from "../components/ReminderCard";
+import TaskCard from "../components/TaskCard";
 
 export default function AdminDashboard() {
   const { isXS } = isXSmall();
@@ -40,6 +41,8 @@ export default function AdminDashboard() {
 
   const [upTime, setUpTime] = useState<number>(0);
   const [openReminderModal, setOpenReminderModal] = useState<boolean>(false);
+  const [openReportedTasksModal, setOpenReportedTasksModal] =
+    useState<boolean>(false);
 
   const user: any | null = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user")!)
@@ -114,20 +117,38 @@ export default function AdminDashboard() {
     <AdminPagesContainer>
       <SideFade>
         {/* MAIN CONTIANER */}
-        <Box sx={{ ...FlexBox, width: { xs: "100vw", lg: "95vw" } }}>
+        <Box sx={{ ...FlexBox, width: { xs: "100vw", lg: "95vw" } ,p:2.5 }}>
           {/* VIEW REMINDERS MODAL */}
           <GlobalModal
             openModal={openReminderModal}
             setOpenModal={setOpenReminderModal}
             headerText={`Upcoming Reminders (${remsData?.length})`}
           >
-            {remsData?.map((data: any) => {
-              return (
-                <Box key={data?._id} sx={{ width: "100%" }}>
-                  <ReminderCard data={data} />
-                </Box>
-              );
-            })}
+            {remsData
+              ? remsData?.map((data: any) => {
+                  return (
+                    <Box key={data?._id} sx={{ width: "100%" }}>
+                      <ReminderCard data={data} />
+                    </Box>
+                  );
+                })
+              : null}
+          </GlobalModal>
+          {/* VIEW REPORTED TASKS MODAL */}
+          <GlobalModal
+            openModal={openReportedTasksModal}
+            setOpenModal={setOpenReportedTasksModal}
+            headerText={`Reported Tasks (${reportedTasks?.length})`}
+          >
+            {reportedTasks
+              ? reportedTasks?.map((data: any) => {
+                  return (
+                    <Box sx={{ width: "100%" }}>
+                      <TaskCard data={data} />
+                    </Box>
+                  );
+                })
+              : null}
           </GlobalModal>
 
           {/* ROW 1 */}
@@ -272,7 +293,7 @@ export default function AdminDashboard() {
                   sx={{
                     fontSize: { xs: "2rem", lg: "2.5rem" },
                     fontWeight: 700,
-                    color: "primary.main",
+                    color: "warning.main",
                   }}
                 >
                   {upTime + " mins"}
@@ -300,7 +321,7 @@ export default function AdminDashboard() {
                   gap: 2.5,
                   cursor: "pointer",
                   backgroundColor: "info.main",
-                  borderRadius: 2,
+                  borderRadius: 1,
                   p: 1,
                 }}
               >
@@ -325,7 +346,7 @@ export default function AdminDashboard() {
                   gap: 2.5,
                   cursor: "pointer",
                   backgroundColor: "success.main",
-                  borderRadius: 2,
+                  borderRadius: 1,
                   p: 1,
                 }}
               >
@@ -341,14 +362,17 @@ export default function AdminDashboard() {
             </Tooltip>
             <Tooltip title="All Reported Tasks">
               <Box
-                onClick={() => navigate("/admin/assignedtasks")}
+                // onClick={() => navigate("/admin/assignedtasks")}
+                onClick={() =>
+                  setOpenReportedTasksModal(!openReportedTasksModal)
+                }
                 sx={{
                   ...FlexBox,
                   flexDirection: { xs: "column", lg: "row" },
                   gap: 2.5,
                   cursor: "pointer",
                   backgroundColor: "error.main",
-                  borderRadius: 2,
+                  borderRadius: 1,
                   p: 1,
                 }}
               >
@@ -374,7 +398,7 @@ export default function AdminDashboard() {
                   gap: 2.5,
                   cursor: "pointer",
                   backgroundColor: "warning.main",
-                  borderRadius: 2,
+                  borderRadius: 1,
                   p: 1,
                 }}
               >

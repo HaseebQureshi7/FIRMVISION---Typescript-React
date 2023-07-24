@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import EmployeePagesContainer from "./EmployeePagesContainer";
 import { SideFade } from "../components/PageTransition";
 import {
@@ -17,9 +17,14 @@ import {
   Receipt,
 } from "@mui/icons-material";
 import isXSmall from "../components/isXSmall";
+import GlobalModal from "../components/GlobalModal";
 
 export default function EmployeeAdminActions() {
   const { isXS } = isXSmall();
+
+  const [openLeaveModal, setOpenLeaveModal] = useState<boolean>(false);
+  const [openResignModal, setOpenResignModal] = useState<boolean>(false);
+  const [openLetterModal, setOpenLetterModal] = useState<boolean>(false);
 
   return (
     <EmployeePagesContainer>
@@ -31,6 +36,15 @@ export default function EmployeeAdminActions() {
             p: { xs: 2.5, lg: 5 },
           }}
         >
+          {/* MAKE LEAVE MODAL */}
+          <GlobalModal
+            openModal={openLeaveModal}
+            setOpenModal={setOpenLeaveModal}
+            headerText={`Make a Leave Letter`}
+          >
+            
+          </GlobalModal>
+
           {/* HEADER */}
           <Box sx={{ ...FlexBox, alignItems: "flex-start" }}>
             <Typography
@@ -102,6 +116,7 @@ export default function EmployeeAdminActions() {
                   Make a Leave letter
                 </Typography>
                 <Button
+                  onClick={() => setOpenLeaveModal(!openLeaveModal)}
                   endIcon={<FormatItalic />}
                   variant="contained"
                   size="large"

@@ -36,7 +36,7 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [themeMode, setThemeMode] = useState<PaletteMode>("light");
+  const [themeMode, setThemeMode] = useState<PaletteMode>("dark");
 
   const [openSnack, setOpenSnack] = useState<SnackbarTypes>({
     open: false,
