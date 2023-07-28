@@ -163,7 +163,10 @@ export default function AdminSignup() {
             >
               Step
             </Typography>
-            <Typography sx={{ fontWeight: 700, mb: 5 }} variant="h6">
+            <Typography
+              sx={{ fontWeight: 700, color: "text.primary", mb: 5 }}
+              variant="h6"
+            >
               1 of 2
             </Typography>
             <div id="googleSignupButton"></div>
@@ -204,7 +207,10 @@ export default function AdminSignup() {
               >
                 Step
               </Typography>
-              <Typography sx={{ fontWeight: 700 }} variant="h6">
+              <Typography
+                sx={{ fontWeight: 700, color: "text.primary" }}
+                variant="h6"
+              >
                 2 of 2
               </Typography>
             </Box>
